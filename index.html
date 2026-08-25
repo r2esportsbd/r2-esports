@@ -1,271 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R2 Esports</title>
 
-  <title>R2 Esports</title>
+<style>
+:root{
+  --bg:#080b12;
+  --panel:#121927;
+  --panel2:#182132;
+  --line:#29344b;
+  --gold:#ffb300;
+  --text:#f5f7fb;
+  --muted:#aeb7c7;
+  --green:#18c77c;
+}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #080b12;
-      color: white;
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    /* HEADER */
-    header {
-      background: #101522;
-      border-bottom: 1px solid #242b3d;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffb300;
-    }
+a{
+  text-decoration:none;
+  color:inherit;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 15px;
-      font-size: 14px;
-    }
+button{
+  font:inherit;
+  cursor:pointer;
+}
 
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-      background:
-        linear-gradient(135deg, #101522, #080b12);
-    }
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#101522;
+  border-bottom:1px solid var(--line);
+}
 
-    .hero h1 {
-      font-size: 38px;
-      color: #ffb300;
-      margin-bottom: 15px;
-    }
+.nav{
+  max-width:1150px;
+  margin:auto;
+  min-height:68px;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
 
-    .hero p {
-      color: #aab1c0;
-      margin-bottom: 25px;
-    }
+.logo{
+  font-size:23px;
+  font-weight:800;
+  color:var(--gold);
+}
 
-    .btn {
-      display: inline-block;
-      background: #ffb300;
-      color: black;
-      padding: 13px 25px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.navlinks{
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
 
-    /* SECTION */
-    .section {
-      padding: 25px 15px;
-      max-width: 1100px;
-      margin: auto;
-    }
+.wallet-mini{
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:8px 12px;
+  border-radius:10px;
+}
 
-    .section-title {
-      font-size: 24px;
-      margin-bottom: 20px;
-      border-left: 5px solid #ffb300;
-      padding-left: 10px;
-    }
+.hero{
+  padding:75px 18px 65px;
+  text-align:center;
+  background:linear-gradient(135deg,#101522,#080b12);
+}
 
-    /* TOURNAMENT CARDS */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-    }
+.hero h1{
+  font-size:42px;
+  color:var(--gold);
+  margin-bottom:14px;
+}
 
-    .card {
-      background: #111724;
-      border: 1px solid #252d40;
-      border-radius: 12px;
-      padding: 20px;
-      transition: 0.2s;
-    }
+.hero p{
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.6;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #ffb300;
-    }
+.hero-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:28px;
+}
 
-    .card h2 {
-      margin-bottom: 15px;
-      color: #ffb300;
-    }
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:13px 22px;
+  font-weight:bold;
+  background:var(--gold);
+  color:#111;
+}
 
-    .card p {
-      margin: 10px 0;
-      color: #c5cad5;
-    }
+.btn.secondary{
+  background:transparent;
+  color:white;
+  border:1px solid var(--line);
+}
 
-    .free {
-      color: #00d26a;
-    }
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:45px 18px;
+}
 
-    .paid {
-      color: #ffb300;
-    }
+.section-title{
+  font-size:27px;
+  margin-bottom:20px;
+  border-left:5px solid var(--gold);
+  padding-left:12px;
+}
 
-    .join-btn {
-      width: 100%;
-      border: none;
-      background: #ffb300;
-      padding: 12px;
-      border-radius: 7px;
-      font-weight: bold;
-      margin-top: 15px;
-      cursor: pointer;
-    }
+.sub{
+  color:var(--muted);
+  margin-bottom:24px;
+}
 
-    /* INFO */
-    .info {
-      background: #101522;
-      padding: 25px;
-      border-radius: 12px;
-      border: 1px solid #252d40;
-      text-align: center;
-    }
+.mode-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:15px;
+}
 
-    .info h2 {
-      color: #ffb300;
-      margin-bottom: 10px;
-    }
+.mode{
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:white;
+  border-radius:14px;
+  padding:22px;
+  text-align:left;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #7e8798;
-      border-top: 1px solid #242b3d;
-      margin-top: 30px;
-    }
+.mode:hover{
+  border-color:var(--gold);
+}
 
-    /* MOBILE */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        gap: 12px;
-      }
+.mode .icon{
+  font-size:34px;
+  margin-bottom:10px;
+}
 
-      .hero h1 {
-        font-size: 30px;
-      }
-    }
-  </style>
+.mode p{
+  color:var(--muted);
+  margin-top:7px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+}
+
+.card h3{
+  color:var(--gold);
+  margin-bottom:13px;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  background:#173927;
+  color:#72e3ac;
+  margin-bottom:13px;
+}
+
+.meta{
+  color:var(--muted);
+  line-height:1.9;
+}
+
+.card .btn{
+  width:100%;
+  margin-top:16px;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:30px;
+  text-align:center;
+  color:#7e8798;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">🔥 R2 ESPORTS</div>
+  <div class="nav">
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#tournaments">Tournament</a>
-    <a href="#about">About</a>
-  </nav>
+    <div class="logo">🔥 R2 ESPORTS</div>
+
+    <div class="navlinks">
+      <a href="#home">Home</a>
+      <a href="#modes">Modes</a>
+      <a href="#tournaments">Tournaments</a>
+    </div>
+
+    <div class="wallet-mini">
+      👛 Credits: 0
+    </div>
+
+  </div>
 </header>
-
 
 <section class="hero" id="home">
 
-  <h1>WELCOME TO R2 ESPORTS 🎮</h1>
+<h1>WELCOME TO R2 ESPORTS 🎮</h1>
 
-  <p>
-    Join exciting tournaments, compete with players
-    and prove your skills!
-  </p>
+<p>
+Free Fire tournaments, game modes এবং player registration — সব এক জায়গায়।
+</p>
 
-  <a href="#tournaments" class="btn">
-    VIEW TOURNAMENTS
-  </a>
+<div class="hero-actions">
+<a class="btn" href="#modes">EXPLORE MODES</a>
+<a class="btn secondary" href="#tournaments">TOURNAMENTS</a>
+</div>
+
+</section>
+
+<section class="container" id="modes">
+
+<h2 class="section-title">🎮 GAME MODES</h2>
+
+<p class="sub">
+আগে আপনার পছন্দের mode নির্বাচন করুন।
+</p>
+
+<div class="mode-grid">
+
+<button class="mode">
+<div class="icon">👤</div>
+<h3>Solo BR</h3>
+<p>One player battle royale</p>
+</button>
+
+<button class="mode">
+<div class="icon">👥</div>
+<h3>Duo Match</h3>
+<p>Two player team match</p>
+</button>
+
+<button class="mode">
+<div class="icon">👨‍👩‍👧‍👦</div>
+<h3>Squad Match</h3>
+<p>Four player squad</p>
+</button>
+
+<button class="mode">
+<div class="icon">⚔️</div>
+<h3>Clash Squad</h3>
+<p>Fast competitive rounds</p>
+</button>
+
+<button class="mode">
+<div class="icon">🥊</div>
+<h3>Lone Wolf 1v1</h3>
+<p>Head-to-head battle</p>
+</button>
+
+<button class="mode">
+<div class="icon">🆓</div>
+<h3>Free Match</h3>
+<p>No entry fee</p>
+</button>
+  <section class="container" id="tournaments">
+
+<h2 class="section-title">🏆 TOURNAMENTS</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<span class="badge">FREE MATCH</span>
+
+<h3>🏆 GRAND SOLO MATCH</h3>
+
+<div class="meta">
+🎮 Mode: Solo BR<br>
+🏆 Prize: ৳3000<br>
+💰 Entry: FREE<br>
+📅 Date: Coming Soon
+</div>
+
+<button class="btn" onclick="joinTournament('GRAND SOLO MATCH')">
+JOIN NOW
+</button>
+
+</div>
+
+
+<div class="card">
+
+<span class="badge">FREE MATCH</span>
+
+<h3>👥 DUO CHALLENGE</h3>
+
+<div class="meta">
+🎮 Mode: Duo Match<br>
+🏆 Prize: ৳2000<br>
+💰 Entry: FREE<br>
+📅 Date: Coming Soon
+</div>
+
+<button class="btn" onclick="joinTournament('DUO CHALLENGE')">
+JOIN NOW
+</button>
+
+</div>
+
+
+<div class="card">
+
+<span class="badge">FREE MATCH</span>
+
+<h3>🔥 SQUAD CLASH</h3>
+
+<div class="meta">
+🎮 Mode: Squad Match<br>
+🏆 Prize: ৳5000<br>
+💰 Entry: FREE<br>
+📅 Date: Coming Soon
+</div>
+
+<button class="btn" onclick="joinTournament('SQUAD CLASH')">
+JOIN NOW
+</button>
+
+</div>
+
+
+<div class="card">
+
+<span class="badge">FREE MATCH</span>
+
+<h3>⚔️ CLASH SQUAD CUP</h3>
+
+<div class="meta">
+🎮 Mode: Clash Squad<br>
+🏆 Prize: ৳2500<br>
+💰 Entry: FREE<br>
+📅 Date: Coming Soon
+</div>
+
+<button class="btn" onclick="joinTournament('CLASH SQUAD CUP')">
+JOIN NOW
+</button>
+
+</div>
+
+
+<div class="card">
+
+<span class="badge">FREE MATCH</span>
+
+<h3>🥊 LONE WOLF 1v1</h3>
+
+<div class="meta">
+🎮 Mode: Lone Wolf 1v1<br>
+🏆 Prize: ৳1000<br>
+💰 Entry: FREE<br>
+📅 Date: Coming Soon
+</div>
+
+<button class="btn" onclick="joinTournament('LONE WOLF 1v1')">
+JOIN NOW
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<section class="section" id="tournaments">
+<section class="container" id="dashboard">
 
-  <h2 class="section-title">🔥 FREE TOURNAMENTS</h2>
+<h2 class="section-title">👤 PLAYER DASHBOARD</h2>
 
-  <div class="cards">
+<div class="card">
 
-    <div class="card">
-      <h2>🏆 GRAND SOLO MATCH</h2>
+<h3>👛 MY WALLET</h3>
 
-      <p>🎮 Mode: Solo</p>
-      <p>🏆 Prize Pool: ৳3000</p>
-      <p class="free">💰 Entry: FREE</p>
-      <p>📅 Date: Coming Soon</p>
+<div class="meta">
 
-      <button class="join-btn">
-        JOIN NOW
-      </button>
-    </div>
+Current Balance:
+<b id="balance">0 Credits</b>
 
-  </div>
+</div>
 
-</section>
+<br>
 
+<button class="btn" onclick="addDemoCredits()">
++ ADD DEMO CREDITS
+</button>
 
-<section class="section">
+</div>
 
-  <h2 class="section-title">💰 PAID TOURNAMENTS</h2>
+<br>
 
-  <div class="cards">
+<div class="card">
 
-    <div class="card">
-      <h2>🔥 SQUAD CLASH</h2>
+<h3>📋 MY TOURNAMENTS</h3>
 
-      <p>🎮 Mode: Squad</p>
-      <p>🏆 Prize Pool: ৳5000</p>
-      <p class="paid">💰 Entry: ৳50</p>
-      <p>📅 Date: Coming Soon</p>
+<div id="myTournaments" class="meta">
 
-      <button class="join-btn">
-        JOIN NOW
-      </button>
-    </div>
+এখনও কোনো Tournament Join করা হয়নি।
 
-  </div>
+</div>
 
-</section>
-
-
-<section class="section" id="about">
-
-  <div class="info">
-
-    <h2>ABOUT R2 ESPORTS</h2>
-
-    <p>
-      R2 Esports হলো একটি Gaming Tournament Platform।
-      এখানে Free এবং Paid Tournament আয়োজন করা হবে।
-    </p>
-
-  </div>
+</div>
 
 </section>
 
 
 <footer>
-  © 2026 R2 ESPORTS | All Rights Reserved
+
+© 2026 R2 ESPORTS | All Rights Reserved
+
 </footer>
+
+
+<script>
+
+let balance = 0;
+
+let joinedTournaments = [];
+
+
+function addDemoCredits(){
+
+balance = balance + 100;
+
+document.getElementById("balance").innerHTML =
+balance + " Credits";
+
+alert("Demo Credits Added!");
+
+}
+
+
+function joinTournament(name){
+
+if(joinedTournaments.includes(name)){
+
+alert("আপনি ইতিমধ্যে এই Tournament Join করেছেন!");
+
+return;
+
+}
+
+let playerName = prompt(
+"আপনার Free Fire In-Game Name লিখুন:"
+);
+
+if(playerName == null || playerName == ""){
+
+alert("Registration Cancelled");
+
+return;
+
+}
+
+joinedTournaments.push(name);
+
+let list = document.getElementById("myTournaments");
+
+list.innerHTML +=
+"<br>🏆 " +
+name +
+"<br>👤 Player: " +
+playerName +
+"<br><br>";
+
+alert(
+"Successfully Registered for " + name
+);
+
+}
+
+</script>
 
 </body>
 </html>
