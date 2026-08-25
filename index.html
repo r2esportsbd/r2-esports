@@ -1,23 +1,271 @@
-<h2>🔥 FREE TOURNAMENT</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h3>GRAND SOLO MATCH</h3>
-<p>🏆 Prize: ৳3000</p>
-<p>💰 Entry: FREE</p>
-<button>JOIN</button>
+  <title>R2 Esports</title>
 
-<hr>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<h2>💰 PAID TOURNAMENT</h2>
+    body {
+      font-family: Arial, sans-serif;
+      background: #080b12;
+      color: white;
+    }
 
-<h3>SQUAD CLASH</h3>
-<p>🏆 Prize: ৳5000</p>
-<p>💰 Entry: ৳50</p>
-<button>JOIN</button>
+    /* HEADER */
+    header {
+      background: #101522;
+      border-bottom: 1px solid #242b3d;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-<hr>
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffb300;
+    }
 
-<h2>ADMIN</h2>
-<p>Admin থেকে নতুন Tournament যোগ করা হবে</p>
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background:
+        linear-gradient(135deg, #101522, #080b12);
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      color: #ffb300;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #aab1c0;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #ffb300;
+      color: black;
+      padding: 13px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 25px 15px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-left: 5px solid #ffb300;
+      padding-left: 10px;
+    }
+
+    /* TOURNAMENT CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #111724;
+      border: 1px solid #252d40;
+      border-radius: 12px;
+      padding: 20px;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #ffb300;
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+      color: #ffb300;
+    }
+
+    .card p {
+      margin: 10px 0;
+      color: #c5cad5;
+    }
+
+    .free {
+      color: #00d26a;
+    }
+
+    .paid {
+      color: #ffb300;
+    }
+
+    .join-btn {
+      width: 100%;
+      border: none;
+      background: #ffb300;
+      padding: 12px;
+      border-radius: 7px;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    /* INFO */
+    .info {
+      background: #101522;
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #252d40;
+      text-align: center;
+    }
+
+    .info h2 {
+      color: #ffb300;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #7e8798;
+      border-top: 1px solid #242b3d;
+      margin-top: 30px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🔥 R2 ESPORTS</div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#tournaments">Tournament</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+
+<section class="hero" id="home">
+
+  <h1>WELCOME TO R2 ESPORTS 🎮</h1>
+
+  <p>
+    Join exciting tournaments, compete with players
+    and prove your skills!
+  </p>
+
+  <a href="#tournaments" class="btn">
+    VIEW TOURNAMENTS
+  </a>
+
+</section>
+
+
+<section class="section" id="tournaments">
+
+  <h2 class="section-title">🔥 FREE TOURNAMENTS</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h2>🏆 GRAND SOLO MATCH</h2>
+
+      <p>🎮 Mode: Solo</p>
+      <p>🏆 Prize Pool: ৳3000</p>
+      <p class="free">💰 Entry: FREE</p>
+      <p>📅 Date: Coming Soon</p>
+
+      <button class="join-btn">
+        JOIN NOW
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <h2 class="section-title">💰 PAID TOURNAMENTS</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h2>🔥 SQUAD CLASH</h2>
+
+      <p>🎮 Mode: Squad</p>
+      <p>🏆 Prize Pool: ৳5000</p>
+      <p class="paid">💰 Entry: ৳50</p>
+      <p>📅 Date: Coming Soon</p>
+
+      <button class="join-btn">
+        JOIN NOW
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="about">
+
+  <div class="info">
+
+    <h2>ABOUT R2 ESPORTS</h2>
+
+    <p>
+      R2 Esports হলো একটি Gaming Tournament Platform।
+      এখানে Free এবং Paid Tournament আয়োজন করা হবে।
+    </p>
+
+  </div>
+
+</section>
+
+
+<footer>
+  © 2026 R2 ESPORTS | All Rights Reserved
+</footer>
 
 </body>
 </html>
