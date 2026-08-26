@@ -1,3 +1,4 @@
+</script>
 <!doctype html>
 <html lang="bn">
 <head>
@@ -743,9 +744,16 @@ onclick="closeM()">×</button>
 
 
 <div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<scrip
+const SUPABASE_URL = "https://wtrglyugzkmtrntesqzt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_pxhMh6tU0qhtkmigvSyAqQ_Yjr-KxlR";
 
-<script>
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 const T=[
 ["SOLO BR CHAMPIONSHIP","Solo BR","Paid",30,3000,"24/48","আজ • 7:00 PM"],
@@ -754,7 +762,6 @@ const T=[
 ["BERMUDA DUO RUSH","Duo","Paid",40,4000,"18/24","22 Apr • 9:00 PM"],
 ["SQUAD WAR","Clash Squad","Free",0,2000,"15/24","23 Apr • 7:30 PM"]
 ];
-
 const M=[
 "All",
 "Solo BR",
