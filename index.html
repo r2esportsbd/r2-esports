@@ -1,301 +1,3102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>R2.0 Esports</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-    body{background:#08101f;color:#fff;min-height:100vh;}
-    .hidden{display:none !important;}
-    #loading{position:fixed;inset:0;background:#08101f;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:20px;color:#ffd54a;}
-    #authPage{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;}
-    .auth-box{width:100%;max-width:420px;background:#111b31;padding:30px 22px;border-radius:22px;border:1px solid #30466f;}
-    .logo{text-align:center;font-size:28px;font-weight:bold;color:#ffd54a;margin-bottom:10px;}
-    .subtitle{text-align:center;color:#aab5c9;margin-bottom:25px;}
-    .auth-box input{width:100%;padding:15px;margin:8px 0;border-radius:12px;border:1px solid #35476a;background:#0a1223;color:white;font-size:16px;}
-    button{border:none;cursor:pointer;font-size:16px;}
-    .main-btn{width:100%;padding:15px;border-radius:12px;background:#ffc233;color:#111;font-weight:bold;margin-top:10px;}
-    .switch-btn{width:100%;background:none;color:#6da9ff;padding:15px;}
-    .error{color:#ff6b6b;text-align:center;margin-top:10px;}
-    #app{padding-bottom:85px;}
-    header{position:sticky;top:0;z-index:100;background:#0d1529;padding:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #263b61;}
-    .brand{font-size:20px;font-weight:bold;color:#ffd54a;}
-    .header-user{color:#b8c4d8;font-size:13px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    main{max-width:800px;margin:auto;padding:18px;}
-    .hero{background:linear-gradient(135deg,#1d1740,#132747);padding:28px 20px;border-radius:22px;border:1px solid #405a8c;margin-bottom:25px;}
-    .hero h1{color:#ffd34f;font-size:32px;margin:10px 0;}
-    .hero p{color:#c0c9da;line-height:1.6;}
-    h2{margin:20px 0 12px;}
-    .section-text{color:#a9b5c8;margin-bottom:15px;}
-    .tournament{background:#111b30;border:1px solid #293e64;border-radius:18px;padding:18px;margin-bottom:15px;}
-    .tournament h3{color:#fff;margin-bottom:10px;}
-    .badge{display:inline-block;background:#203b62;padding:6px 10px;border-radius:20px;color:#9dc7ff;font-size:12px;margin-right:5px;margin-bottom:10px;}
-    .info{color:#b8c3d4;line-height:1.7;margin:10px 0;}
-    .join-btn{width:100%;padding:14px;border-radius:12px;background:#ffc233;color:#111;font-weight:bold;margin-top:8px;}
-    .joined{background:#1f704e;color:white;}
-    .empty{text-align:center;padding:35px 15px;color:#aeb8c8;border:1px dashed #34486c;border-radius:16px;}
-    .profile-card{background:#111b30;padding:20px;border-radius:18px;border:1px solid #30476e;}
-    .profile-card p{margin:12px 0;color:#c4cedd;}
-    .logout{background:#d94b4b;color:white;width:100%;padding:14px;border-radius:12px;margin-top:15px;}
-    nav{position:fixed;bottom:0;left:0;right:0;background:#0d1528;border-top:1px solid #263b60;display:flex;justify-content:space-around;z-index:200;}
-    nav button{background:none;color:#aab6c9;padding:14px 5px;font-size:13px;flex:1;}
-    nav button.active{color:#ffd34f;}
-    .page{display:none;}
-    .page.active{display:block;}
-    @media(max-width:500px){.hero h1{font-size:27px;}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>R2.0 eSports</title>
+
+<style>
+:root{
+  --bg:#f4f7ff;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#64748b;
+  --line:#e5eaf3;
+  --purple:#6d35e8;
+  --purple2:#a855f7;
+  --blue:#2188ff;
+  --green:#12a76d;
+  --red:#e5484d;
+  --shadow:0 12px 35px rgba(38,56,88,.12);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#f7f8ff,#edf5ff);
+  color:var(--text);
+}
+
+button{
+  border:none;
+  border-radius:12px;
+  padding:11px 16px;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #dce3f0;
+  border-radius:11px;
+  background:white;
+  margin:6px 0 11px;
+  font-size:15px;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  max-width:1180px;
+  margin:auto;
+  padding:13px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  font-size:23px;
+  font-weight:900;
+}
+
+.brand b{
+  color:var(--purple);
+}
+
+.primary{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;
+}
+
+.soft{
+  background:#f1edff;
+  color:var(--purple);
+}
+
+.ok{
+  background:#e8fff5;
+  color:var(--green);
+}
+
+.danger{
+  background:#fff0f1;
+  color:var(--red);
+}
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:22px 18px 60px;
+}
+
+.hero{
+  padding:28px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#211044,#6d35e8 55%,#2388ff);
+  color:white;
+  box-shadow:var(--shadow);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+}
+
+.hero h1{
+  margin:0 0 8px;
+  font-size:34px;
+}
+
+.hero p{
+  margin:0;
+  color:#eee6ff;
+}
+
+.balance{
+  background:rgba(255,255,255,.16);
+  padding:16px 22px;
+  border-radius:18px;
+  text-align:center;
+  min-width:140px;
+}
+
+.balance b{
+  font-size:22px;
+}
+
+.modes{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+
+.mode{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  font-weight:800;
+}
+
+.mode.active{
+  background:var(--text);
+  color:white;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(275px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 6px 20px rgba(30,41,59,.05);
+}
+
+.card h3{
+  margin:0 0 12px;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.section{
+  margin-top:28px;
+}
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.pill{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:99px;
+  background:#eef4ff;
+  color:#2864d7;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.full{
+  background:#fff0f1;
+  color:var(--red);
+}
+
+.hidden{
+  display:none !important;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.item{
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:white;
+}
+
+.admin-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(16,24,40,.48);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:1000;
+}
+
+.modalbox{
+  background:white;
+  width:min(520px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.22);
+}
+
+.close{
+  float:right;
+  background:#f2f4f8;
+  padding:7px 11px;
+}
+
+.notice{
+  padding:11px 13px;
+  border-radius:12px;
+  background:#eef6ff;
+  color:#2563eb;
+  margin:10px 0;
+  font-size:14px;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+@media(max-width:650px){
+  .hero{
+    display:block;
+  }
+
+  .balance{
+    margin-top:15px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .admin-grid{
+    grid-template-columns:1fr;
+  }
+
+  .nav{
+    padding:11px;
+  }
+
+  .brand{
+    font-size:19px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-<div id="loading">🔥 R2.0 Esports Loading...</div>
+<header>
+  <div class="nav">
+    <div class="brand">
+      R2.0 <b>eSports</b>
+    </div>
 
-<div id="authPage" class="hidden">
-  <div class="auth-box">
-    <div class="logo">👑 R2.0 ESPORT</div>
-    <p class="subtitle">Play. Compete. Win.</p>
-    <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email address">
-      <input type="password" id="loginPassword" placeholder="Password">
-      <button class="main-btn" onclick="login()">LOGIN</button>
-      <button class="switch-btn" onclick="showRegister()">নতুন Account তৈরি করুন</button>
+    <div id="navUser">
+      <button class="primary" onclick="openAuth()">
+        Login
+      </button>
     </div>
-    <div id="registerForm" class="hidden">
-      <input type="text" id="registerName" placeholder="আপনার নাম">
-      <input type="email" id="registerEmail" placeholder="Email address">
-      <input type="password" id="registerPassword" placeholder="Password (কমপক্ষে 6 অক্ষর)">
-      <button class="main-btn" onclick="register()">CREATE ACCOUNT</button>
-      <button class="switch-btn" onclick="showLogin()">আগে থেকেই Account আছে? Login করুন</button>
-    </div>
-    <p id="authError" class="error"></p>
   </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div>
+    <h1>Play. Compete. Win.</h1>
+
+    <p>
+      আপনার পছন্দের ম্যাচে অংশ নিন
+      এবং নিজের টুর্নামেন্ট ইতিহাস
+      এক জায়গায় রাখুন।
+    </p>
+  </div>
+
+  <div class="balance">
+    Wallet<br>
+    <b id="heroBalance">৳0</b>
+  </div>
+</section>
+
+<div class="modes" id="modeButtons">
+  <button class="mode active" data-mode="all">All</button>
+  <button class="mode" data-mode="solo">Solo</button>
+  <button class="mode" data-mode="duo">Duo</button>
+  <button class="mode" data-mode="squad">Squad</button>
+  <button class="mode" data-mode="custom">Custom</button>
 </div>
 
-<div id="app" class="hidden">
-  <header>
-    <div class="brand">👑 R2.0 ESPORT</div>
-    <div class="header-user" id="headerUser"></div>
-  </header>
-  <main>
-    <section id="homePage" class="page active">
-      <div class="hero">
-        <div>🔥 R2.0 ESPORT • PLAY. COMPETE. WIN.</div>
-        <h1>PLAY. COMPETE. WIN.</h1>
-        <p>Tournament খুঁজে নিন, ম্যাচে Join করুন এবং জেতার জন্য প্রস্তুত হন।</p>
-      </div>
-      <h2>🏆 LIVE & UPCOMING TOURNAMENTS</h2>
-      <p class="section-text">চলমান এবং আসন্ন ম্যাচ</p>
-      <div id="tournamentList"><div class="empty">Tournament Loading...</div></div>
-    </section>
-    <section id="matchesPage" class="page">
-      <h2>🎮 MY MATCHES</h2>
-      <p class="section-text">আপনি যেসব Tournament-এ Join করেছেন</p>
-      <div id="myMatches"><div class="empty">এখনও কোনো Tournament Join করেননি</div></div>
-    </section>
-    <section id="profilePage" class="page">
-      <h2>👤 PROFILE</h2>
-      <div class="profile-card">
-        <p><strong>নাম:</strong> <span id="profileName"></span></p>
-        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-        <button class="logout" onclick="logout()">LOGOUT</button>
-      </div>
-    </section>
-  </main>
-  <nav>
-    <button class="active" onclick="openPage('homePage',this)">🎮<br>Play</button>
-    <button onclick="openPage('matchesPage',this)">🎟<br>My Matches</button>
-    <button onclick="openPage('profilePage',this)">👤<br>Profile</button>
-  </nav>
-</div>
+<section class="section">
+  <div class="row">
+    <h2>🏆 Available Tournaments</h2>
+    <span id="tCount" class="small"></span>
+  </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+  <div id="tournaments" class="grid"></div>
+</section>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyD6uFXHpNK1G6MA7IdgVI1YrrWe8II44",
-    authDomain: "r2o-esports.firebaseapp.com",
-    projectId: "r2o-esports",
-    storageBucket: "r2o-esports.firebasestorage.app",
-    messagingSenderId: "1093098377356",
-    appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
-    measurementId: "G-28FJ7LF6TL"
-  };
+<section class="section hidden" id="joinedSection">
+  <h2>🎮 My Joined Matches</h2>
+  <div id="joinedList" class="list"></div>
+</section>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  let currentUser = null;
+<section class="section hidden" id="profileSection">
+  <h2>👤 Profile & Wallet</h2>
 
-  window.showRegister = function(){
-    document.getElementById("loginForm").classList.add("hidden");
-    document.getElementById("registerForm").classList.remove("hidden");
-  };
-  window.showLogin = function(){
-    document.getElementById("registerForm").classList.add("hidden");
-    document.getElementById("loginForm").classList.remove("hidden");
-  };
+  <div class="grid">
 
-  window.register = async function(){
-    const name = document.getElementById("registerName").value.trim();
-    const email = document.getElementById("registerEmail").value.trim();
-    const password = document.getElementById("registerPassword").value;
-    if(!name || !email || !password){
-      document.getElementById("authError").innerText = "সব তথ্য পূরণ করুন";
-      return;
-    }
-    try{
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      await setDoc(doc(db,"users",user.uid), { name:name, email:email, createdAt: new Date().toISOString() });
-      document.getElementById("authError").innerText = "";
-    } catch(error){
-      document.getElementById("authError").innerText = error.message;
-    }
-  };
+    <div class="card">
+      <div id="profileInfo"></div>
 
-  window.login = async function(){
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    try{
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch(error){
-      document.getElementById("authError").innerText = "Login failed: " + error.message;
-    }
-  };
+      <hr style="border:0;border-top:1px solid var(--line);margin:16px 0;">
 
-  window.logout = async function(){ await signOut(auth); };
-
-  onAuthStateChanged(auth, async(user)=>{
-    document.getElementById("loading").classList.add("hidden");
-    if(user){
-      currentUser = user;
-      document.getElementById("authPage").classList.add("hidden");
-      document.getElementById("app").classList.remove("hidden");
-      await loadProfile();
-      await loadTournaments();
-      await loadMyMatches();
-    } else {
-      currentUser = null;
-      document.getElementById("app").classList.add("hidden");
-      document.getElementById("authPage").classList.remove("hidden");
-    }
-  });
-
-  async function loadProfile(){
-    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-    let name = "Player";
-    if(userDoc.exists()){ name = userDoc.data().name || "Player"; }
-    document.getElementById("headerUser").innerText = name;
-    document.getElementById("profileName").innerText = name;
-    document.getElementById("profileEmail").innerText = currentUser.email;
-  }
-
-  const defaultTournaments = [
-    { id:"solo-br", title:"SOLO BR CHAMPIONSHIP", mode:"Solo BR", entry:"Paid", entryFee:"৳30", prize:"৳30,000", slots:"24/48", date:"আজ • 7:00 PM" },
-    { id:"clash-squad", title:"CLASH SQUAD CUP", mode:"Clash Squad", entry:"Paid", entryFee:"৳50", prize:"৳5,000", slots:"12/32", date:"আজ • 8:00 PM" },
-    { id:"lone-wolf", title:"LONE WOLF 1v1", mode:"Lone Wolf 1v1", entry:"Free", entryFee:"Free", prize:"৳1,000", slots:"8/16", date:"21 Apr • 8:00 PM" }
-  ];
-
-  let tournaments = defaultTournaments;
-
-  async function loadTournaments(){
-    try{
-      const snapshot = await getDocs(collection(db,"tournaments"));
-      if(!snapshot.empty){
-        tournaments = [];
-        snapshot.forEach((docItem)=>{ tournaments.push({ id:docItem.id, ...docItem.data() }); });
-      }
-    } catch(error){ console.log("Database tournament unavailable, using demo list"); }
-    renderTournaments();
-  }
-
-  async function renderTournaments(){
-    const box = document.getElementById("tournamentList");
-    box.innerHTML = "";
-    for(const t of tournaments){
-      let joined = false;
-      try{
-        const reg = await getDoc(doc(db, "registrations", currentUser.uid + "_" + t.id));
-        joined = reg.exists();
-      } catch(e){}
-      const div = document.createElement("div");
-      div.className = "tournament";
-      div.innerHTML = `
-        <h3>${t.title}</h3>
-        <span class="badge">🎮 ${t.mode}</span>
-        <span class="badge">${t.entry}</span>
-        <div class="info">
-          🏆 Prize: ${t.prize}<br>
-          🎟 Entry: ${t.entryFee}<br>
-          👥 Slots: ${t.slots}<br>
-          🕒 ${t.date}
-        </div>
-        <button class="join-btn ${joined ? "joined" : ""}" onclick="joinTournament('${t.id}')">
-          ${ joined ? "✓ JOINED" : "JOIN NOW" }
+      <div class="row">
+        <button class="ok" onclick="openDeposit()">
+          Deposit Request
         </button>
-      `;
-      box.appendChild(div);
-    }
+
+        <button class="primary" onclick="openWithdraw()">
+          Withdraw
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Recent Transactions</h3>
+      <div id="transactions" class="list"></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section hidden" id="adminSection">
+  <h2>🛡️ Admin Panel</h2>
+
+  <div class="admin-grid">
+
+    <div class="card">
+      <h3>Create Tournament</h3>
+
+      <input id="aTitle" placeholder="Tournament title">
+
+      <select id="aMode">
+        <option value="solo">Solo</option>
+        <option value="duo">Duo</option>
+        <option value="squad">Squad</option>
+        <option value="custom">Custom</option>
+      </select>
+
+      <input id="aFee" type="number" placeholder="Entry fee">
+      <input id="aPrize" type="number" placeholder="Prize pool">
+      <input id="aMax" type="number" placeholder="Max players">
+
+      <button class="primary" onclick="createTournament()">
+        Publish Tournament
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Room & Match Control</h3>
+
+      <select id="roomTournament">
+        <option value="">Select tournament</option>
+      </select>
+
+      <input id="roomId" placeholder="Room ID">
+      <input id="roomPassword" placeholder="Room Password">
+
+      <label class="small">Room open time</label>
+
+      <input id="roomRelease" type="datetime-local">
+
+      <button class="primary" onclick="saveRoom()">
+        Save Room
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Pending Deposits</h3>
+      <div id="depositRequests" class="list"></div>
+    </div>
+
+    <div class="card">
+      <h3>Pending Withdraws</h3>
+      <div id="withdrawRequests" class="list"></div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  R2.0 eSports • Firebase Powered
+</footer>
+
+<div id="modal" class="modal hidden">
+  <div class="modalbox" id="modalContent"></div>
+                                       </div>
+  <script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  onSnapshot,
+  query,
+  where,
+  limit,
+  serverTimestamp,
+  runTransaction,
+  increment,
+  getDocs
+} from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
+
+  authDomain:
+  "r20-esports.firebaseapp.com",
+
+  projectId:
+  "r20-esports",
+
+  storageBucket:
+  "r20-esports.firebasestorage.app",
+
+  messagingSenderId:
+  "1093098377356",
+
+  appId:
+  "1:1093098377356:web:ca32c25bf149e317bceba9",
+
+  measurementId:
+  "G-28FJ7LF6TL"
+
+};
+
+
+/* =========================
+   FIREBASE START
+========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+const provider =
+new GoogleAuthProvider();
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let me = null;
+
+let profile = null;
+
+let allTournaments = [];
+
+let selectedMode = "all";
+
+
+/* =========================
+   SHORTCUT
+========================= */
+
+const $ =
+id => document.getElementById(id);
+
+
+/* =========================
+   MODAL
+========================= */
+
+window.closeModal = () => {
+
+  $("modal")
+  .classList
+  .add("hidden");
+
+};
+
+
+function modal(html){
+
+  $("modalContent").innerHTML =
+
+  `
+  <button
+  class="close"
+  onclick="closeModal()">
+
+  ✕
+
+  </button>
+
+  ${html}
+  `;
+
+  $("modal")
+  .classList
+  .remove("hidden");
+
+}
+
+
+/* =========================
+   AUTH POPUP
+========================= */
+
+window.openAuth = () => {
+
+modal(`
+
+<h2>
+Welcome to R2.0 eSports
+</h2>
+
+
+<input
+id="email"
+placeholder="Email">
+
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+
+<div class="row">
+
+<button
+class="primary"
+onclick="login()">
+
+Login
+
+</button>
+
+
+<button
+class="soft"
+onclick="register()">
+
+Create Account
+
+</button>
+
+</div>
+
+
+<button
+style="
+width:100%;
+margin-top:10px;
+"
+onclick="googleLogin()">
+
+Continue with Google
+
+</button>
+
+
+<p class="small">
+
+নতুন Account তৈরি হলে
+Player Profile এবং Wallet
+অটোমেটিক তৈরি হবে।
+
+</p>
+
+`);
+
+};
+
+
+/* =========================
+   LOGIN
+========================= */
+
+window.login =
+async () => {
+
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+$("email").value,
+
+$("password").value
+
+);
+
+closeModal();
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* =========================
+   REGISTER
+========================= */
+
+window.register =
+async () => {
+
+try{
+
+await createUserWithEmailAndPassword(
+
+auth,
+
+$("email").value,
+
+$("password").value
+
+);
+
+closeModal();
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* =========================
+   GOOGLE LOGIN
+========================= */
+
+window.googleLogin =
+async () => {
+
+try{
+
+await signInWithPopup(
+
+auth,
+
+provider
+
+);
+
+closeModal();
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+window.logout = () => {
+
+signOut(auth);
+
+};
+
+
+/* =========================
+   CREATE USER PROFILE
+========================= */
+
+async function ensureUser(user){
+
+const userRef =
+
+doc(
+db,
+"users",
+user.uid
+);
+
+
+const snapshot =
+
+await getDoc(userRef);
+
+
+if(!snapshot.exists()){
+
+await setDoc(
+
+userRef,
+
+{
+
+uid:
+user.uid,
+
+name:
+
+user.displayName ||
+
+user.email
+?.split("@")[0] ||
+
+"Player",
+
+email:
+
+user.email ||
+
+"",
+
+photoURL:
+
+user.photoURL ||
+
+"",
+
+balance:
+0,
+
+role:
+"player",
+
+createdAt:
+
+serverTimestamp()
+
+}
+
+);
+
+}
+
+
+const newSnapshot =
+
+await getDoc(userRef);
+
+
+profile =
+newSnapshot.data();
+
+}
+
+
+/* =========================
+   MONEY FORMAT
+========================= */
+
+function money(number){
+
+return
+
+"৳" +
+
+Number(
+number || 0
+)
+
+.toLocaleString();
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function setNav(){
+
+if(!me){
+
+$("navUser").innerHTML =
+
+`
+<button
+class="primary"
+onclick="openAuth()">
+
+Login
+
+</button>
+`;
+
+}
+
+else{
+
+$("navUser").innerHTML =
+
+`
+
+<button
+class="soft"
+onclick="showProfile()">
+
+👤
+${profile?.name || "Player"}
+
+</button>
+
+
+<button
+class="soft"
+onclick="showJoined()">
+
+My Joined
+
+</button>
+
+
+${
+profile?.role === "admin"
+
+?
+
+`
+
+<button
+class="primary"
+onclick="showAdmin()">
+
+Admin
+
+</button>
+
+`
+
+:
+
+""
+
+}
+
+
+<button
+class="danger"
+onclick="logout()">
+
+Logout
+
+</button>
+
+`;
+
+}
+
+
+$("heroBalance")
+.textContent =
+
+money(
+profile?.balance
+);
+
+
+if($("profileInfo")){
+
+$("profileInfo").innerHTML =
+
+`
+
+<h3>
+
+${profile?.name || "Player"}
+
+</h3>
+
+
+<div class="small">
+
+${profile?.email || ""}
+
+</div>
+
+
+<h2>
+
+${money(
+profile?.balance
+)}
+
+</h2>
+
+`;
+
+}
+
+}
+
+
+/* =========================
+   SHOW PROFILE
+========================= */
+
+window.showProfile = () => {
+
+$("profileSection")
+.classList
+.remove("hidden");
+
+
+$("joinedSection")
+.classList
+.add("hidden");
+
+
+$("adminSection")
+.classList
+.add("hidden");
+
+
+loadTransactions();
+
+};
+
+
+/* =========================
+   SHOW JOINED
+========================= */
+
+window.showJoined = () => {
+
+$("joinedSection")
+.classList
+.remove("hidden");
+
+
+$("profileSection")
+.classList
+.add("hidden");
+
+
+$("adminSection")
+.classList
+.add("hidden");
+
+
+loadJoined();
+
+};
+
+
+/* =========================
+   SHOW ADMIN
+========================= */
+
+window.showAdmin = () => {
+
+if(
+profile?.role !== "admin"
+){
+
+return;
+
+}
+
+
+$("adminSection")
+.classList
+.remove("hidden");
+
+
+$("profileSection")
+.classList
+.add("hidden");
+
+
+$("joinedSection")
+.classList
+.add("hidden");
+
+
+loadAdmin();
+
+};
+
+
+/* =========================
+   ESCAPE TEXT
+========================= */
+
+function esc(text = ""){
+
+return String(text)
+
+.replace(
+/[&<>"']/g,
+
+character =>
+
+({
+
+"&":"&amp;",
+
+"<":"&lt;",
+
+">":"&gt;",
+
+'"':"&quot;",
+
+"'":"&#039;"
+
+}[character])
+
+);
+
+}
+
+
+/* =========================
+   RENDER TOURNAMENTS
+========================= */
+
+function renderTournaments(){
+
+const list =
+
+selectedMode === "all"
+
+?
+
+allTournaments
+
+:
+
+allTournaments.filter(
+
+t =>
+
+t.gameMode === selectedMode
+
+);
+
+
+$("tCount").textContent =
+
+list.length +
+
+" match";
+
+
+if(!list.length){
+
+$("tournaments").innerHTML =
+
+`
+
+<div class="card">
+
+এখনো কোনো Tournament নেই।
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+$("tournaments").innerHTML =
+
+list.map(
+
+t => {
+
+const joined =
+
+t.joinedCount || 0;
+
+
+const full =
+
+joined >= t.maxPlayer;
+
+
+const status =
+
+t.status || "open";
+
+
+return `
+
+<div class="card">
+
+
+<div class="row">
+
+<h3>
+
+${esc(t.title)}
+
+</h3>
+
+
+<span
+class="
+pill
+${full ? "full" : ""}
+">
+
+${
+
+full
+
+?
+
+"MATCH FULL"
+
+:
+
+status
+
+}
+
+</span>
+
+</div>
+
+
+<div class="meta">
+
+<div>
+
+🎮
+${t.gameMode || "solo"}
+
+</div>
+
+
+<div>
+
+💳 Entry
+
+${money(t.entryFee)}
+
+</div>
+
+
+<div>
+
+🏆 Prize
+
+${money(t.prizePool)}
+
+</div>
+
+
+<div>
+
+👥
+
+${joined}/${t.maxPlayer}
+
+</div>
+
+</div>
+
+
+<div
+style="margin-top:14px"
+class="row">
+
+
+<button
+class="soft"
+onclick="details('${t.id}')">
+
+Details
+
+</button>
+
+
+<button
+class="primary"
+
+${
+
+full
+
+?
+
+"disabled"
+
+:
+
+""
+
+}
+
+onclick="joinMatch('${t.id}')">
+
+${
+
+full
+
+?
+
+"Full"
+
+:
+
+"Join"
+
+}
+
+</button>
+
+
+</div>
+
+</div>
+
+`;
+
+}
+
+)
+
+.join("");
+
+}
+
+
+/* =========================
+   TOURNAMENT DETAILS
+========================= */
+
+window.details = id => {
+
+const t =
+
+allTournaments.find(
+
+item =>
+
+item.id === id
+
+);
+
+
+if(!t){
+
+return;
+
+}
+
+
+modal(`
+
+<h2>
+
+${esc(t.title)}
+
+</h2>
+
+
+<div class="meta">
+
+<div>
+
+Mode:
+
+${t.gameMode}
+
+</div>
+
+
+<div>
+
+Entry:
+
+${money(t.entryFee)}
+
+</div>
+
+
+<div>
+
+Prize:
+
+${money(t.prizePool)}
+
+</div>
+
+
+<div>
+
+Players:
+
+${t.joinedCount || 0}/${t.maxPlayer}
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+Join করার সময়
+Game Name এবং
+Player UID দিতে হবে।
+
+</div>
+
+
+<button
+class="primary"
+
+onclick="
+
+closeModal();
+
+joinMatch('${id}')
+
+">
+
+Join Now
+
+</button>
+
+`);
+
+};
+
+
+/* =========================
+   JOIN MATCH POPUP
+========================= */
+
+window.joinMatch = id => {
+
+if(!me){
+
+openAuth();
+
+return;
+
+}
+
+
+const t =
+
+allTournaments.find(
+
+item =>
+
+item.id === id
+
+);
+
+
+if(!t){
+
+return;
+
+}
+
+
+modal(`
+
+<h2>
+
+Register:
+
+${esc(t.title)}
+
+</h2>
+
+
+<input
+id="gameName"
+placeholder="Game Name">
+
+
+<input
+id="playerUID"
+placeholder="Player UID">
+
+
+<button
+class="primary"
+
+onclick="
+
+confirmJoin('${id}')
+
+">
+
+Confirm Registration
+
+</button>
+
+`);
+
+};
+
+
+/* =========================
+   MODE BUTTONS
+========================= */
+
+$("modeButtons")
+.onclick = event => {
+
+const mode =
+
+event.target.dataset.mode;
+
+
+if(!mode){
+
+return;
+
+}
+
+
+selectedMode = mode;
+
+
+document
+.querySelectorAll(".mode")
+
+.forEach(
+
+button =>
+
+button
+.classList
+.toggle(
+
+"active",
+
+button.dataset.mode === selectedMode
+
+)
+
+);
+
+
+renderTournaments();
+
+};
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+
+auth,
+
+async user => {
+
+me = user;
+
+
+if(user){
+
+await ensureUser(user);
+
+
+onSnapshot(
+
+doc(
+db,
+"users",
+user.uid
+),
+
+snapshot => {
+
+profile =
+
+snapshot.data();
+
+
+setNav();
+
+}
+
+);
+
+
+$("joinedSection")
+.classList
+.remove("hidden");
+
+}
+
+else{
+
+profile = null;
+
+}
+
+
+setNav();
+
+}
+
+);
+
+
+/* =========================
+   LIVE TOURNAMENTS
+========================= */
+
+onSnapshot(
+
+collection(
+db,
+"tournaments"
+),
+
+snapshot => {
+
+allTournaments =
+
+snapshot.docs
+
+.map(
+
+document =>
+
+({
+
+id:
+
+document.id,
+
+...
+
+document.data()
+
+})
+
+)
+
+
+.sort(
+
+(a,b) =>
+
+(
+
+b.createdAt?.seconds || 0
+
+)
+
+-
+
+(
+
+a.createdAt?.seconds || 0
+
+)
+
+);
+
+
+renderTournaments();
+
+}
+
+);
+/* =========================
+   CONFIRM JOIN
+========================= */
+
+window.confirmJoin = async id => {
+
+  if(!me){
+    openAuth();
+    return;
   }
 
-  window.joinTournament = async function(tournamentId){
-    if(!currentUser) return;
-    const tournament = tournaments.find(t=>t.id === tournamentId);
-    if(!tournament) return;
-    try{
-      await setDoc(doc(db, "registrations", currentUser.uid + "_" + tournamentId),
-        { userId: currentUser.uid, tournamentId: tournamentId, title: tournament.title, mode: tournament.mode, prize: tournament.prize, date: tournament.date, joinedAt: new Date().toISOString() }
-      );
-      alert(tournament.title + " এ সফলভাবে Join করেছেন!");
-      await renderTournaments();
-      await loadMyMatches();
-    } catch(error){
-      alert("Join করতে সমস্যা হয়েছে: " + error.message);
-    }
-  };
+  const gameName = $("gameName").value.trim();
+  const playerUID = $("playerUID").value.trim();
 
-  async function loadMyMatches(){
-    const box = document.getElementById("myMatches");
-    box.innerHTML = "";
-    try{
-      const snapshot = await getDocs(collection(db, "registrations"));
-      const matches = [];
-      snapshot.forEach((docItem)=>{
-        const data = docItem.data();
-        if(data.userId === currentUser.uid){ matches.push(data); }
-      });
-      if(matches.length === 0){
-        box.innerHTML = `<div class="empty">এখনও কোনো Tournament Join করেননি</div>`;
+  if(!gameName || !playerUID){
+    alert("Game Name এবং Player UID দিন");
+    return;
+  }
+
+  const tournamentRef = doc(db,"tournaments",id);
+  const joinId = me.uid + "_" + id;
+  const joinRef = doc(db,"joined",joinId);
+
+  try{
+
+    await runTransaction(db, async transaction => {
+
+      const tournamentSnap =
+      await transaction.get(tournamentRef);
+
+      const userRef =
+      doc(db,"users",me.uid);
+
+      const userSnap =
+      await transaction.get(userRef);
+
+      const oldJoin =
+      await transaction.get(joinRef);
+
+      if(!tournamentSnap.exists()){
+        throw new Error("Tournament পাওয়া যায়নি");
+      }
+
+      if(!userSnap.exists()){
+        throw new Error("User পাওয়া যায়নি");
+      }
+
+      if(oldJoin.exists()){
+        throw new Error("আপনি ইতিমধ্যে এই ম্যাচে Join করেছেন");
+      }
+
+      const tournament =
+      tournamentSnap.data();
+
+      const currentJoined =
+      Number(tournament.joinedCount || 0);
+
+      const maxPlayers =
+      Number(tournament.maxPlayer || 0);
+
+      const fee =
+      Number(tournament.entryFee || 0);
+
+      const userData =
+      userSnap.data();
+
+      const balance =
+      Number(userData.balance || 0);
+
+      if(currentJoined >= maxPlayers){
+        throw new Error("MATCH FULL");
+      }
+
+      if(balance < fee){
+        throw new Error("Wallet-এ পর্যাপ্ত টাকা নেই");
+      }
+
+      transaction.update(
+        tournamentRef,
+        {
+          joinedCount:
+          currentJoined + 1
+        }
+      );
+
+      transaction.update(
+        userRef,
+        {
+          balance:
+          balance - fee
+        }
+      );
+
+      transaction.set(
+        joinRef,
+        {
+          userId:me.uid,
+          tournamentId:id,
+          tournamentTitle:tournament.title,
+          gameMode:tournament.gameMode,
+          gameName:gameName,
+          playerUID:playerUID,
+          entryFee:fee,
+          status:"confirmed",
+          joinedAt:serverTimestamp()
+        }
+      );
+
+      const transactionRef =
+      doc(
+        collection(
+          db,
+          "transactions"
+        )
+      );
+
+      transaction.set(
+        transactionRef,
+        {
+          userId:me.uid,
+          type:"entry_fee",
+          amount:fee,
+          status:"completed",
+          title:
+          "Match Entry: " +
+          tournament.title,
+          createdAt:serverTimestamp()
+        }
+      );
+
+    });
+
+    closeModal();
+
+    alert(
+      "Registration successful! আপনার Slot Confirm হয়েছে।"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message ||
+      "Registration failed"
+    );
+
+  }
+
+};
+
+
+/* =========================
+   MY JOINED MATCHES
+========================= */
+
+function loadJoined(){
+
+  if(!me){
+    return;
+  }
+
+  const joinedQuery =
+  query(
+    collection(db,"joined"),
+    where(
+      "userId",
+      "==",
+      me.uid
+    )
+  );
+
+  onSnapshot(
+    joinedQuery,
+    async snapshot => {
+
+      const matches =
+      snapshot.docs.map(
+        item => ({
+          id:item.id,
+          ...item.data()
+        })
+      );
+
+      if(!matches.length){
+
+        $("joinedList").innerHTML =
+        `
+        <div class="item">
+          এখনো কোনো ম্যাচে Join করেননি।
+        </div>
+        `;
+
         return;
       }
-      matches.forEach((m)=>{
-        const div = document.createElement("div");
-        div.className = "tournament";
-        div.innerHTML = `
-          <h3>${m.title}</h3>
-          <div class="info">
-            🎮 ${m.mode}<br>
-            🏆 Prize: ${m.prize}<br>
-            🕒 ${m.date}
+
+      let html = "";
+
+      for(const match of matches){
+
+        let roomInfo =
+        null;
+
+        try{
+
+          const roomSnap =
+          await getDoc(
+            doc(
+              db,
+              "rooms",
+              match.tournamentId
+            )
+          );
+
+          if(roomSnap.exists()){
+
+            const room =
+            roomSnap.data();
+
+            const release =
+            room.releaseTime?.toDate
+            ?
+            room.releaseTime.toDate()
+            :
+            null;
+
+            const now =
+            new Date();
+
+            if(
+              !release ||
+              release <= now
+            ){
+
+              roomInfo = room;
+
+            }
+
+          }
+
+        }
+
+        catch(error){
+
+          console.log(error);
+
+        }
+
+        html +=
+        `
+        <div class="item">
+
+          <div class="row">
+
+            <b>
+              ${esc(match.tournamentTitle)}
+            </b>
+
+            <span class="pill">
+              ${esc(match.status || "confirmed")}
+            </span>
+
           </div>
-          <button class="join-btn joined">✓ REGISTERED</button>
+
+          <div class="small">
+            Game Name: ${esc(match.gameName)}
+          </div>
+
+          <div class="small">
+            UID: ${esc(match.playerUID)}
+          </div>
+
+          <div class="small">
+            Entry: ${money(match.entryFee)}
+          </div>
+
+          <hr style="border:0;border-top:1px solid #eee;margin:10px 0;">
+
+          ${
+            roomInfo
+            ?
+            `
+            <b>🎮 Room Ready</b>
+
+            <div class="notice">
+              Room ID:
+              <b>${esc(roomInfo.roomId)}</b>
+              <br>
+              Password:
+              <b>${esc(roomInfo.password)}</b>
+            </div>
+            `
+            :
+            `
+            <div class="notice">
+              Room ID এবং Password
+              Admin নির্ধারিত সময়ের আগে
+              দেখা যাবে না।
+            </div>
+            `
+          }
+
+        </div>
         `;
-        box.appendChild(div);
-      });
-    } catch(error){
-      box.innerHTML = `<div class="empty">Database permission setup করতে হবে</div>`;
+
+      }
+
+      $("joinedList").innerHTML =
+      html;
+
     }
+  );
+
+}
+
+
+/* =========================
+   TRANSACTION HISTORY
+========================= */
+
+function loadTransactions(){
+
+  if(!me){
+    return;
   }
 
-  window.openPage = function(pageId,button){
-    document.querySelectorAll(".page").forEach(page=>{ page.classList.remove("active"); });
-    document.getElementById(pageId).classList.add("active");
-    document.querySelectorAll("nav button").forEach(btn=>{ btn.classList.remove("active"); });
-    button.classList.add("active");
-    if(pageId === "matchesPage"){ loadMyMatches(); }
-  };
-</script>
-</body>
-  </html>
+  const transactionQuery =
+  query(
+    collection(
+      db,
+      "transactions"
+    ),
+    where(
+      "userId",
+      "==",
+      me.uid
+    ),
+    limit(30)
+  );
+
+  onSnapshot(
+    transactionQuery,
+    snapshot => {
+
+      const items =
+      snapshot.docs.map(
+        item => item.data()
+      );
+
+      if(!items.length){
+
+        $("transactions").innerHTML =
+        `
+        <div class="item">
+          কোনো Transaction নেই।
+        </div>
+        `;
+
+        return;
+      }
+
+      $("transactions").innerHTML =
+      items.map(
+        item =>
+
+        `
+        <div class="item">
+
+          <div class="row">
+
+            <b>
+              ${esc(
+                item.title ||
+                item.type
+              )}
+            </b>
+
+            <b>
+              ${money(item.amount)}
+            </b>
+
+          </div>
+
+          <div class="small">
+            ${esc(item.status || "")}
+          </div>
+
+        </div>
+        `
+
+      ).join("");
+
+    }
+  );
+
+}
+
+
+/* =========================
+   DEPOSIT POPUP
+========================= */
+
+window.openDeposit = () => {
+
+  if(!me){
+    openAuth();
+    return;
+  }
+
+  modal(`
+
+  <h2>
+    Deposit Request
+  </h2>
+
+  <select id="depositMethod">
+
+    <option value="bKash">
+      bKash
+    </option>
+
+    <option value="Nagad">
+      Nagad
+    </option>
+
+    <option value="Rocket">
+      Rocket
+    </option>
+
+  </select>
+
+  <input
+  id="depositAmount"
+  type="number"
+  placeholder="Amount">
+
+  <input
+  id="depositTransactionId"
+  placeholder="Transaction ID">
+
+  <button
+  class="primary"
+  onclick="submitDeposit()">
+
+  Submit Request
+
+  </button>
+
+  <div class="notice">
+
+  টাকা পাঠানোর পর
+  সঠিক Transaction ID দিন।
+  Admin যাচাই করে
+  Wallet Balance যোগ করবেন।
+
+  </div>
+
+  `);
+
+};
+
+
+window.submitDeposit =
+async () => {
+
+  const method =
+  $("depositMethod").value;
+
+  const amount =
+  Number(
+    $("depositAmount").value
+  );
+
+  const transactionId =
+  $("depositTransactionId")
+  .value
+  .trim();
+
+  if(
+    !amount ||
+    amount <= 0 ||
+    !transactionId
+  ){
+
+    alert(
+      "সঠিক Amount এবং Transaction ID দিন"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "deposit_requests"
+      ),
+      {
+
+        userId:
+        me.uid,
+
+        userName:
+        profile.name,
+
+        userEmail:
+        profile.email,
+
+        method:
+        method,
+
+        amount:
+        amount,
+
+        transactionId:
+        transactionId,
+
+        status:
+        "pending",
+
+        createdAt:
+        serverTimestamp()
+
+      }
+    );
+
+    closeModal();
+
+    alert(
+      "Deposit Request পাঠানো হয়েছে"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================
+   WITHDRAW POPUP
+========================= */
+
+window.openWithdraw = () => {
+
+  if(!me){
+    openAuth();
+    return;
+  }
+
+  modal(`
+
+  <h2>
+    Withdraw Request
+  </h2>
+
+  <select id="withdrawMethod">
+
+    <option value="bKash">
+      bKash
+    </option>
+
+    <option value="Nagad">
+      Nagad
+    </option>
+
+    <option value="Rocket">
+      Rocket
+    </option>
+
+  </select>
+
+  <input
+  id="withdrawNumber"
+  placeholder="Your Account Number">
+
+  <input
+  id="withdrawAmount"
+  type="number"
+  placeholder="Amount">
+
+  <button
+  class="primary"
+  onclick="submitWithdraw()">
+
+  Apply Withdraw
+
+  </button>
+
+  <div class="notice">
+
+  Admin Request Approve করলে
+  Wallet থেকে টাকা কাটা হবে।
+  এরপর Admin টাকা
+  আপনার দেওয়া নম্বরে পাঠাবেন।
+
+  </div>
+
+  `);
+
+};
+
+
+window.submitWithdraw =
+async () => {
+
+  const method =
+  $("withdrawMethod").value;
+
+  const number =
+  $("withdrawNumber")
+  .value
+  .trim();
+
+  const amount =
+  Number(
+    $("withdrawAmount").value
+  );
+
+  if(
+    !number ||
+    !amount ||
+    amount <= 0
+  ){
+
+    alert(
+      "সঠিক Number এবং Amount দিন"
+    );
+
+    return;
+
+  }
+
+  if(
+    Number(
+      profile.balance || 0
+    ) < amount
+  ){
+
+    alert(
+      "Wallet-এ পর্যাপ্ত টাকা নেই"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "withdraw_requests"
+      ),
+      {
+
+        userId:
+        me.uid,
+
+        userName:
+        profile.name,
+
+        userEmail:
+        profile.email,
+
+        method:
+        method,
+
+        accountNumber:
+        number,
+
+        amount:
+        amount,
+
+        status:
+        "pending",
+
+        createdAt:
+        serverTimestamp()
+
+      }
+    );
+
+    closeModal();
+
+    alert(
+      "Withdraw Request পাঠানো হয়েছে"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================
+   CREATE TOURNAMENT
+========================= */
+
+window.createTournament =
+async () => {
+
+  if(
+    profile?.role !== "admin"
+  ){
+
+    alert(
+      "Admin access required"
+    );
+
+    return;
+
+  }
+
+  const title =
+  $("aTitle")
+  .value
+  .trim();
+
+  const gameMode =
+  $("aMode")
+  .value;
+
+  const entryFee =
+  Number(
+    $("aFee").value
+  );
+
+  const prizePool =
+  Number(
+    $("aPrize").value
+  );
+
+  const maxPlayer =
+  Number(
+    $("aMax").value
+  );
+
+  if(
+    !title ||
+    maxPlayer <= 0
+  ){
+
+    alert(
+      "Tournament তথ্য সঠিকভাবে দিন"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "tournaments"
+      ),
+      {
+
+        title:
+        title,
+
+        gameMode:
+        gameMode,
+
+        entryFee:
+        entryFee || 0,
+
+        prizePool:
+        prizePool || 0,
+
+        maxPlayer:
+        maxPlayer,
+
+        joinedCount:
+        0,
+
+        status:
+        "open",
+
+        createdAt:
+        serverTimestamp()
+
+      }
+    );
+
+    $("aTitle").value = "";
+    $("aFee").value = "";
+    $("aPrize").value = "";
+    $("aMax").value = "";
+
+    alert(
+      "Tournament Published!"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================
+   ADMIN LOAD
+========================= */
+
+function loadAdmin(){
+
+  if(
+    profile?.role !== "admin"
+  ){
+    return;
+  }
+
+  loadRoomTournamentOptions();
+
+  loadDepositRequests();
+
+  loadWithdrawRequests();
+
+}
+
+
+/* =========================
+   ROOM TOURNAMENT OPTIONS
+========================= */
+
+function loadRoomTournamentOptions(){
+
+  $("roomTournament").innerHTML =
+  `
+  <option value="">
+    Select tournament
+  </option>
+  ` +
+  allTournaments.map(
+    tournament =>
+    `
+    <option value="${tournament.id}">
+      ${esc(tournament.title)}
+    </option>
+    `
+  ).join("");
+
+}
+
+
+/* =========================
+   SAVE ROOM
+========================= */
+
+window.saveRoom =
+async () => {
+
+  if(
+    profile?.role !== "admin"
+  ){
+    return;
+  }
+
+  const tournamentId =
+  $("roomTournament").value;
+
+  const roomId =
+  $("roomId")
+  .value
+  .trim();
+
+  const password =
+  $("roomPassword")
+  .value
+  .trim();
+
+  const releaseText =
+  $("roomRelease").value;
+
+  if(
+    !tournamentId ||
+    !roomId ||
+    !password
+  ){
+
+    alert(
+      "সব Room তথ্য দিন"
+    );
+
+    return;
+
+  }
+
+  let releaseTime = null;
+
+  if(releaseText){
+
+    releaseTime =
+    new Date(
+      releaseText
+    );
+
+  }
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "rooms",
+        tournamentId
+      ),
+      {
+
+        tournamentId:
+        tournamentId,
+
+        roomId:
+        roomId,
+
+        password:
+        password,
+
+        releaseTime:
+        releaseTime,
+
+        updatedAt:
+        serverTimestamp()
+
+      }
+    );
+
+    alert(
+      "Room information saved"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================
+   DEPOSIT REQUESTS ADMIN
+========================= */
+
+function loadDepositRequests(){
+
+  onSnapshot(
+    query(
+      collection(
+        db,
+        "deposit_requests"
+      ),
+      where(
+        "status",
+        "==",
+        "pending"
+      )
+    ),
+
+    snapshot => {
+
+      if(snapshot.empty){
+
+        $("depositRequests").innerHTML =
+        `
+        <div class="item">
+          কোনো Pending Deposit নেই।
+        </div>
+        `;
+
+        return;
+
+      }
+
+      $("depositRequests").innerHTML =
+      snapshot.docs.map(
+        request => {
+
+          const data =
+          request.data();
+
+          return `
+
+          <div class="item">
+
+            <b>
+              ${esc(data.userName)}
+            </b>
+
+            <div class="small">
+              ${esc(data.method)}
+              •
+              ${money(data.amount)}
+            </div>
+
+            <div class="small">
+              Transaction ID:
+              ${esc(data.transactionId)}
+            </div>
+
+            <div class="row"
+            style="margin-top:8px">
+
+              <button
+              class="ok"
+              onclick="approveDeposit('${request.id}')">
+
+              Approve
+
+              </button>
+
+              <button
+              class="danger"
+              onclick="rejectDeposit('${request.id}')">
+
+              Reject
+
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      ).join("");
+
+    }
+  );
+
+}
+
+
+/* =========================
+   APPROVE DEPOSIT
+========================= */
+
+window.approveDeposit =
+async requestId => {
+
+  const requestRef =
+  doc(
+    db,
+    "deposit_requests",
+    requestId
+  );
+
+  try{
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const requestSnap =
+        await transaction.get(
+          requestRef
+        );
+
+        if(
+          !requestSnap.exists()
+        ){
+          throw new Error(
+            "Request পাওয়া যায়নি"
+          );
+        }
+
+        const request =
+        requestSnap.data();
+
+        if(
+          request.status !==
+          "pending"
+        ){
+          throw new Error(
+            "Request already processed"
+          );
+        }
+
+        const userRef =
+        doc(
+          db,
+          "users",
+          request.userId
+        );
+
+        transaction.update(
+          requestRef,
+          {
+            status:
+            "approved"
+          }
+        );
+
+        transaction.update(
+          userRef,
+          {
+            balance:
+            increment(
+              Number(
+                request.amount
+              )
+            )
+          }
+        );
+
+        const transactionRef =
+        doc(
+          collection(
+            db,
+            "transactions"
+          )
+        );
+
+        transaction.set(
+          transactionRef,
+          {
+
+            userId:
+            request.userId,
+
+            type:
+            "deposit",
+
+            amount:
+            request.amount,
+
+            status:
+            "completed",
+
+            title:
+            "Deposit Approved",
+
+            createdAt:
+            serverTimestamp()
+
+          }
+        );
+
+      }
+    );
+
+    alert(
+      "Deposit Approved"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+window.rejectDeposit =
+async requestId => {
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "deposit_requests",
+        requestId
+      ),
+      {
+        status:
+        "rejected"
+      }
+    );
+
+    alert(
+      "Deposit Rejected"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+
+/* =========================
+   WITHDRAW REQUESTS ADMIN
+========================= */
+
+function loadWithdrawRequests(){
+
+  onSnapshot(
+    query(
+      collection(
+        db,
+        "withdraw_requests"
+      ),
+      where(
+        "status",
+        "==",
+        "pending"
+      )
+    ),
+
+    snapshot => {
+
+      if(snapshot.empty){
+
+        $("withdrawRequests").innerHTML =
+        `
+        <div class="item">
+          কোনো Pending Withdraw নেই।
+        </div>
+        `;
+
+        return;
+
+      }
+
+      $("withdrawRequests").innerHTML =
+      snapshot.docs.map(
+        request => {
+
+          const data =
+          request.data();
+
+          return `
+
+          <div class="item">
+
+            <b>
+              ${esc(data.userName)}
+            </b>
+
+            <div class="small">
+              ${esc(data.method)}
+              •
+              ${money(data.amount)}
+            </div>
+
+            <div class="small">
+              Number:
+              ${esc(data.accountNumber)}
+            </div>
+
+            <div class="row"
+            style="margin-top:8px">
+
+              <button
+              class="ok"
+              onclick="approveWithdraw('${request.id}')">
+
+              Approve
+
+              </button>
+
+              <button
+              class="danger"
+              onclick="rejectWithdraw('${request.id}')">
+
+              Reject
+
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      ).join("");
+
+    }
+  );
+
+}
+
+
+/* =========================
+   APPROVE WITHDRAW
+========================= */
+
+window.approveWithdraw =
+async requestId => {
+
+  const requestRef =
+  doc(
+    db,
+    "withdraw_requests",
+    requestId
+  );
+
+  try{
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const requestSnap =
+        await transaction.get(
+          requestRef
+        );
+
+        if(
+          !requestSnap.exists()
+        ){
+          throw new Error(
+            "Request পাওয়া যায়নি"
+          );
+        }
+
+        const request =
+        requestSnap.data();
+
+        if(
+          request.status !==
+          "pending"
+        ){
+          throw new Error(
+            "Request already processed"
+          );
+        }
+
+        const userRef =
+        doc(
+          db,
+          "users",
+          request.userId
+        );
+
+        const userSnap =
+        await transaction.get(
+          userRef
+        );
+
+        if(
+          !userSnap.exists()
+        ){
+          throw new Error(
+            "User পাওয়া যায়নি"
+          );
+        }
+
+        const balance =
+        Number(
+          userSnap.data().balance || 0
+        );
+
+        const amount =
+        Number(
+          request.amount || 0
+        );
+
+        if(balance < amount){
+          throw new Error(
+            "User-এর Wallet-এ পর্যাপ্ত টাকা নেই"
+          );
+        }
+
+        transaction.update(
+          requestRef,
+          {
+            status:
+            "approved"
+          }
+        );
+
+        transaction.update(
+          userRef,
+          {
+            balance:
+            balance - amount
+          }
+        );
+
+        const transactionRef =
+        doc(
+          collection(
+            db,
+            "transactions"
+          )
+      
