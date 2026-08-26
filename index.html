@@ -1,30 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>R2.0 ESPORT</title>
 
 <style>
 :root{
-  --bg:#080d16;
-  --panel:#121a29;
-  --panel2:#182235;
-  --line:#29364e;
-  --gold:#ffb400;
-  --gold2:#ffd15a;
-  --text:#f5f7fb;
-  --muted:#aeb8c9;
-  --green:#19c37d;
-  --red:#ff4d4f;
-  --blue:#4aa3ff;
+  --bg:#070b16;
+  --p:#101a30;
+  --p2:#0b1326;
+  --tx:#f5f7ff;
+  --mut:#9ca8c4;
+  --line:#34466d;
+  --gold:#ffd43b;
+  --blue:#38bdf8;
+  --purple:#a855f7;
+  --green:#22c55e;
+  --red:#ff4757;
 }
 
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
 
 html{
@@ -32,683 +30,449 @@ html{
 }
 
 body{
+  margin:0;
+  color:var(--tx);
   font-family:Arial,"Noto Sans Bengali",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  padding-bottom:82px;
-}
-
-button,input,select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
+  background:
+    radial-gradient(circle at 15% 0,#612b8c55,transparent 28%),
+    radial-gradient(circle at 90% 20%,#007cc755,transparent 28%),
+    radial-gradient(circle at 45% 100%,#ff8c0033,transparent 30%),
+    var(--bg);
+  padding-bottom:80px;
 }
 
 .app{
-  max-width:1150px;
+  max-width:1100px;
   margin:auto;
-  min-height:100vh;
 }
 
-/* TOPBAR */
-
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(8,13,22,.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
-}
-
-.top-inner{
-  height:66px;
-  padding:0 16px;
+.top{
+  height:65px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
+  padding:0 15px;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#080d1eee;
+  backdrop-filter:blur(14px);
+}
+
+button,input{
+  font:inherit;
 }
 
 .brand{
-  font-weight:900;
+  border:0;
+  background:transparent;
   color:var(--gold);
   font-size:21px;
-  letter-spacing:.5px;
+  font-weight:900;
 }
 
-.top-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.profile-mini{
-  width:39px;
-  height:39px;
-  border-radius:50%;
-  border:2px solid var(--gold);
-  background:#26344c;
-  display:grid;
+.logo{
+  display:inline-grid;
   place-items:center;
-  font-size:21px;
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  margin-right:8px;
+  background:linear-gradient(135deg,#ffd43b,#ff5b2e,#6237ff);
 }
 
-/* PAGES */
+.top button:not(.brand){
+  border:1px solid var(--line);
+  background:var(--p2);
+  color:white;
+  border-radius:12px;
+  padding:10px;
+}
 
 .page{
   display:none;
-  padding:18px 16px 30px;
+  padding:15px;
 }
 
 .page.active{
   display:block;
 }
 
-/* HERO */
-
 .hero{
-  padding:24px 8px 12px;
+  min-height:270px;
+  border:1px solid #4d66a9;
+  border-radius:24px;
+  padding:30px;
+  overflow:hidden;
+  background:
+    linear-gradient(120deg,#0c1027ee,#1d1644bb),
+    radial-gradient(circle at 85% 35%,#00aaff88,transparent 27%),
+    radial-gradient(circle at 15% 0,#b21cff77,transparent 35%);
+  position:relative;
 }
 
-.hero-card{
-  padding:25px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:linear-gradient(
-    135deg,
-    #14243a,
-    #101522 55%,
-    #221c0e
-  );
+.hero:after{
+  content:"🎮";
+  position:absolute;
+  right:5%;
+  bottom:-25px;
+  font-size:155px;
+  opacity:.12;
+}
+
+.hero>*{
+  position:relative;
+  z-index:1;
 }
 
 .hero h1{
-  font-size:clamp(27px,6vw,48px);
+  font-size:clamp(34px,8vw,62px);
   color:var(--gold);
-  margin-bottom:10px;
+  margin:10px 0;
 }
 
-.hero p{
-  color:var(--muted);
+.hero p,
+.mut{
+  color:var(--mut);
   line-height:1.6;
-  max-width:720px;
 }
 
-/* MODE */
-
-.mode-row{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:18px 2px 10px;
-  scrollbar-width:none;
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:12px 18px;
+  font-weight:900;
+  background:linear-gradient(135deg,#ffe34f,#ffac13);
+  color:#1b1400;
 }
 
-.mode-row::-webkit-scrollbar{
-  display:none;
+.head{
+  margin:25px 0 12px;
 }
 
-.mode{
-  min-width:max-content;
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:var(--text);
-  padding:11px 15px;
-  border-radius:12px;
-  font-weight:700;
-}
-
-.mode.active,
-.mode:hover{
-  border-color:var(--gold);
-  color:var(--gold);
-  background:#211b0c;
-}
-
-/* SECTION */
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:10px;
-  margin:22px 0 14px;
-}
-
-.section-head h2{
+.head h2{
+  margin:0;
   font-size:24px;
 }
 
-.section-head p{
-  color:var(--muted);
-  font-size:14px;
+.head p{
+  margin:5px 0;
+  color:var(--mut);
 }
 
-/* GRID */
+.modes{
+  display:flex;
+  gap:9px;
+  overflow:auto;
+  padding:4px 0;
+}
+
+.mode{
+  white-space:nowrap;
+  min-width:130px;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:var(--p2);
+  color:white;
+  font-weight:800;
+}
+
+.mode.on{
+  border-color:var(--gold);
+  box-shadow:0 0 20px #ffd43b33;
+}
 
 .grid{
   display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
 }
 
-/* TOURNAMENT CARD */
-
-.tcard{
-  background:var(--panel);
+.card{
+  background:linear-gradient(145deg,#15203add,#0b1224ee);
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  transition:.2s;
+  border-radius:19px;
+  padding:16px;
+  overflow:hidden;
 }
 
-.tcard:hover{
-  transform:translateY(-2px);
-  border-color:#53627d;
+.art{
+  height:112px;
+  margin:-16px -16px 14px;
+  padding:17px;
+  display:flex;
+  align-items:end;
+  font-size:25px;
+  font-weight:900;
+  font-style:italic;
+  background:
+    radial-gradient(circle at 15% 20%,#ffb51f88,transparent 22%),
+    linear-gradient(125deg,#2a103a,#0c3061 60%,#31153c);
+}
+
+.art small{
+  display:block;
+  color:var(--gold);
+  font-size:12px;
 }
 
 .badges{
   display:flex;
   gap:7px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
+  margin:8px 0;
 }
 
 .badge{
-  font-size:11px;
-  font-weight:800;
   padding:5px 9px;
-  border-radius:20px;
-  background:#203148;
-  color:#9ed0ff;
+  border-radius:999px;
+  background:#16365a;
+  color:#b9dcff;
+  font-size:12px;
+  font-weight:800;
 }
 
-.badge.free{
-  background:#153c2b;
-  color:#7ee4ad;
+.paid{
+  background:#57301f;
+  color:#ffd6b0;
 }
 
-.badge.paid{
-  background:#4b3612;
-  color:#ffd267;
-}
-
-.tcard h3{
-  color:var(--gold);
-  font-size:21px;
-  margin-bottom:12px;
+.free{
+  background:#143c2c;
+  color:#9cf0c1;
 }
 
 .meta{
   display:grid;
-  gap:8px;
-  color:var(--muted);
-  line-height:1.45;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:13px 0;
+}
+
+.meta div{
+  padding:9px 5px;
+  border-radius:10px;
+  background:#091225;
+  text-align:center;
+  color:var(--mut);
+  font-size:11px;
 }
 
 .meta b{
-  color:var(--text);
+  display:block;
+  color:var(--gold);
+  font-size:15px;
+  margin-top:3px;
 }
 
-/* BUTTON */
-
-.btn{
-  border:0;
-  border-radius:11px;
-  padding:12px 16px;
-  background:var(--gold);
-  color:#111;
-  font-weight:900;
-}
-
-.btn.block{
-  width:100%;
-  margin-top:16px;
-}
-
-.btn.ghost{
-  background:transparent;
-  color:var(--text);
-  border:1px solid var(--line);
-}
-
-.btn.red{
-  background:var(--red);
-  color:white;
-}
-
-.btn.small{
-  padding:9px 12px;
-  font-size:13px;
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
 }
 
 .empty{
+  padding:35px;
+  text-align:center;
   border:1px dashed var(--line);
   border-radius:16px;
-  padding:32px 18px;
+  color:var(--mut);
+}
+
+.cover{
+  height:150px;
+  border-radius:22px 22px 0 0;
+  background:linear-gradient(120deg,#281250,#075a99,#30113f);
+}
+
+.profile{
   text-align:center;
-  color:var(--muted);
-}
-
-/* MY MATCH */
-
-.match-card{
-  background:var(--panel);
+  padding:0 20px 20px;
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:14px;
-}
-
-.match-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-
-.status{
-  padding:6px 9px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  background:#173927;
-  color:#82e7b3;
-}
-
-.room-box{
-  margin-top:14px;
-  background:#0c121d;
-  border:1px solid var(--line);
-  padding:14px;
-  border-radius:13px;
-}
-
-.room-box.locked{
-  color:var(--muted);
-}
-
-/* RESULTS */
-
-.results{
-  display:grid;
-  gap:12px;
-}
-
-.result-row{
-  background:var(--panel);
-  border:1px solid var(--line);
-  padding:15px;
-  border-radius:14px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-/* PROFILE */
-
-.profile-cover{
-  height:190px;
-  border-radius:20px 20px 0 0;
-  background:
-  linear-gradient(
-    120deg,
-    #123b5c,
-    #1f6d96,
-    #263a69
-  );
-  border:1px solid var(--line);
-  border-bottom:0;
-}
-
-.profile-card{
-  position:relative;
-  margin-bottom:20px;
+  border-radius:0 0 22px 22px;
+  background:var(--p);
 }
 
 .avatar{
-  width:106px;
-  height:106px;
+  width:94px;
+  height:94px;
+  margin:-47px auto 7px;
+  border:4px solid var(--bg);
   border-radius:50%;
-  border:5px solid var(--bg);
-  background:#26344c;
   display:grid;
   place-items:center;
-  font-size:52px;
-  position:absolute;
-  top:137px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.profile-info{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:0 0 20px 20px;
-  padding:64px 20px 22px;
-  text-align:center;
-}
-
-.profile-info h2{
-  margin-bottom:7px;
-}
-
-.profile-info p{
-  color:var(--muted);
+  font-size:42px;
+  background:linear-gradient(135deg,#7c3aed,#00b6ff);
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  margin-top:22px;
   border-top:1px solid var(--line);
-  padding-top:18px;
+  margin-top:16px;
 }
 
-.stat{
-  text-align:center;
+.stats div{
+  padding:10px;
 }
 
-.stat strong{
-  font-size:24px;
+.stats b{
   display:block;
   color:var(--gold);
+  font-size:20px;
 }
 
-.stat span{
-  font-size:12px;
-  color:var(--muted);
-}
-
-/* PROFILE MENU */
-
-.menu{
-  border-top:1px solid var(--line);
-}
-
-.menu-item{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:19px 14px;
-  background:var(--panel);
-  border:0;
-  border-bottom:1px solid var(--line);
-  color:var(--text);
-  text-align:left;
-  font-size:18px;
-}
-
-.menu-item:hover{
-  background:#182235;
-}
-
-.menu-icon{
-  width:34px;
-  text-align:center;
-  font-size:26px;
-}
-
-.arrow{
-  margin-left:auto;
-  color:var(--muted);
-}
-
-/* WALLET */
-
-.wallet-card{
-  background:
-  linear-gradient(
-    135deg,
-    #18253a,
-    #101622
-  );
-  border:1px solid var(--line);
-  border-radius:20px;
+.wallet{
   padding:22px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,#162d58,#121932);
 }
 
 .balance{
   font-size:38px;
-  font-weight:900;
   color:var(--gold);
-  margin:8px 0;
+  font-weight:900;
 }
 
-.wallet-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:14px;
-}
-
-.mini-card{
-  background:#0c121d;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:15px;
-}
-
-.mini-card span{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.mini-card b{
-  display:block;
-  margin-top:6px;
-  font-size:21px;
-}
-
-/* FORM */
-
-.form-group{
-  display:grid;
-  gap:7px;
-  margin:12px 0;
-}
-
-.form-group label{
-  font-size:14px;
-  color:var(--muted);
-}
-
-.form-group input,
-.form-group select{
+.menu{
   width:100%;
-  padding:13px;
-  border-radius:11px;
-  border:1px solid var(--line);
-  background:#0b111b;
-  color:var(--text);
-  outline:none;
+  padding:16px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:var(--p);
+  color:white;
+  text-align:left;
 }
 
-.form-group input:focus,
-.form-group select:focus{
-  border-color:var(--gold);
-}
-
-/* MODAL */
-
-.modal-backdrop{
+.modalbg{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
   z-index:50;
+  background:#000b;
   display:none;
-  align-items:end;
+  align-items:flex-end;
   justify-content:center;
-  padding:14px;
+  padding:12px;
 }
 
-.modal-backdrop.show{
+.modalbg.show{
   display:flex;
 }
 
 .modal{
-  width:min(560px,100%);
+  width:min(540px,100%);
   max-height:88vh;
   overflow:auto;
-  background:#111a29;
+  background:#10182d;
   border:1px solid var(--line);
   border-radius:22px;
-  padding:20px;
+  padding:18px;
 }
 
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:14px;
+.form{
+  display:grid;
+  gap:7px;
+  margin:13px 0;
+}
+
+.form input{
+  padding:14px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:#081124;
+  color:white;
 }
 
 .close{
+  float:right;
   border:0;
-  background:transparent;
+  background:none;
   color:white;
-  font-size:28px;
+  font-size:27px;
 }
-
-.notice{
-  padding:12px;
-  border:1px solid #614e20;
-  background:#2b2313;
-  border-radius:12px;
-  color:#f5d47b;
-  font-size:13px;
-  line-height:1.45;
-  margin-top:12px;
-}
-
-/* TOAST */
 
 .toast{
   position:fixed;
+  bottom:90px;
   left:50%;
-  bottom:95px;
-  transform:translateX(-50%) translateY(20px);
-  background:#1a2638;
-  color:white;
+  transform:translateX(-50%);
+  background:#17233d;
   border:1px solid var(--line);
-  padding:12px 16px;
+  padding:12px 18px;
   border-radius:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:80;
+  display:none;
+  z-index:60;
 }
 
 .toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+  display:block;
 }
 
-/* BOTTOM NAV */
-
-.bottom-nav{
+.nav{
   position:fixed;
-  z-index:30;
   bottom:0;
   left:0;
   right:0;
-  background:#101722;
+  background:#0a1020ee;
   border-top:1px solid var(--line);
-  display:flex;
-  justify-content:center;
-}
-
-.bottom-inner{
-  width:min(760px,100%);
   display:grid;
   grid-template-columns:repeat(5,1fr);
+  z-index:20;
 }
 
-.nav-btn{
+.nav button{
   border:0;
-  background:transparent;
-  color:#9da8b9;
-  padding:10px 4px 12px;
+  background:none;
+  color:#9aa8c4;
+  padding:9px 2px;
   font-size:12px;
 }
 
-.nav-btn span{
+.nav span{
   display:block;
-  font-size:23px;
-  margin-bottom:3px;
+  font-size:22px;
 }
 
-.nav-btn.active{
+.nav .on{
   color:var(--gold);
-  font-weight:bold;
 }
 
-/* RULES */
-
-.rule-list{
-  display:grid;
-  gap:10px;
+.match{
+  padding:14px;
+  border-bottom:1px solid var(--line);
 }
 
-.rule{
-  background:var(--panel);
-  border:1px solid var(--line);
-  padding:15px;
-  border-radius:14px;
-  color:var(--muted);
-  line-height:1.5;
+.status{
+  padding:4px 8px;
+  border-radius:999px;
+  background:#163b2a;
+  color:#91ecb6;
+  font-size:12px;
 }
 
-.rule b{
-  color:var(--text);
-}
-
-/* MOBILE */
-
-@media(max-width:520px){
-
-  .top-inner{
-    height:61px;
-  }
-
-  .brand{
-    font-size:18px;
-  }
-
-  .hero-card{
-    padding:20px;
-  }
-
+@media(max-width:560px){
   .page{
-    padding-left:10px;
-    padding-right:10px;
+    padding:12px;
   }
 
-  .profile-cover{
-    height:170px;
+  .hero{
+    padding:23px;
+    min-height:250px;
   }
 
-  .avatar{
-    top:118px;
+  .hero p{
+    font-size:15px;
   }
 
-  .profile-info{
-    padding-top:64px;
+  .top .brand{
+    font-size:17px;
   }
 
-  .stats strong{
-    font-size:20px;
+  .top button:not(.brand){
+    padding:8px;
   }
 }
 </style>
@@ -718,365 +482,157 @@ button{
 
 <div class="app">
 
-<header class="topbar">
+<header class="top">
 
-<div class="top-inner">
-
-<button class="brand"
-onclick="showPage('home')"
-style="border:0;background:transparent">
-🔥 R2.0 ESPORT
+<button class="brand" onclick="page('home')">
+<span class="logo">👑</span>R2.0 ESPORT
 </button>
 
-<div class="top-actions">
-
-<button class="btn ghost small"
-onclick="showPage('mymatches')">
-My Matches
-</button>
-
-<button class="profile-mini"
-onclick="showPage('profile')"
-aria-label="Profile">
-🎮
-</button>
-
-</div>
-
+<div>
+<button onclick="page('matches')">My Matches</button>
+<button onclick="page('profile')">🎮</button>
 </div>
 
 </header>
 
 <main>
 
-<!-- HOME -->
-
 <section id="home" class="page active">
 
 <div class="hero">
 
-<div class="hero-card">
+<small>🔥 R2.0 ESPORT • PLAY. COMPETE. WIN.</small>
 
-<h1>PLAY. COMPETE. WIN. 🎮</h1>
+<h1>PLAY. COMPETE. WIN.</h1>
 
 <p>
-R2.0 ESPORT-এর টুর্নামেন্ট বেছে নিন,
-Mode অনুযায়ী ম্যাচ দেখুন এবং সহজে Registration করুন।
+টুর্নামেন্ট খুঁজে নিন, Mode অনুযায়ী ম্যাচ দেখুন
+এবং সহজেই Registration করুন।
 </p>
 
 <button class="btn"
-style="margin-top:18px"
-onclick="document.getElementById('modes').scrollIntoView({behavior:'smooth'})">
-
+onclick="document.querySelector('.modes').scrollIntoView()">
 EXPLORE MODES
-
 </button>
 
 </div>
 
+<div class="head">
+<h2>🔥 GAME MODES</h2>
+<p>পছন্দের Mode নির্বাচন করুন</p>
 </div>
 
+<div class="modes" id="modes"></div>
 
-<div id="modes" class="mode-row">
-
-<button class="mode active" data-mode="All">
-🔥 All Matches
-</button>
-
-<button class="mode" data-mode="Solo BR">
-👤 Solo BR
-</button>
-
-<button class="mode" data-mode="Duo">
-👥 Duo Match
-</button>
-
-<button class="mode" data-mode="Squad">
-👨‍👩‍👧‍👦 Squad Match
-</button>
-
-<button class="mode" data-mode="Clash Squad">
-⚔️ Clash Squad
-</button>
-
-<button class="mode" data-mode="Lone Wolf">
-🥊 Lone Wolf 1v1
-</button>
-
-<button class="mode" data-mode="Free">
-🆓 Free Match
-</button>
-
+<div class="head">
+<h2>🏆 LIVE & UPCOMING TOURNAMENTS</h2>
+<p id="desc">সব ম্যাচ দেখানো হচ্ছে</p>
 </div>
 
-
-<div class="section-head">
-
-<div>
-
-<h2 id="modeTitle">
-🔥 ALL TOURNAMENTS
-</h2>
-
-<p id="modeDesc">
-আপনার পছন্দের ম্যাচ নির্বাচন করুন
-</p>
-
-</div>
-
-</div>
-
-<div class="grid"
-id="tournamentGrid">
-</div>
+<div class="grid" id="tours"></div>
 
 </section>
 
 
-<!-- MY MATCHES -->
+<section id="matches" class="page">
 
-<section id="mymatches"
-class="page">
-
-<div class="section-head">
-
-<div>
-
-<h2>
-🎟️ MY MATCHES
-</h2>
-
-<p>
-আপনার Registered ম্যাচ ও Room Details
-</p>
-
+<div class="head">
+<h2>🎟️ MY MATCHES</h2>
+<p>Registered ম্যাচ ও Room Details</p>
 </div>
 
-</div>
-
-<div id="myMatchesList"></div>
+<div class="card" id="matches"></div>
 
 </section>
 
 
-<!-- RESULTS -->
+<section id="results" class="page">
 
-<section id="results"
-class="page">
-
-<div class="section-head">
-
-<div>
-
-<h2>
-📊 RESULTS
-</h2>
-
-<p>
-সাম্প্রতিক ম্যাচের ফলাফল
-</p>
-
+<div class="head">
+<h2>📊 RESULTS</h2>
+<p>সাম্প্রতিক ফলাফল</p>
 </div>
 
-</div>
-
-<div class="results"
-id="resultsList">
-</div>
+<div class="grid" id="results"></div>
 
 </section>
 
 
-<!-- PROFILE -->
+<section id="profile" class="page">
 
-<section id="profile"
-class="page">
+<div class="cover"></div>
 
-<div class="profile-card">
+<div class="profile">
 
-<div class="profile-cover"></div>
+<div class="avatar">🥷</div>
 
-<div class="avatar">
-🎮
-</div>
+<h2 id="pname">R2_PLAYER</h2>
 
-<div class="profile-info">
-
-<h2 id="profileName">
-R2 Player
-</h2>
-
-<p id="profileSub">
-আপনার Gaming Profile সম্পূর্ণ করুন
+<p class="mut" id="puid">
+UID: যোগ করা হয়নি
 </p>
-
 
 <div class="stats">
 
-<div class="stat">
-
-<strong id="statPlayed">
-0
-</strong>
-
-<span>
-Match Played
-</span>
-
+<div>
+<b id="cnt">0</b>
+Match
 </div>
 
-
-<div class="stat">
-
-<strong id="statBalance">
-৳0
-</strong>
-
-<span>
+<div>
+<b id="bal1">৳120</b>
 Balance
-</span>
-
 </div>
 
-
-<div class="stat">
-
-<strong id="statWins">
-0
-</strong>
-
-<span>
+<div>
+<b>0</b>
 Won
-</span>
-
 </div>
 
 </div>
 
 </div>
 
+<div class="card" style="margin-top:14px;padding:0">
+
+<button class="menu"
+onclick="page('wallet')">
+💰 Wallet　›
+</button>
+
+<button class="menu"
+onclick="page('rules')">
+⚖️ All Rules　›
+</button>
+
+<button class="menu"
+onclick="edit()">
+👤 Edit Profile　›
+</button>
+
 </div>
 
-
-<div class="menu">
-
-<button class="menu-item"
-onclick="showPage('wallet')">
-
-<span class="menu-icon">
-👛
-</span>
-
-Wallet
-
-<span class="arrow">
-›
-</span>
-
-</button>
+</section>
 
 
-<button class="menu-item"
-onclick="showPage('withdraw')">
+<section id="wallet" class="page">
 
-<span class="menu-icon">
-💸
-</span>
+<div class="head">
+<h2>💰 WALLET</h2>
+<p>আপনার ESPORT Balance</p>
+</div>
 
-Withdraw
+<div class="wallet">
 
-<span class="arrow">
-›
-</span>
+<small class="mut">YOUR BALANCE</small>
 
-</button>
+<div class="balance" id="bal2">৳120</div>
 
+<button class="btn"
+style="margin-top:15px"
+onclick="toast('Payment/withdrawal পরে backend এর সাথে যুক্ত হবে')">
 
-<button class="menu-item"
-onclick="openProfileEdit()">
-
-<span class="menu-icon">
-👤
-</span>
-
-My Profile
-
-<span class="arrow">
-›
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="toggleTheme()">
-
-<span class="menu-icon">
-🌙
-</span>
-
-Theme
-
-<span id="themeLabel"
-class="arrow">
-Dark
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showPage('rules')">
-
-<span class="menu-icon">
-📖
-</span>
-
-All Rules
-
-<span class="arrow">
-›
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showTopPlayers()">
-
-<span class="menu-icon">
-📈
-</span>
-
-Top Players
-
-<span class="arrow">
-›
-</span>
-
-</button>
-
-
-<button class="menu-item"
-onclick="showDeveloper()">
-
-<span class="menu-icon">
-🧑‍💻
-</span>
-
-Developer Profile
-
-<span class="arrow">
-›
-</span>
-
-</button>
-
-
-<button class="btn red block"
-onclick="logoutDemo()">
-
-Logout
+➕ WALLET OPTIONS
 
 </button>
 
@@ -1085,285 +641,27 @@ Logout
 </section>
 
 
-<!-- WALLET -->
+<section id="rules" class="page">
 
-<section id="wallet"
-class="page">
-
-<button class="btn ghost small"
-onclick="showPage('profile')">
-
-← Back to Profile
-
-</button>
-
-
-<div class="section-head">
-
-<div>
-
-<h2>
-👛 WALLET
-</h2>
-
-<p>
-Wallet শুধুমাত্র Profile থেকে খোলা যায়
-</p>
-
+<div class="head">
+<h2>⚖️ TOURNAMENT RULES</h2>
 </div>
 
-</div>
+<div class="card">
 
+<ol class="mut" style="line-height:2">
 
-<div class="wallet-card">
+<li>IGN ও UID সঠিক দিতে হবে।</li>
 
-<div style="color:var(--muted)">
-Available Balance
-</div>
+<li>নির্ধারিত সময়ে Lobby তে উপস্থিত থাকতে হবে।</li>
 
-<div class="balance"
-id="walletBalance">
+<li>Room ID/Password শুধু Registered Player দেখতে পারবে।</li>
 
-৳0
+<li>Cheating করলে Account বাতিল হতে পারে।</li>
 
-</div>
+<li>Admin এর সিদ্ধান্ত চূড়ান্ত।</li>
 
-
-<div class="wallet-grid">
-
-<div class="mini-card">
-
-<span>
-Current Earn
-</span>
-
-<b id="walletEarn">
-৳0
-</b>
-
-</div>
-
-
-<div class="mini-card">
-
-<span>
-Transactions
-</span>
-
-<b id="walletTx">
-0
-</b>
-
-</div>
-
-</div>
-
-
-<button class="btn block"
-onclick="showToast('Real payment gateway এখনো সংযুক্ত করা হয়নি')">
-
-ADD MONEY
-
-</button>
-
-</div>
-
-
-<div class="section-head">
-
-<div>
-
-<h2>
-Recent Transactions
-</h2>
-
-</div>
-
-</div>
-
-
-<div id="transactionList"
-class="empty">
-
-এখনও কোনো Transaction নেই
-
-</div>
-
-</section>
-
-
-<!-- WITHDRAW -->
-
-<section id="withdraw"
-class="page">
-
-<button class="btn ghost small"
-onclick="showPage('profile')">
-
-← Back to Profile
-
-</button>
-
-
-<div class="section-head">
-
-<div>
-
-<h2>
-💸 WITHDRAW
-</h2>
-
-<p>
-Withdrawal request profile section থেকে
-</p>
-
-</div>
-
-</div>
-
-
-<div class="wallet-card">
-
-<div class="form-group">
-
-<label>
-Amount
-</label>
-
-<input id="withdrawAmount"
-type="number"
-placeholder="Amount">
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Method
-</label>
-
-<select id="withdrawMethod">
-
-<option>
-bKash
-</option>
-
-<option>
-Nagad
-</option>
-
-<option>
-Rocket
-</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Account Number
-</label>
-
-<input id="withdrawAccount"
-placeholder="01XXXXXXXXX">
-
-</div>
-
-
-<button class="btn block"
-onclick="requestWithdraw()">
-
-REQUEST WITHDRAW
-
-</button>
-
-
-<div class="notice">
-
-নিরাপত্তার জন্য বাস্তব টাকা/পেমেন্ট চালুর আগে
-backend, authentication এবং প্রয়োজনীয় নিরাপত্তা ব্যবস্থা দরকার।
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- RULES -->
-
-<section id="rules"
-class="page">
-
-<button class="btn ghost small"
-onclick="showPage('profile')">
-
-← Back
-
-</button>
-
-
-<div class="section-head">
-
-<div>
-
-<h2>
-📖 ALL RULES
-</h2>
-
-</div>
-
-</div>
-
-
-<div class="rule-list">
-
-<div class="rule">
-
-<b>
-1. Registration:
-</b>
-
-সঠিক IGN ও UID দিয়ে Register করতে হবে।
-
-</div>
-
-
-<div class="rule">
-
-<b>
-2. Room Details:
-</b>
-
-Admin প্রকাশ করার আগে Room ID/Password Locked থাকবে।
-
-</div>
-
-
-<div class="rule">
-
-<b>
-3. Fair Play:
-</b>
-
-Tournament rules ও organizer-এর নির্দেশ মানতে হবে।
-
-</div>
-
-
-<div class="rule">
-
-<b>
-4. Results:
-</b>
-
-ফলাফল organizer/admin যাচাই করার পর প্রকাশ হবে।
-
-</div>
+</ol>
 
 </div>
 
@@ -1374,405 +672,585 @@ Tournament rules ও organizer-এর নির্দেশ মানতে হ�
 </div>
 
 
-<!-- BOTTOM NAV -->
+<div class="nav">
 
-<nav class="bottom-nav">
+<button class="on"
+data="home"
+onclick="page('home')">
 
-<div class="bottom-inner">
-
-<button class="nav-btn active"
-data-page="home"
-onclick="showPage('home')">
-
-<span>
-🎮
-</span>
-
+<span>🎮</span>
 Play
 
 </button>
 
 
-<button class="nav-btn"
-data-page="mymatches"
-onclick="showPage('mymatches')">
+<button
+data="matches"
+onclick="page('matches')">
 
-<span>
-🎟️
-</span>
-
+<span>🎟️</span>
 My Matches
 
 </button>
 
 
-<button class="nav-btn"
-data-page="results"
-onclick="showPage('results')">
+<button
+data="results"
+onclick="page('results')">
 
-<span>
-📊
-</span>
-
+<span>📊</span>
 Results
 
 </button>
 
 
-<button class="nav-btn"
-data-page="profile"
-onclick="showPage('profile')">
+<button
+data="profile"
+onclick="page('profile')">
 
-<span>
-👤
-</span>
-
+<span>👤</span>
 Profile
 
 </button>
 
 
-<button class="nav-btn"
-onclick="showToast('More features আসছে')">
+<button
+data="wallet"
+onclick="page('wallet')">
 
-<span>
-☰
-</span>
-
+<span>▦</span>
 More
 
 </button>
 
 </div>
 
-</nav>
 
-
-<!-- JOIN MODAL -->
-
-<div class="modal-backdrop"
-id="joinModal">
+<div class="modalbg" id="mb">
 
 <div class="modal">
 
-<div class="modal-head">
-
-<h2 id="joinTitle">
-JOIN TOURNAMENT
-</h2>
-
 <button class="close"
-onclick="closeModal('joinModal')">
+onclick="closeM()">×</button>
 
-×
+<h2 id="mt">Join Tournament</h2>
+
+<div id="mc"></div>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+const T=[
+["SOLO BR CHAMPIONSHIP","Solo BR","Paid",30,3000,"24/48","আজ • 7:00 PM"],
+["CLASH SQUAD CUP","Clash Squad","Paid",50,5000,"12/32","20 Apr • 7:00 PM"],
+["LONE WOLF 1v1","Lone Wolf 1v1","Free",0,1000,"8/16","21 Apr • 8:00 PM"],
+["BERMUDA DUO RUSH","Duo","Paid",40,4000,"18/24","22 Apr • 9:00 PM"],
+["SQUAD WAR","Clash Squad","Free",0,2000,"15/24","23 Apr • 7:30 PM"]
+];
+
+const M=[
+"All",
+"Solo BR",
+"Duo",
+"Squad",
+"Clash Squad",
+"Lone Wolf 1v1",
+"Free Match"
+];
+
+let mode=localStorage.mode||"All";
+
+let P=JSON.parse(
+localStorage.profile||
+'{"name":"R2_PLAYER","uid":"","balance":120}'
+);
+
+let J=JSON.parse(
+localStorage.joined||"[]"
+);
+
+
+function save(){
+
+localStorage.mode=mode;
+
+localStorage.profile=
+JSON.stringify(P);
+
+localStorage.joined=
+JSON.stringify(J);
+
+}
+
+
+function tk(n){
+return "৳"+n.toLocaleString();
+}
+
+
+function modes(){
+
+document.getElementById("modes").innerHTML=
+
+M.map(x=>`
+
+<button
+class="mode ${x==mode?"on":""}"
+onclick="mode='${x}';save();render()">
+
+🎮 ${x}
+
+</button>
+
+`).join("");
+
+}
+
+
+function render(){
+
+modes();
+
+let a=
+mode=="All"
+?T
+:T.filter(x=>
+x[1]==mode||
+(mode=="Free Match"&&x[2]=="Free")
+);
+
+desc.textContent=
+mode=="All"
+?"সব ম্যাচ দেখানো হচ্ছে"
+:mode+" ম্যাচ দেখানো হচ্ছে";
+
+
+tours.innerHTML=a.length
+
+?a.map(x=>{
+
+let i=T.indexOf(x);
+
+return`
+
+<div class="card">
+
+<div class="art">
+
+<div>
+
+<small>
+${x[1]} •
+${x[2]=="Free"?"🆓 FREE":"🔥 PAID"}
+</small>
+
+${x[0]}
+
+</div>
+
+</div>
+
+<h3>${x[0]}</h3>
+
+<div class="badges">
+
+<span class="badge">
+${x[1]}
+</span>
+
+<span class="badge
+${x[2]=="Free"?"free":"paid"}">
+
+${x[2]}
+
+</span>
+
+</div>
+
+
+<div class="meta">
+
+<div>
+🏆 Prize
+<b>${tk(x[4])}</b>
+</div>
+
+<div>
+🎟️ Entry
+<b>${tk(x[3])}</b>
+</div>
+
+<div>
+👥 Slots
+<b>${x[5]}</b>
+</div>
+
+</div>
+
+
+<div class="row">
+
+<small class="mut">
+🕒 ${x[6]}
+</small>
+
+<button class="btn"
+onclick="join(${i})">
+
+${J.some(z=>z.i==i)
+?"JOINED"
+:"JOIN NOW"}
 
 </button>
 
 </div>
 
-
-<div id="joinDetails"
-class="notice">
 </div>
 
+`;
 
-<div class="form-group">
+}).join("")
 
-<label>
-Player In-Game Name (IGN)
-</label>
-
-<input id="joinIgn"
-placeholder="Your Free Fire name">
-
-</div>
+:'<div class="empty">এই Mode এ এখনো Tournament নেই।</div>';
 
 
-<div class="form-group">
+matches.innerHTML=
 
-<label>
-Free Fire UID
-</label>
+J.length
 
-<input id="joinUid"
-inputmode="numeric"
-placeholder="Your UID">
+?J.map(z=>`
+
+<div class="match">
+
+<div class="row">
+
+<b>${T[z.i][0]}</b>
+
+<span class="status">
+Registered
+</span>
 
 </div>
 
+<p class="mut">
 
-<div id="teamFields">
+${T[z.i][1]}
+•
+${T[z.i][6]}
+
+</p>
+
+<div class="card"
+style="padding:10px">
+
+🔒 Room Details Locked
+
+<br>
+
+<small class="mut">
+ম্যাচের আগে Room ID & Password খুলে দেওয়া হবে।
+</small>
+
+</div>
+
+</div>
+
+`).join("")
+
+:'<div class="empty">এখনো কোনো Tournament এ Join করেননি।</div>';
+
+
+results.innerHTML=
+
+T.slice(1).map((x,i)=>`
+
+<div class="card">
+
+<div class="art">
+
+<div>
+
+<small>
+🏆 RECENT RESULT
+</small>
+
+${x[0]}
+
+</div>
+
+</div>
+
+<h3>
+🥇 Team
+${["R2 KING","NEXA PRO","WOLFX","SABIR"][i]}
+</h3>
+
+<p class="mut">
+Prize: ${tk(x[4])}
+</p>
+
+</div>
+
+`).join("");
+
+
+pname.textContent=P.name;
+
+puid.textContent=
+"UID: "+
+(P.uid||"যোগ করা হয়নি");
+
+cnt.textContent=J.length;
+
+bal1.textContent=tk(P.balance);
+
+bal2.textContent=tk(P.balance);
+
+}
+
+
+function join(i){
+
+if(J.some(x=>x.i==i)){
+
+toast("আপনি ইতিমধ্যে Registered");
+
+return;
+
+}
+
+let x=T[i];
+
+mt.textContent=
+"Join Tournament";
+
+mc.innerHTML=`
+
+<div class="card">
+
+<b>${x[0]}</b>
+
+<p class="mut">
+
+${x[1]}
+•
+Prize ${tk(x[4])}
+•
+Entry ${tk(x[3])}
+
+</p>
+
 </div>
 
 
-<button class="btn block"
-onclick="confirmJoin()">
+<div class="form">
 
-CONFIRM REGISTRATION
+<label>IGN</label>
+
+<input
+id="ign"
+value="${P.name}">
+
+</div>
+
+
+<div class="form">
+
+<label>Free Fire UID</label>
+
+<input
+id="uid"
+value="${P.uid}"
+inputmode="numeric">
+
+</div>
+
+
+<p class="mut">
+
+Your Balance:
+${tk(P.balance)}
+
+•
+
+After Join:
+${tk(P.balance-x[3])}
+
+</p>
+
+
+<button
+class="btn"
+style="width:100%"
+onclick="confirm(${i})">
+
+CONFIRM & JOIN
 
 </button>
 
-</div>
+`;
+
+mb.classList.add("show");
+
+}
+
+
+function confirm(i){
+
+let n=ign.value.trim();
+
+let u=uid.value.trim();
+
+let x=T[i];
+
+
+if(!n||!u){
+
+return toast("IGN এবং UID দিন");
+
+}
+
+
+if(P.balance<x[3]){
+
+return toast("Balance যথেষ্ট নয়");
+
+}
+
+
+P.name=n;
+
+P.uid=u;
+
+P.balance-=x[3];
+
+J.push({i});
+
+save();
+
+closeM();
+
+render();
+
+toast("🎉 Registration সফল হয়েছে!");
+
+}
+
+
+function edit(){
+
+mt.textContent=
+"Edit Profile";
+
+
+mc.innerHTML=`
+
+<div class="form">
+
+<label>Player Name</label>
+
+<input
+id="en"
+value="${P.name}">
 
 </div>
 
 
-<!-- PROFILE EDIT MODAL -->
+<div class="form">
 
-<div class="modal-backdrop"
-id="profileModal">
+<label>UID</label>
 
-<div class="modal">
-
-<div class="modal-head">
-
-<h2>
-MY PROFILE
-</h2>
-
-<button class="close"
-onclick="closeModal('profileModal')">
-
-×
-
-</button>
+<input
+id="eu"
+value="${P.uid}">
 
 </div>
 
 
-<div class="form-group">
-
-<label>
-Display Name
-</label>
-
-<input id="editName">
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Default IGN
-</label>
-
-<input id="editIgn">
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Default UID
-</label>
-
-<input id="editUid">
-
-</div>
-
-
-<button class="btn block"
-onclick="saveProfile()">
+<button class="btn"
+onclick="
+P.name=en.value||P.name;
+P.uid=eu.value;
+save();
+closeM();
+render()
+">
 
 SAVE PROFILE
 
 </button>
 
-</div>
+`;
 
-</div>
-
-
-<div class="toast"
-id="toast">
-</div>
-
-
-<script>
-
-/* TOURNAMENT DATA */
-
-const tournaments=[
-
-{
-id:1,
-title:"GRAND SOLO MATCH",
-mode:"Solo BR",
-type:"Free",
-prize:3000,
-entry:0,
-date:"Coming Soon",
-slots:"0 / 48",
-roomReleased:false,
-roomId:"R2-1001",
-password:"SOLO20"
-},
-
-{
-id:2,
-title:"DUO RUSH",
-mode:"Duo",
-type:"Free",
-prize:2000,
-entry:0,
-date:"Coming Soon",
-slots:"0 / 24",
-roomReleased:false,
-roomId:"R2-1002",
-password:"DUO20"
-},
-
-{
-id:3,
-title:"SQUAD CLASH",
-mode:"Squad",
-type:"Paid",
-prize:5000,
-entry:50,
-date:"Coming Soon",
-slots:"0 / 12",
-roomReleased:false,
-roomId:"R2-1003",
-password:"SQUAD20"
-},
-
-{
-id:4,
-title:"CLASH SQUAD CUP",
-mode:"Clash Squad",
-type:"Paid",
-prize:2500,
-entry:30,
-date:"Coming Soon",
-slots:"0 / 8",
-roomReleased:false,
-roomId:"R2-1004",
-password:"CS20"
-},
-
-{
-id:5,
-title:"LONE WOLF 1v1",
-mode:"Lone Wolf",
-type:"Free",
-prize:1000,
-entry:0,
-date:"Coming Soon",
-slots:"0 / 16",
-roomReleased:false,
-roomId:"R2-1005",
-password:"ONE20"
-},
-
-{
-id:6,
-title:"FREE NIGHT SCRIM",
-mode:"Solo BR",
-type:"Free",
-prize:0,
-entry:0,
-date:"Coming Soon",
-slots:"0 / 48",
-roomReleased:false,
-roomId:"R2-1006",
-password:"FREE20"
-}
-
-];
-
-
-/* RESULTS */
-
-const results=[
-
-[
-"Weekend Squad Cup",
-"🥇 Team R2 Warriors",
-"৳5000"
-],
-
-[
-"Solo Night Battle",
-"🥇 GamingPro",
-"৳3000"
-],
-
-[
-"Clash Squad Cup",
-"🥇 Fire Kings",
-"৳2500"
-]
-
-];
-
-
-let currentMode="All";
-
-let selectedTournament=null;
-
-
-/* LOCAL STORAGE */
-
-let state=JSON.parse(
-localStorage.getItem("r20esport_state")||"{}"
-);
-
-state.profile=
-state.profile||
-{
-name:"R2 Player",
-ign:"",
-uid:"
-
-state.joined=
-state.joined||[];
-
-state.transactions=
-state.transactions||[];
-
-state.balance=
-state.balance||0;
-
-state.wins=
-state.wins||0;
-
-
-/* SAVE */
-
-function save(){
-
-localStorage.setItem(
-"r20esport_state",
-JSON.stringify(state)
-);
+mb.classList.add("show");
 
 }
 
 
-/* MONEY */
+function closeM(){
 
-function money(v){
-
-return "৳"+
-Number(v).toLocaleString("en-US");
+mb.classList.remove("show");
 
 }
 
 
-/* PAGE */
-
-function showPage(id){
+function page(id){
 
 document
 .querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+.forEach(x=>
+x.classList.toggle(
+"active",
+x.id==id
+)
+);
+
 
 document
-.getElementById(id)
-.classList.add("active");
+.querySelectorAll(".nav button")
+.forEach(x=>
+x.classList.toggle(
+"on",
+x.getAttribute("data")==id
+)
+);
 
 
-document
-.querySelectorAll(".nav-btn[da
+scrollTo(0,0);
+
+}
+
+
+function toast(s){
+
+let x=
+document.getElementById("toast");
+
+x.textContent=s;
+
+x.classList.add("show");
+
+clearTimeout(window.tt);
+
+window.tt=setTimeout(
+()=>x.classList.remove("show"),
+2500
+);
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>
+
