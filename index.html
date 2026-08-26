@@ -1,1263 +1,301 @@
-</script>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>R2.0 ESPORT</title>
-
-<style>
-:root{
-  --bg:#070b16;
-  --p:#101a30;
-  --p2:#0b1326;
-  --tx:#f5f7ff;
-  --mut:#9ca8c4;
-  --line:#34466d;
-  --gold:#ffd43b;
-  --blue:#38bdf8;
-  --purple:#a855f7;
-  --green:#22c55e;
-  --red:#ff4757;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  color:var(--tx);
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
-  background:
-    radial-gradient(circle at 15% 0,#612b8c55,transparent 28%),
-    radial-gradient(circle at 90% 20%,#007cc755,transparent 28%),
-    radial-gradient(circle at 45% 100%,#ff8c0033,transparent 30%),
-    var(--bg);
-  padding-bottom:80px;
-}
-
-.app{
-  max-width:1100px;
-  margin:auto;
-}
-
-.top{
-  height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 15px;
-  border-bottom:1px solid var(--line);
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:#080d1eee;
-  backdrop-filter:blur(14px);
-}
-
-button,input{
-  font:inherit;
-}
-
-.brand{
-  border:0;
-  background:transparent;
-  color:var(--gold);
-  font-size:21px;
-  font-weight:900;
-}
-
-.logo{
-  display:inline-grid;
-  place-items:center;
-  width:43px;
-  height:43px;
-  border-radius:14px;
-  margin-right:8px;
-  background:linear-gradient(135deg,#ffd43b,#ff5b2e,#6237ff);
-}
-
-.top button:not(.brand){
-  border:1px solid var(--line);
-  background:var(--p2);
-  color:white;
-  border-radius:12px;
-  padding:10px;
-}
-
-.page{
-  display:none;
-  padding:15px;
-}
-
-.page.active{
-  display:block;
-}
-
-.hero{
-  min-height:270px;
-  border:1px solid #4d66a9;
-  border-radius:24px;
-  padding:30px;
-  overflow:hidden;
-  background:
-    linear-gradient(120deg,#0c1027ee,#1d1644bb),
-    radial-gradient(circle at 85% 35%,#00aaff88,transparent 27%),
-    radial-gradient(circle at 15% 0,#b21cff77,transparent 35%);
-  position:relative;
-}
-
-.hero:after{
-  content:"🎮";
-  position:absolute;
-  right:5%;
-  bottom:-25px;
-  font-size:155px;
-  opacity:.12;
-}
-
-.hero>*{
-  position:relative;
-  z-index:1;
-}
-
-.hero h1{
-  font-size:clamp(34px,8vw,62px);
-  color:var(--gold);
-  margin:10px 0;
-}
-
-.hero p,
-.mut{
-  color:var(--mut);
-  line-height:1.6;
-}
-
-.btn{
-  border:0;
-  border-radius:13px;
-  padding:12px 18px;
-  font-weight:900;
-  background:linear-gradient(135deg,#ffe34f,#ffac13);
-  color:#1b1400;
-}
-
-.head{
-  margin:25px 0 12px;
-}
-
-.head h2{
-  margin:0;
-  font-size:24px;
-}
-
-.head p{
-  margin:5px 0;
-  color:var(--mut);
-}
-
-.modes{
-  display:flex;
-  gap:9px;
-  overflow:auto;
-  padding:4px 0;
-}
-
-.mode{
-  white-space:nowrap;
-  min-width:130px;
-  padding:14px;
-  border-radius:15px;
-  border:1px solid var(--line);
-  background:var(--p2);
-  color:white;
-  font-weight:800;
-}
-
-.mode.on{
-  border-color:var(--gold);
-  box-shadow:0 0 20px #ffd43b33;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:14px;
-}
-
-.card{
-  background:linear-gradient(145deg,#15203add,#0b1224ee);
-  border:1px solid var(--line);
-  border-radius:19px;
-  padding:16px;
-  overflow:hidden;
-}
-
-.art{
-  height:112px;
-  margin:-16px -16px 14px;
-  padding:17px;
-  display:flex;
-  align-items:end;
-  font-size:25px;
-  font-weight:900;
-  font-style:italic;
-  background:
-    radial-gradient(circle at 15% 20%,#ffb51f88,transparent 22%),
-    linear-gradient(125deg,#2a103a,#0c3061 60%,#31153c);
-}
-
-.art small{
-  display:block;
-  color:var(--gold);
-  font-size:12px;
-}
-
-.badges{
-  display:flex;
-  gap:7px;
-  margin:8px 0;
-}
-
-.badge{
-  padding:5px 9px;
-  border-radius:999px;
-  background:#16365a;
-  color:#b9dcff;
-  font-size:12px;
-  font-weight:800;
-}
-
-.paid{
-  background:#57301f;
-  color:#ffd6b0;
-}
-
-.free{
-  background:#143c2c;
-  color:#9cf0c1;
-}
-
-.meta{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin:13px 0;
-}
-
-.meta div{
-  padding:9px 5px;
-  border-radius:10px;
-  background:#091225;
-  text-align:center;
-  color:var(--mut);
-  font-size:11px;
-}
-
-.meta b{
-  display:block;
-  color:var(--gold);
-  font-size:15px;
-  margin-top:3px;
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-}
-
-.empty{
-  padding:35px;
-  text-align:center;
-  border:1px dashed var(--line);
-  border-radius:16px;
-  color:var(--mut);
-}
-
-.cover{
-  height:150px;
-  border-radius:22px 22px 0 0;
-  background:linear-gradient(120deg,#281250,#075a99,#30113f);
-}
-
-.profile{
-  text-align:center;
-  padding:0 20px 20px;
-  border:1px solid var(--line);
-  border-radius:0 0 22px 22px;
-  background:var(--p);
-}
-
-.avatar{
-  width:94px;
-  height:94px;
-  margin:-47px auto 7px;
-  border:4px solid var(--bg);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-size:42px;
-  background:linear-gradient(135deg,#7c3aed,#00b6ff);
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-top:1px solid var(--line);
-  margin-top:16px;
-}
-
-.stats div{
-  padding:10px;
-}
-
-.stats b{
-  display:block;
-  color:var(--gold);
-  font-size:20px;
-}
-
-.wallet{
-  padding:22px;
-  border-radius:20px;
-  border:1px solid var(--line);
-  background:linear-gradient(135deg,#162d58,#121932);
-}
-
-.balance{
-  font-size:38px;
-  color:var(--gold);
-  font-weight:900;
-}
-
-.menu{
-  width:100%;
-  padding:16px;
-  border:0;
-  border-bottom:1px solid var(--line);
-  background:var(--p);
-  color:white;
-  text-align:left;
-}
-
-.modalbg{
-  position:fixed;
-  inset:0;
-  z-index:50;
-  background:#000b;
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  padding:12px;
-}
-
-.modalbg.show{
-  display:flex;
-}
-
-.modal{
-  width:min(540px,100%);
-  max-height:88vh;
-  overflow:auto;
-  background:#10182d;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-}
-
-.form{
-  display:grid;
-  gap:7px;
-  margin:13px 0;
-}
-
-.form input{
-  padding:14px;
-  border-radius:11px;
-  border:1px solid var(--line);
-  background:#081124;
-  color:white;
-}
-
-.close{
-  float:right;
-  border:0;
-  background:none;
-  color:white;
-  font-size:27px;
-}
-
-.toast{
-  position:fixed;
-  bottom:90px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#17233d;
-  border:1px solid var(--line);
-  padding:12px 18px;
-  border-radius:12px;
-  display:none;
-  z-index:60;
-}
-
-.toast.show{
-  display:block;
-}
-
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#0a1020ee;
-  border-top:1px solid var(--line);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:20;
-}
-
-.nav button{
-  border:0;
-  background:none;
-  color:#9aa8c4;
-  padding:9px 2px;
-  font-size:12px;
-}
-
-.nav span{
-  display:block;
-  font-size:22px;
-}
-
-.nav .on{
-  color:var(--gold);
-}
-
-.match{
-  padding:14px;
-  border-bottom:1px solid var(--line);
-}
-
-.status{
-  padding:4px 8px;
-  border-radius:999px;
-  background:#163b2a;
-  color:#91ecb6;
-  font-size:12px;
-}
-
-@media(max-width:560px){
-  .page{
-    padding:12px;
-  }
-
-  .hero{
-    padding:23px;
-    min-height:250px;
-  }
-
-  .hero p{
-    font-size:15px;
-  }
-
-  .top .brand{
-    font-size:17px;
-  }
-
-  .top button:not(.brand){
-    padding:8px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R2.0 Esports</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+    body{background:#08101f;color:#fff;min-height:100vh;}
+    .hidden{display:none !important;}
+    #loading{position:fixed;inset:0;background:#08101f;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:20px;color:#ffd54a;}
+    #authPage{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;}
+    .auth-box{width:100%;max-width:420px;background:#111b31;padding:30px 22px;border-radius:22px;border:1px solid #30466f;}
+    .logo{text-align:center;font-size:28px;font-weight:bold;color:#ffd54a;margin-bottom:10px;}
+    .subtitle{text-align:center;color:#aab5c9;margin-bottom:25px;}
+    .auth-box input{width:100%;padding:15px;margin:8px 0;border-radius:12px;border:1px solid #35476a;background:#0a1223;color:white;font-size:16px;}
+    button{border:none;cursor:pointer;font-size:16px;}
+    .main-btn{width:100%;padding:15px;border-radius:12px;background:#ffc233;color:#111;font-weight:bold;margin-top:10px;}
+    .switch-btn{width:100%;background:none;color:#6da9ff;padding:15px;}
+    .error{color:#ff6b6b;text-align:center;margin-top:10px;}
+    #app{padding-bottom:85px;}
+    header{position:sticky;top:0;z-index:100;background:#0d1529;padding:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #263b61;}
+    .brand{font-size:20px;font-weight:bold;color:#ffd54a;}
+    .header-user{color:#b8c4d8;font-size:13px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    main{max-width:800px;margin:auto;padding:18px;}
+    .hero{background:linear-gradient(135deg,#1d1740,#132747);padding:28px 20px;border-radius:22px;border:1px solid #405a8c;margin-bottom:25px;}
+    .hero h1{color:#ffd34f;font-size:32px;margin:10px 0;}
+    .hero p{color:#c0c9da;line-height:1.6;}
+    h2{margin:20px 0 12px;}
+    .section-text{color:#a9b5c8;margin-bottom:15px;}
+    .tournament{background:#111b30;border:1px solid #293e64;border-radius:18px;padding:18px;margin-bottom:15px;}
+    .tournament h3{color:#fff;margin-bottom:10px;}
+    .badge{display:inline-block;background:#203b62;padding:6px 10px;border-radius:20px;color:#9dc7ff;font-size:12px;margin-right:5px;margin-bottom:10px;}
+    .info{color:#b8c3d4;line-height:1.7;margin:10px 0;}
+    .join-btn{width:100%;padding:14px;border-radius:12px;background:#ffc233;color:#111;font-weight:bold;margin-top:8px;}
+    .joined{background:#1f704e;color:white;}
+    .empty{text-align:center;padding:35px 15px;color:#aeb8c8;border:1px dashed #34486c;border-radius:16px;}
+    .profile-card{background:#111b30;padding:20px;border-radius:18px;border:1px solid #30476e;}
+    .profile-card p{margin:12px 0;color:#c4cedd;}
+    .logout{background:#d94b4b;color:white;width:100%;padding:14px;border-radius:12px;margin-top:15px;}
+    nav{position:fixed;bottom:0;left:0;right:0;background:#0d1528;border-top:1px solid #263b60;display:flex;justify-content:space-around;z-index:200;}
+    nav button{background:none;color:#aab6c9;padding:14px 5px;font-size:13px;flex:1;}
+    nav button.active{color:#ffd34f;}
+    .page{display:none;}
+    .page.active{display:block;}
+    @media(max-width:500px){.hero h1{font-size:27px;}}
+  </style>
 </head>
-
 <body>
 
-<div class="app">
+<div id="loading">🔥 R2.0 Esports Loading...</div>
 
-<header class="top">
-
-<button class="brand" onclick="page('home')">
-<span class="logo">👑</span>R2.0 ESPORT
-</button>
-
-<div>
-<button onclick="page('matches')">My Matches</button>
-<button onclick="page('profile')">🎮</button>
+<div id="authPage" class="hidden">
+  <div class="auth-box">
+    <div class="logo">👑 R2.0 ESPORT</div>
+    <p class="subtitle">Play. Compete. Win.</p>
+    <div id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email address">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button class="main-btn" onclick="login()">LOGIN</button>
+      <button class="switch-btn" onclick="showRegister()">নতুন Account তৈরি করুন</button>
+    </div>
+    <div id="registerForm" class="hidden">
+      <input type="text" id="registerName" placeholder="আপনার নাম">
+      <input type="email" id="registerEmail" placeholder="Email address">
+      <input type="password" id="registerPassword" placeholder="Password (কমপক্ষে 6 অক্ষর)">
+      <button class="main-btn" onclick="register()">CREATE ACCOUNT</button>
+      <button class="switch-btn" onclick="showLogin()">আগে থেকেই Account আছে? Login করুন</button>
+    </div>
+    <p id="authError" class="error"></p>
+  </div>
 </div>
 
-</header>
-
-<main>
-
-<section id="home" class="page active">
-
-<div class="hero">
-
-<small>🔥 R2.0 ESPORT • PLAY. COMPETE. WIN.</small>
-
-<h1>PLAY. COMPETE. WIN.</h1>
-
-<p>
-টুর্নামেন্ট খুঁজে নিন, Mode অনুযায়ী ম্যাচ দেখুন
-এবং সহজেই Registration করুন।
-</p>
-
-<button class="btn"
-onclick="document.querySelector('.modes').scrollIntoView()">
-EXPLORE MODES
-</button>
-
+<div id="app" class="hidden">
+  <header>
+    <div class="brand">👑 R2.0 ESPORT</div>
+    <div class="header-user" id="headerUser"></div>
+  </header>
+  <main>
+    <section id="homePage" class="page active">
+      <div class="hero">
+        <div>🔥 R2.0 ESPORT • PLAY. COMPETE. WIN.</div>
+        <h1>PLAY. COMPETE. WIN.</h1>
+        <p>Tournament খুঁজে নিন, ম্যাচে Join করুন এবং জেতার জন্য প্রস্তুত হন।</p>
+      </div>
+      <h2>🏆 LIVE & UPCOMING TOURNAMENTS</h2>
+      <p class="section-text">চলমান এবং আসন্ন ম্যাচ</p>
+      <div id="tournamentList"><div class="empty">Tournament Loading...</div></div>
+    </section>
+    <section id="matchesPage" class="page">
+      <h2>🎮 MY MATCHES</h2>
+      <p class="section-text">আপনি যেসব Tournament-এ Join করেছেন</p>
+      <div id="myMatches"><div class="empty">এখনও কোনো Tournament Join করেননি</div></div>
+    </section>
+    <section id="profilePage" class="page">
+      <h2>👤 PROFILE</h2>
+      <div class="profile-card">
+        <p><strong>নাম:</strong> <span id="profileName"></span></p>
+        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        <button class="logout" onclick="logout()">LOGOUT</button>
+      </div>
+    </section>
+  </main>
+  <nav>
+    <button class="active" onclick="openPage('homePage',this)">🎮<br>Play</button>
+    <button onclick="openPage('matchesPage',this)">🎟<br>My Matches</button>
+    <button onclick="openPage('profilePage',this)">👤<br>Profile</button>
+  </nav>
 </div>
 
-<div class="head">
-<h2>🔥 GAME MODES</h2>
-<p>পছন্দের Mode নির্বাচন করুন</p>
-</div>
-
-<div class="modes" id="modes"></div>
-
-<div class="head">
-<h2>🏆 LIVE & UPCOMING TOURNAMENTS</h2>
-<p id="desc">সব ম্যাচ দেখানো হচ্ছে</p>
-</div>
-
-<div class="grid" id="tours"></div>
-
-</section>
-
-
-<section id="matches" class="page">
-
-<div class="head">
-<h2>🎟️ MY MATCHES</h2>
-<p>Registered ম্যাচ ও Room Details</p>
-</div>
-
-<div class="card" id="matches"></div>
-
-</section>
-
-
-<section id="results" class="page">
-
-<div class="head">
-<h2>📊 RESULTS</h2>
-<p>সাম্প্রতিক ফলাফল</p>
-</div>
-
-<div class="grid" id="results"></div>
-
-</section>
-
-
-<section id="profile" class="page">
-
-<div class="cover"></div>
-
-<div class="profile">
-
-<div class="avatar">🥷</div>
-
-<h2 id="pname">R2_PLAYER</h2>
-
-<p class="mut" id="puid">
-UID: যোগ করা হয়নি
-</p>
-
-<div class="stats">
-
-<div>
-<b id="cnt">0</b>
-Match
-</div>
-
-<div>
-<b id="bal1">৳120</b>
-Balance
-</div>
-
-<div>
-<b>0</b>
-Won
-</div>
-
-</div>
-
-</div>
-
-<div class="card" style="margin-top:14px;padding:0">
-
-<button class="menu"
-onclick="page('wallet')">
-💰 Wallet　›
-</button>
-
-<button class="menu"
-onclick="page('rules')">
-⚖️ All Rules　›
-</button>
-
-<button class="menu"
-onclick="edit()">
-👤 Edit Profile　›
-</button>
-
-</div>
-
-</section>
-
-
-<section id="wallet" class="page">
-
-<div class="head">
-<h2>💰 WALLET</h2>
-<p>আপনার ESPORT Balance</p>
-</div>
-
-<div class="wallet">
-
-<small class="mut">YOUR BALANCE</small>
-
-<div class="balance" id="bal2">৳120</div>
-
-<button class="btn"
-style="margin-top:15px"
-onclick="toast('Payment/withdrawal পরে backend এর সাথে যুক্ত হবে')">
-
-➕ WALLET OPTIONS
-
-</button>
-
-</div>
-
-</section>
-
-
-<section id="rules" class="page">
-
-<div class="head">
-<h2>⚖️ TOURNAMENT RULES</h2>
-</div>
-
-<div class="card">
-
-<ol class="mut" style="line-height:2">
-
-<li>IGN ও UID সঠিক দিতে হবে।</li>
-
-<li>নির্ধারিত সময়ে Lobby তে উপস্থিত থাকতে হবে।</li>
-
-<li>Room ID/Password শুধু Registered Player দেখতে পারবে।</li>
-
-<li>Cheating করলে Account বাতিল হতে পারে।</li>
-
-<li>Admin এর সিদ্ধান্ত চূড়ান্ত।</li>
-
-</ol>
-
-</div>
-
-</section>
-
-</main>
-
-</div>
-
-
-<div class="nav">
-
-<button class="on"
-data="home"
-onclick="page('home')">
-
-<span>🎮</span>
-Play
-
-</button>
-
-
-<button
-data="matches"
-onclick="page('matches')">
-
-<span>🎟️</span>
-My Matches
-
-</button>
-
-
-<button
-data="results"
-onclick="page('results')">
-
-<span>📊</span>
-Results
-
-</button>
-
-
-<button
-data="profile"
-onclick="page('profile')">
-
-<span>👤</span>
-Profile
-
-</button>
-
-
-<button
-data="wallet"
-onclick="page('wallet')">
-
-<span>▦</span>
-More
-
-</button>
-
-</div>
-
-
-<div class="modalbg" id="mb">
-
-<div class="modal">
-
-<button class="close"
-onclick="closeM()">×</button>
-
-<h2 id="mt">Join Tournament</h2>
-
-<div id="mc"></div>
-
-</div>
-
-</div>
-
-
-<div class="toast" id="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<scrip
-const SUPABASE_URL = "https://wtrglyugzkmtrntesqzt.supabase.co";
-const SUPABASE_KEY = "sb_publishable_pxhMh6tU0qhtkmigvSyAqQ_Yjr-KxlR";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-const T=[
-["SOLO BR CHAMPIONSHIP","Solo BR","Paid",30,3000,"24/48","আজ • 7:00 PM"],
-["CLASH SQUAD CUP","Clash Squad","Paid",50,5000,"12/32","20 Apr • 7:00 PM"],
-["LONE WOLF 1v1","Lone Wolf 1v1","Free",0,1000,"8/16","21 Apr • 8:00 PM"],
-["BERMUDA DUO RUSH","Duo","Paid",40,4000,"18/24","22 Apr • 9:00 PM"],
-["SQUAD WAR","Clash Squad","Free",0,2000,"15/24","23 Apr • 7:30 PM"]
-];
-const M=[
-"All",
-"Solo BR",
-"Duo",
-"Squad",
-"Clash Squad",
-"Lone Wolf 1v1",
-"Free Match"
-];
-
-let mode=localStorage.mode||"All";
-
-let P=JSON.parse(
-localStorage.profile||
-'{"name":"R2_PLAYER","uid":"","balance":120}'
-);
-
-let J=JSON.parse(
-localStorage.joined||"[]"
-);
-
-
-function save(){
-
-localStorage.mode=mode;
-
-localStorage.profile=
-JSON.stringify(P);
-
-localStorage.joined=
-JSON.stringify(J);
-
-}
-
-
-function tk(n){
-return "৳"+n.toLocaleString();
-}
-
-
-function modes(){
-
-document.getElementById("modes").innerHTML=
-
-M.map(x=>`
-
-<button
-class="mode ${x==mode?"on":""}"
-onclick="mode='${x}';save();render()">
-
-🎮 ${x}
-
-</button>
-
-`).join("");
-
-}
-
-
-function render(){
-
-modes();
-
-let a=
-mode=="All"
-?T
-:T.filter(x=>
-x[1]==mode||
-(mode=="Free Match"&&x[2]=="Free")
-);
-
-desc.textContent=
-mode=="All"
-?"সব ম্যাচ দেখানো হচ্ছে"
-:mode+" ম্যাচ দেখানো হচ্ছে";
-
-
-tours.innerHTML=a.length
-
-?a.map(x=>{
-
-let i=T.indexOf(x);
-
-return`
-
-<div class="card">
-
-<div class="art">
-
-<div>
-
-<small>
-${x[1]} •
-${x[2]=="Free"?"🆓 FREE":"🔥 PAID"}
-</small>
-
-${x[0]}
-
-</div>
-
-</div>
-
-<h3>${x[0]}</h3>
-
-<div class="badges">
-
-<span class="badge">
-${x[1]}
-</span>
-
-<span class="badge
-${x[2]=="Free"?"free":"paid"}">
-
-${x[2]}
-
-</span>
-
-</div>
-
-
-<div class="meta">
-
-<div>
-🏆 Prize
-<b>${tk(x[4])}</b>
-</div>
-
-<div>
-🎟️ Entry
-<b>${tk(x[3])}</b>
-</div>
-
-<div>
-👥 Slots
-<b>${x[5]}</b>
-</div>
-
-</div>
-
-
-<div class="row">
-
-<small class="mut">
-🕒 ${x[6]}
-</small>
-
-<button class="btn"
-onclick="join(${i})">
-
-${J.some(z=>z.i==i)
-?"JOINED"
-:"JOIN NOW"}
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("")
-
-:'<div class="empty">এই Mode এ এখনো Tournament নেই।</div>';
-
-
-matches.innerHTML=
-
-J.length
-
-?J.map(z=>`
-
-<div class="match">
-
-<div class="row">
-
-<b>${T[z.i][0]}</b>
-
-<span class="status">
-Registered
-</span>
-
-</div>
-
-<p class="mut">
-
-${T[z.i][1]}
-•
-${T[z.i][6]}
-
-</p>
-
-<div class="card"
-style="padding:10px">
-
-🔒 Room Details Locked
-
-<br>
-
-<small class="mut">
-ম্যাচের আগে Room ID & Password খুলে দেওয়া হবে।
-</small>
-
-</div>
-
-</div>
-
-`).join("")
-
-:'<div class="empty">এখনো কোনো Tournament এ Join করেননি।</div>';
-
-
-results.innerHTML=
-
-T.slice(1).map((x,i)=>`
-
-<div class="card">
-
-<div class="art">
-
-<div>
-
-<small>
-🏆 RECENT RESULT
-</small>
-
-${x[0]}
-
-</div>
-
-</div>
-
-<h3>
-🥇 Team
-${["R2 KING","NEXA PRO","WOLFX","SABIR"][i]}
-</h3>
-
-<p class="mut">
-Prize: ${tk(x[4])}
-</p>
-
-</div>
-
-`).join("");
-
-
-pname.textContent=P.name;
-
-puid.textContent=
-"UID: "+
-(P.uid||"যোগ করা হয়নি");
-
-cnt.textContent=J.length;
-
-bal1.textContent=tk(P.balance);
-
-bal2.textContent=tk(P.balance);
-
-}
-
-
-function join(i){
-
-if(J.some(x=>x.i==i)){
-
-toast("আপনি ইতিমধ্যে Registered");
-
-return;
-
-}
-
-let x=T[i];
-
-mt.textContent=
-"Join Tournament";
-
-mc.innerHTML=`
-
-<div class="card">
-
-<b>${x[0]}</b>
-
-<p class="mut">
-
-${x[1]}
-•
-Prize ${tk(x[4])}
-•
-Entry ${tk(x[3])}
-
-</p>
-
-</div>
-
-
-<div class="form">
-
-<label>IGN</label>
-
-<input
-id="ign"
-value="${P.name}">
-
-</div>
-
-
-<div class="form">
-
-<label>Free Fire UID</label>
-
-<input
-id="uid"
-value="${P.uid}"
-inputmode="numeric">
-
-</div>
-
-
-<p class="mut">
-
-Your Balance:
-${tk(P.balance)}
-
-•
-
-After Join:
-${tk(P.balance-x[3])}
-
-</p>
-
-
-<button
-class="btn"
-style="width:100%"
-onclick="confirm(${i})">
-
-CONFIRM & JOIN
-
-</button>
-
-`;
-
-mb.classList.add("show");
-
-}
-
-
-function confirm(i){
-
-let n=ign.value.trim();
-
-let u=uid.value.trim();
-
-let x=T[i];
-
-
-if(!n||!u){
-
-return toast("IGN এবং UID দিন");
-
-}
-
-
-if(P.balance<x[3]){
-
-return toast("Balance যথেষ্ট নয়");
-
-}
-
-
-P.name=n;
-
-P.uid=u;
-
-P.balance-=x[3];
-
-J.push({i});
-
-save();
-
-closeM();
-
-render();
-
-toast("🎉 Registration সফল হয়েছে!");
-
-}
-
-
-function edit(){
-
-mt.textContent=
-"Edit Profile";
-
-
-mc.innerHTML=`
-
-<div class="form">
-
-<label>Player Name</label>
-
-<input
-id="en"
-value="${P.name}">
-
-</div>
-
-
-<div class="form">
-
-<label>UID</label>
-
-<input
-id="eu"
-value="${P.uid}">
-
-</div>
-
-
-<button class="btn"
-onclick="
-P.name=en.value||P.name;
-P.uid=eu.value;
-save();
-closeM();
-render()
-">
-
-SAVE PROFILE
-
-</button>
-
-`;
-
-mb.classList.add("show");
-
-}
-
-
-function closeM(){
-
-mb.classList.remove("show");
-
-}
-
-
-function page(id){
-
-document
-.querySelectorAll(".page")
-.forEach(x=>
-x.classList.toggle(
-"active",
-x.id==id
-)
-);
-
-
-document
-.querySelectorAll(".nav button")
-.forEach(x=>
-x.classList.toggle(
-"on",
-x.getAttribute("data")==id
-)
-);
-
-
-scrollTo(0,0);
-
-}
-
-
-function toast(s){
-
-let x=
-document.getElementById("toast");
-
-x.textContent=s;
-
-x.classList.add("show");
-
-clearTimeout(window.tt);
-
-window.tt=setTimeout(
-()=>x.classList.remove("show"),
-2500
-);
-
-}
-
-
-render();
-
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD6uFXHpNK1G6MA7IdgVI1YrrWe8II44",
+    authDomain: "r2o-esports.firebaseapp.com",
+    projectId: "r2o-esports",
+    storageBucket: "r2o-esports.firebasestorage.app",
+    messagingSenderId: "1093098377356",
+    appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
+    measurementId: "G-28FJ7LF6TL"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUser = null;
+
+  window.showRegister = function(){
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("registerForm").classList.remove("hidden");
+  };
+  window.showLogin = function(){
+    document.getElementById("registerForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+  };
+
+  window.register = async function(){
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    if(!name || !email || !password){
+      document.getElementById("authError").innerText = "সব তথ্য পূরণ করুন";
+      return;
+    }
+    try{
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await setDoc(doc(db,"users",user.uid), { name:name, email:email, createdAt: new Date().toISOString() });
+      document.getElementById("authError").innerText = "";
+    } catch(error){
+      document.getElementById("authError").innerText = error.message;
+    }
+  };
+
+  window.login = async function(){
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    try{
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch(error){
+      document.getElementById("authError").innerText = "Login failed: " + error.message;
+    }
+  };
+
+  window.logout = async function(){ await signOut(auth); };
+
+  onAuthStateChanged(auth, async(user)=>{
+    document.getElementById("loading").classList.add("hidden");
+    if(user){
+      currentUser = user;
+      document.getElementById("authPage").classList.add("hidden");
+      document.getElementById("app").classList.remove("hidden");
+      await loadProfile();
+      await loadTournaments();
+      await loadMyMatches();
+    } else {
+      currentUser = null;
+      document.getElementById("app").classList.add("hidden");
+      document.getElementById("authPage").classList.remove("hidden");
+    }
+  });
+
+  async function loadProfile(){
+    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+    let name = "Player";
+    if(userDoc.exists()){ name = userDoc.data().name || "Player"; }
+    document.getElementById("headerUser").innerText = name;
+    document.getElementById("profileName").innerText = name;
+    document.getElementById("profileEmail").innerText = currentUser.email;
+  }
+
+  const defaultTournaments = [
+    { id:"solo-br", title:"SOLO BR CHAMPIONSHIP", mode:"Solo BR", entry:"Paid", entryFee:"৳30", prize:"৳30,000", slots:"24/48", date:"আজ • 7:00 PM" },
+    { id:"clash-squad", title:"CLASH SQUAD CUP", mode:"Clash Squad", entry:"Paid", entryFee:"৳50", prize:"৳5,000", slots:"12/32", date:"আজ • 8:00 PM" },
+    { id:"lone-wolf", title:"LONE WOLF 1v1", mode:"Lone Wolf 1v1", entry:"Free", entryFee:"Free", prize:"৳1,000", slots:"8/16", date:"21 Apr • 8:00 PM" }
+  ];
+
+  let tournaments = defaultTournaments;
+
+  async function loadTournaments(){
+    try{
+      const snapshot = await getDocs(collection(db,"tournaments"));
+      if(!snapshot.empty){
+        tournaments = [];
+        snapshot.forEach((docItem)=>{ tournaments.push({ id:docItem.id, ...docItem.data() }); });
+      }
+    } catch(error){ console.log("Database tournament unavailable, using demo list"); }
+    renderTournaments();
+  }
+
+  async function renderTournaments(){
+    const box = document.getElementById("tournamentList");
+    box.innerHTML = "";
+    for(const t of tournaments){
+      let joined = false;
+      try{
+        const reg = await getDoc(doc(db, "registrations", currentUser.uid + "_" + t.id));
+        joined = reg.exists();
+      } catch(e){}
+      const div = document.createElement("div");
+      div.className = "tournament";
+      div.innerHTML = `
+        <h3>${t.title}</h3>
+        <span class="badge">🎮 ${t.mode}</span>
+        <span class="badge">${t.entry}</span>
+        <div class="info">
+          🏆 Prize: ${t.prize}<br>
+          🎟 Entry: ${t.entryFee}<br>
+          👥 Slots: ${t.slots}<br>
+          🕒 ${t.date}
+        </div>
+        <button class="join-btn ${joined ? "joined" : ""}" onclick="joinTournament('${t.id}')">
+          ${ joined ? "✓ JOINED" : "JOIN NOW" }
+        </button>
+      `;
+      box.appendChild(div);
+    }
+  }
+
+  window.joinTournament = async function(tournamentId){
+    if(!currentUser) return;
+    const tournament = tournaments.find(t=>t.id === tournamentId);
+    if(!tournament) return;
+    try{
+      await setDoc(doc(db, "registrations", currentUser.uid + "_" + tournamentId),
+        { userId: currentUser.uid, tournamentId: tournamentId, title: tournament.title, mode: tournament.mode, prize: tournament.prize, date: tournament.date, joinedAt: new Date().toISOString() }
+      );
+      alert(tournament.title + " এ সফলভাবে Join করেছেন!");
+      await renderTournaments();
+      await loadMyMatches();
+    } catch(error){
+      alert("Join করতে সমস্যা হয়েছে: " + error.message);
+    }
+  };
+
+  async function loadMyMatches(){
+    const box = document.getElementById("myMatches");
+    box.innerHTML = "";
+    try{
+      const snapshot = await getDocs(collection(db, "registrations"));
+      const matches = [];
+      snapshot.forEach((docItem)=>{
+        const data = docItem.data();
+        if(data.userId === currentUser.uid){ matches.push(data); }
+      });
+      if(matches.length === 0){
+        box.innerHTML = `<div class="empty">এখনও কোনো Tournament Join করেননি</div>`;
+        return;
+      }
+      matches.forEach((m)=>{
+        const div = document.createElement("div");
+        div.className = "tournament";
+        div.innerHTML = `
+          <h3>${m.title}</h3>
+          <div class="info">
+            🎮 ${m.mode}<br>
+            🏆 Prize: ${m.prize}<br>
+            🕒 ${m.date}
+          </div>
+          <button class="join-btn joined">✓ REGISTERED</button>
+        `;
+        box.appendChild(div);
+      });
+    } catch(error){
+      box.innerHTML = `<div class="empty">Database permission setup করতে হবে</div>`;
+    }
+  }
+
+  window.openPage = function(pageId,button){
+    document.querySelectorAll(".page").forEach(page=>{ page.classList.remove("active"); });
+    document.getElementById(pageId).classList.add("active");
+    document.querySelectorAll("nav button").forEach(btn=>{ btn.classList.remove("active"); });
+    button.classList.add("active");
+    if(pageId === "matchesPage"){ loadMyMatches(); }
+  };
 </script>
-
 </body>
-</html>
-
+  </html>
