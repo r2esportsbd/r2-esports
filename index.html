@@ -1,169 +1,1736 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R20 Esports - Login</title>
+
+<title>R2.0 eSports</title>
+
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
-  body{background:#0a0a0a;color:white;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(800px 400px at 20% 10%, rgba(255,26,26,0.15), transparent), radial-gradient(600px 300px at 90% 90%, rgba(255,26,26,0.08), transparent), #0a0a0a}
- .card{width:100%;max-width:420px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:28px;backdrop-filter:blur(20px)}
-  h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px}
-  h1 span{color:#ff1a1a}
- .sub{color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:24px}
-  label{font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);display:block;margin:14px 0 6px}
-  input{width:100%;height:46px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:0 14px;color:white;outline:none}
-  input:focus{border-color:rgba(255,26,26,0.6)}
-  button{width:100%;height:46px;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:16px}
- .primary{background:linear-gradient(#ff2a2a,#cc0000);color:white;letter-spacing:1px}
- .secondary{background:rgba(255,255,255,0.06);color:white;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;gap:10px}
- .error{background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);padding:10px;border-radius:10px;font-size:12px;color:#ffb3b3;margin-top:12px;display:none}
- .success{background:rgba(0,255,100,0.1);border:1px solid rgba(0,255,100,0.3);padding:10px;border-radius:10px;font-size:12px;color:#b3ffcc;margin-top:12px;display:none}
- .toggle{text-align:center;margin-top:16px;font-size:13px;color:rgba(255,255,255,0.5)}
- .toggle span{color:#ff1a1a;cursor:pointer;font-weight:700}
- .dashboard{display:none}
- .codebox{background:black;border:1px solid rgba(255,255,255,0.1);padding:12px;border-radius:10px;font-size:11px;margin-top:16px;color:rgba(255,255,255,0.6)}
+:root{
+  --bg:#08090d;
+  --bg2:#10131a;
+  --card:#141821;
+  --card2:#1a1f2a;
+  --red:#ef2939;
+  --red2:#a80016;
+  --silver:#d9dde5;
+  --text:#f4f6fb;
+  --muted:#9aa3b2;
+  --green:#29d17d;
+  --border:rgba(255,255,255,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:
+  radial-gradient(circle at top right,rgba(220,25,45,.16),transparent 28%),
+  radial-gradient(circle at bottom left,rgba(130,10,25,.12),transparent 30%),
+  var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* AUTH */
+
+#authPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.authBox{
+  width:100%;
+  max-width:430px;
+  background:linear-gradient(145deg,#151922,#0d0f15);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:30px 24px;
+  box-shadow:0 20px 70px rgba(0,0,0,.55);
+  text-align:center;
+}
+
+.logoBox{
+  width:105px;
+  height:105px;
+  margin:0 auto 18px;
+  border-radius:24px;
+  overflow:hidden;
+  border:2px solid var(--red);
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 35px rgba(239,41,57,.25);
+}
+
+.logoBox img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.logoFallback{
+  font-size:30px;
+  font-weight:900;
+  color:var(--red);
+}
+
+.authBox h1{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.authBox p{
+  color:var(--muted);
+  margin-bottom:24px;
+}
+
+.formGroup{
+  text-align:left;
+  margin-bottom:14px;
+}
+
+.formGroup label{
+  display:block;
+  font-size:13px;
+  color:var(--silver);
+  margin-bottom:7px;
+}
+
+.formGroup input{
+  width:100%;
+  background:#0a0c11;
+  border:1px solid var(--border);
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  outline:none;
+}
+
+.formGroup input:focus{
+  border-color:var(--red);
+}
+
+.primaryBtn{
+  width:100%;
+  border:none;
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  font-weight:bold;
+  background:linear-gradient(135deg,var(--red),#8d0e1b);
+  margin-top:5px;
+}
+
+.switchBtn{
+  margin-top:16px;
+  color:var(--muted);
+  background:none;
+  border:none;
+}
+
+.switchBtn b{
+  color:var(--red);
+}
+
+/* APP */
+
+#appPage{
+  min-height:100vh;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 5%;
+  background:rgba(8,9,13,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:900;
+}
+
+.brandLogo{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--red);
+  background:#111;
+}
+
+.brandLogo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand span{
+  color:var(--red);
+}
+
+.navBtns{
+  display:flex;
+  gap:8px;
+}
+
+.navBtns button{
+  background:#181c25;
+  color:white;
+  border:1px solid var(--border);
+  padding:10px 13px;
+  border-radius:10px;
+}
+
+main{
+  width:min(1150px,92%);
+  margin:25px auto 70px;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:38px;
+  border-radius:26px;
+  background:
+  linear-gradient(120deg,rgba(35,37,48,.95),rgba(12,14,20,.92)),
+  #111;
+  border:1px solid var(--border);
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  right:-100px;
+  top:-130px;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,var(--red),transparent 65%);
+  opacity:.28;
+}
+
+.hero h1{
+  position:relative;
+  z-index:1;
+  font-size:clamp(28px,5vw,48px);
+  max-width:650px;
+}
+
+.hero h1 span{
+  color:var(--red);
+}
+
+.hero p{
+  position:relative;
+  z-index:1;
+  color:var(--muted);
+  margin-top:12px;
+  max-width:650px;
+  line-height:1.6;
+}
+
+.stats{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:25px;
+}
+
+.stat{
+  min-width:150px;
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--border);
+  padding:13px 16px;
+  border-radius:14px;
+}
+
+.stat small{
+  display:block;
+  color:var(--muted);
+}
+
+.stat b{
+  font-size:20px;
+}
+
+/* FILTERS */
+
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:25px 0;
+}
+
+.filterBtn{
+  background:#151923;
+  color:white;
+  border:1px solid var(--border);
+  padding:11px 20px;
+  border-radius:12px;
+}
+
+.filterBtn.active{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:25px 0 16px;
+}
+
+.sectionTitle h2{
+  font-size:25px;
+}
+
+/* TOURNAMENTS */
+
+.tournamentGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+
+.tournamentCard{
+  background:linear-gradient(145deg,#161b24,#0f1218);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.cardTop{
+  padding:20px;
+  border-bottom:1px solid var(--border);
+}
+
+.modeBadge{
+  display:inline-block;
+  background:rgba(239,41,57,.14);
+  color:#ff6571;
+  border:1px solid rgba(239,41,57,.25);
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.tournamentCard h3{
+  margin-top:12px;
+  font-size:21px;
+}
+
+.cardBody{
+  padding:18px 20px;
+}
+
+.infoRow{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  color:var(--muted);
+}
+
+.infoRow b{
+  color:white;
+}
+
+.progress{
+  height:8px;
+  background:#252a35;
+  border-radius:10px;
+  overflow:hidden;
+  margin:10px 0 6px;
+}
+
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,var(--red),#ff6b75);
+}
+
+.slotText{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.joinBtn{
+  width:100%;
+  margin-top:16px;
+  border:none;
+  padding:13px;
+  border-radius:11px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(135deg,var(--red),#8c0d19);
+}
+
+.joinBtn:disabled{
+  background:#303641;
+  color:#888;
+  cursor:not-allowed;
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:45px;
+  text-align:center;
+  color:var(--muted);
+  background:#12151c;
+  border:1px dashed var(--border);
+  border-radius:18px;
+}
+
+/* PROFILE */
+
+.modalBg{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.72);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal{
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow:auto;
+  background:#141821;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px;
+}
+
+.modal h2{
+  margin-bottom:18px;
+}
+
+.closeBtn{
+  float:right;
+  background:#252a35;
+  color:white;
+  border:none;
+  width:35px;
+  height:35px;
+  border-radius:10px;
+}
+
+.profileInfo{
+  background:#0e1117;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:15px;
+}
+
+.profileInfo p{
+  color:var(--muted);
+  margin:7px 0;
+}
+
+.roomBox{
+  margin-top:12px;
+  background:rgba(41,209,125,.08);
+  border:1px solid rgba(41,209,125,.25);
+  padding:14px;
+  border-radius:12px;
+}
+
+.adminOnly{
+  margin-top:20px;
+}
+
+.adminOnly button{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:12px;
+  color:white;
+  background:#252a35;
+  margin-bottom:10px;
+}
+
+/* ADMIN */
+
+.adminPanel{
+  margin-top:25px;
+  padding:22px;
+  background:#12161f;
+  border:1px solid rgba(239,41,57,.25);
+  border-radius:20px;
+}
+
+.adminPanel h2{
+  color:#ff6571;
+  margin-bottom:18px;
+}
+
+.adminForm{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.adminForm input,
+.adminForm select{
+  width:100%;
+  background:#090b10;
+  border:1px solid var(--border);
+  color:white;
+  padding:12px;
+  border-radius:10px;
+}
+
+.adminForm button{
+  grid-column:1/-1;
+  background:var(--red);
+  color:white;
+  border:none;
+  padding:13px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.adminList{
+  margin-top:20px;
+}
+
+.adminTournament{
+  padding:14px;
+  margin-top:10px;
+  background:#0d1016;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.adminTournament input{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  background:#181d27;
+  border:1px solid var(--border);
+  color:white;
+  border-radius:8px;
+}
+
+.adminTournament button{
+  margin-top:8px;
+  margin-right:5px;
+  border:none;
+  padding:8px 10px;
+  border-radius:7px;
+  color:white;
+  background:#303744;
+}
+
+.adminTournament .danger{
+  background:#8c0d19;
+}
+
+@media(max-width:650px){
+
+  header{
+    padding:11px 4%;
+  }
+
+  .brand{
+    font-size:17px;
+  }
+
+  .navBtns button{
+    padding:9px 10px;
+  }
+
+  .hero{
+    padding:25px 20px;
+  }
+
+  .adminForm{
+    grid-template-columns:1fr;
+  }
+
+  .adminForm button{
+    grid-column:auto;
+  }
+
+}
 </style>
 </head>
+
 <body>
 
-<div class="card" id="authCard">
-  <h1><span>R20</span> ESPORTS</h1>
-  <div class="sub">তোমার Firebase দিয়ে আসল লগইন সিস্টেম</div>
+<section id="authPage">
 
-  <div id="loginForm">
-    <label>EMAIL</label>
-    <input id="email" type="email" placeholder="gamer@r20.com">
-    <label>PASSWORD</label>
-    <input id="password" type="password" placeholder="••••••••">
+<div class="authBox">
 
-    <div id="errorBox" class="error"></div>
-    <div id="successBox" class="success"></div>
-
-    <button class="primary" id="mainBtn" onclick="handleAuth()">LOGIN • লগইন করুন</button>
-    <button class="secondary" onclick="googleLogin()"> <span style="background:white;color:black;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:12px">G</span> Google দিয়ে লগইন</button>
-
-    <div class="toggle"><span id="toggleText" onclick="toggleMode()">নতুন একাউন্ট খুলুন? Sign Up</span></div>
-  </div>
-
-  <div id="dashboard" class="dashboard">
-    <div class="success" style="display:block" id="welcomeMsg"></div>
-    <div class="codebox" id="userInfo"></div>
-    <button class="primary" onclick="logout()">LOGOUT • বের হোন</button>
-  </div>
-
-  <div class="codebox">
-    ✅ এই কোডটা তোমার <b>r20-esports</b> প্রজেক্টে কানেক্টেড<br>
-    🔧 Firebase Console > Authentication > Email/Password & Google Enable করতে হবে
-  </div>
+<div class="logoBox">
+<img id="authLogo" src="logo.png" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block'">
+<div id="logoFallback" class="logoFallback" style="display:none">R20</div>
 </div>
 
+<h1>R2.0 <span style="color:#ef2939">eSports</span></h1>
+
+<p id="authText">Login করে tournament এ অংশ নিন</p>
+
+<div class="formGroup">
+<label>Email</label>
+<input id="email" type="email" placeholder="Your email">
+</div>
+
+<div class="formGroup">
+<label>Password</label>
+<input id="password" type="password" placeholder="Your password">
+</div>
+
+<button class="primaryBtn" id="authBtn">Login</button>
+
+<button class="switchBtn" id="switchAuth">
+নতুন account? <b>Register</b>
+</button>
+
+</div>
+
+</section>
+
+
+<section id="appPage" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="brandLogo">
+<img src="logo.png" onerror="this.style.display='none'">
+</div>
+R2.0 <span>eSports</span>
+</div>
+
+<div class="navBtns">
+<button id="profileBtn">👤 Profile</button>
+<button id="logoutBtn">Logout</button>
+</div>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<h1>PLAY. <span>COMPETE.</span> WIN.</h1>
+
+<p>
+Free Fire tournament এ অংশ নিন, নিজের squad তৈরি করুন এবং
+R2.0 eSports community-তে প্রতিযোগিতা করুন।
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<small>Available Tournaments</small>
+<b id="tournamentCount">0</b>
+</div>
+
+<div class="stat">
+<small>Your Joined Matches</small>
+<b id="joinedCount">0</b>
+</div>
+
+<div class="stat">
+<small>Wallet Points</small>
+<b id="walletPoints">0</b>
+</div>
+
+</div>
+
+</section>
+
+
+<div class="filters">
+
+<button class="filterBtn active" data-mode="All">All</button>
+<button class="filterBtn" data-mode="Solo">Solo</button>
+<button class="filterBtn" data-mode="Duo">Duo</button>
+<button class="filterBtn" data-mode="Squad">Squad</button>
+<button class="filterBtn" data-mode="Custom">Custom</button>
+
+</div>
+
+
+<div class="sectionTitle">
+<h2>🏆 Available Tournaments</h2>
+</div>
+
+
+<div id="tournamentGrid" class="tournamentGrid"></div>
+
+
+<section id="adminPanel" class="adminPanel hidden">
+
+<h2>🛡 Admin Panel</h2>
+
+<div class="adminForm">
+
+<input id="adminTitle" placeholder="Tournament title">
+
+<select id="adminMode">
+<option value="Solo">Solo</option>
+<option value="Duo">Duo</option>
+<option value="Squad">Squad</option>
+<option value="Custom">Custom</option>
+</select>
+
+<input id="adminMaxPlayers" type="number" placeholder="Maximum players">
+
+<input id="adminPrize" placeholder="Prize / Reward">
+
+<input id="adminStatus" placeholder="Status e.g. Open">
+
+<button id="createTournament">Create Tournament</button>
+
+</div>
+
+<div id="adminList" class="adminList"></div>
+
+</section>
+
+</main>
+
+</section>
+
+
+<div id="profileModal" class="modalBg hidden">
+
+<div class="modal">
+
+<button class="closeBtn" id="closeProfile">✕</button>
+
+<h2>👤 My Profile</h2>
+
+<div class="profileInfo">
+<p><b>Email:</b> <span id="profileEmail"></span></p>
+<p><b>Wallet Points:</b> <span id="profileWallet">0</span></p>
+<p><b>Joined Tournaments:</b> <span id="profileJoined">0</span></p>
+</div>
+
+<h3>My Matches</h3>
+
+<div id="myMatches"></div>
+
+</div>
+
+</div>
+
+
+<div id="joinModal" class="modalBg hidden">
+
+<div class="modal">
+
+<button class="closeBtn" id="closeJoin">✕</button>
+
+<h2 id="joinTournamentTitle">Join Tournament</h2>
+
+<div class="formGroup">
+<label>Free Fire Game Name</label>
+<input id="gameName" placeholder="Your game name">
+</div>
+
+<div class="formGroup">
+<label>Free Fire UID</label>
+<input id="gameUid" placeholder="Your UID">
+</div>
+
+<button class="primaryBtn" id="confirmJoin">Confirm Registration</button>
+
+</div>
+
+</div>
+
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-  // তোমার দেওয়া কনফিগ - এটাই আসল
-  const firebaseConfig = {
-    apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
-    authDomain: "r20-esports.firebaseapp.com",
-    projectId: "r20-esports",
-    storageBucket: "r20-esports.firebasestorage.app",
-    messagingSenderId: "1093098377356",
-    appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
-    measurementId: "G-28FJ7LF6TL"
-  };
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const provider = new GoogleAuthProvider();
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-  let isLogin = true;
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+getDoc,
+doc,
+setDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+onSnapshot,
+serverTimestamp,
+arrayUnion
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-  window.toggleMode = () => {
-    isLogin =!isLogin;
-    document.getElementById('mainBtn').innerText = isLogin? "LOGIN • লগইন করুন" : "SIGN UP • একাউন্ট খুলুন";
-    document.getElementById('toggleText').innerText = isLogin? "নতুন একাউন্ট খুলুন? Sign Up" : "আগে একাউন্ট আছে? Login";
-    hideMessages();
-  }
 
-  window.handleAuth = async () => {
-    const email = document.getElementById('email').value.trim();
-    const pass = document.getElementById('password').value;
-    if(!email ||!pass){ showError("Email এবং Password দিতে হবে!"); return; }
+const firebaseConfig = {
+apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
+authDomain: "r20-esports.firebaseapp.com",
+projectId: "r20-esports",
+storageBucket: "r20-esports.firebasestorage.app",
+messagingSenderId: "1093098377356",
+appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
+measurementId: "G-28FJ7LF6TL"
+};
 
-    const btn = document.getElementById('mainBtn');
-    btn.innerText = "LOADING...";
-    btn.disabled = true;
 
-    try {
-      if(isLogin){
-        await signInWithEmailAndPassword(auth, email, pass);
-      } else {
-        const cred = await createUserWithEmailAndPassword(auth, email, pass);
-        await setDoc(doc(db, "users", cred.user.uid), {
-          email: cred.user.email,
-          uid: cred.user.uid,
-          createdAt: new Date().toISOString()
-        });
-      }
-    } catch(e){
-      showError(translate(e.code));
-    } finally {
-      btn.innerText = isLogin? "LOGIN • লগইন করুন" : "SIGN UP • একাউন্ট খুলুন";
-      btn.disabled = false;
-    }
-  }
+const app = initializeApp(firebaseConfig);
 
-  window.googleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      await setDoc(doc(db, "users", result.user.uid), {
-        email: result.user.email,
-        name: result.user.displayName,
-        provider: "google",
-        createdAt: new Date().toISOString()
-      }, {merge:true});
-    } catch(e){
-      showError(translate(e.code));
-    }
-  }
+const auth = getAuth(app);
 
-  window.logout = () => signOut(auth);
+const db = getFirestore(app);
 
-  onAuthStateChanged(auth, (user) => {
-    if(user){
-      document.getElementById('loginForm').style.display = "none";
-      document.getElementById('dashboard').style.display = "block";
-      document.getElementById('welcomeMsg').innerText = `✅ লগইন সফল! Welcome ${user.email}`;
-      document.getElementById('userInfo').innerHTML = `UID: ${user.uid}<br>Email: ${user.email}<br>Provider: ${user.providerData[0]?.providerId}<br><br>এই ইউজার এখন তোমার Firestore Database > users collection এ সেভ হয়েছে।`;
-    } else {
-      document.getElementById('loginForm').style.display = "block";
-      document.getElementById('dashboard').style.display = "none";
-    }
-  });
 
-  function showError(msg){
-    const box = document.getElementById('errorBox');
-    box.innerText = msg;
-    box.style.display = "block";
-  }
-  function hideMessages(){
-    document.getElementById('errorBox').style.display = "none";
-  }
-  function translate(code){
-    const m = {
-      "auth/invalid-credential":"Email/Password ভুল! বা একাউন্ট নেই, Sign Up করুন।",
-      "auth/user-not-found":"User পাওয়া যায়নি! আগে Sign Up করুন।",
-      "auth/wrong-password":"ভুল পাসওয়ার্ড!",
-      "auth/email-already-in-use":"এই Email দিয়ে আগেই একাউন্ট আছে, Login করুন।",
-      "auth/weak-password":"Password কমপক্ষে ৬ অক্ষরের হতে হবে!",
-      "auth/operation-not-allowed":"Firebase Console এ Email/Password Enable করা নেই!",
-      "auth/popup-closed-by-user":"Google popup বন্ধ করেছেন।"
-    }
-    return m[code] || code;
-  }
+const ADMIN_EMAIL = "salasalauddin139@gmail.com";
+
+
+let isRegister = false;
+let currentUser = null;
+let currentMode = "All";
+let selectedTournament = null;
+let tournaments = [];
+let unsubscribeTournaments = null;
+
+
+const authPage = document.getElementById("authPage");
+const appPage = document.getElementById("appPage");
+
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
+const authBtn = document.getElementById("authBtn");
+const switchAuth = document.getElementById("switchAuth");
+const authText = document.getElementById("authText");
+
+const tournamentGrid = document.getElementById("tournamentGrid");
+
+const tournamentCount = document.getElementById("tournamentCount");
+const joinedCount = document.getElementById("joinedCount");
+const walletPoints = document.getElementById("walletPoints");
+
+const profileModal = document.getElementById("profileModal");
+const joinModal = document.getElementById("joinModal");
+
+
+switchAuth.onclick = () => {
+
+isRegister = !isRegister;
+
+if(isRegister){
+
+authBtn.innerText = "Create Account";
+
+switchAuth.innerHTML =
+"আগে account আছে? <b>Login</b>";
+
+authText.innerText =
+"নতুন account তৈরি করুন";
+
+}else{
+
+authBtn.innerText = "Login";
+
+switchAuth.innerHTML =
+"নতুন account? <b>Register</b>";
+
+authText.innerText =
+"Login করে tournament এ অংশ নিন";
+
+}
+
+};
+
+
+authBtn.onclick = async () => {
+
+const userEmail = email.value.trim();
+const userPassword = password.value.trim();
+
+if(!userEmail || !userPassword){
+
+alert("Email এবং password দিন");
+return;
+
+}
+
+try{
+
+if(isRegister){
+
+const result =
+await createUserWithEmailAndPassword(
+auth,
+userEmail,
+userPassword
+);
+
+await setDoc(
+doc(db,"users",result.user.uid),
+{
+email:userEmail,
+walletPoints:0,
+joinedCount:0,
+createdAt:serverTimestamp()
+}
+);
+
+}else{
+
+await signInWithEmailAndPassword(
+auth,
+userEmail,
+userPassword
+);
+
+}
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+document.getElementById("logoutBtn").onclick =
+async () => {
+
+await signOut(auth);
+
+};
+
+
+onAuthStateChanged(auth, async user => {
+
+if(user){
+
+currentUser = user;
+
+authPage.classList.add("hidden");
+appPage.classList.remove("hidden");
+
+await ensureUserDocument();
+
+listenTournaments();
+
+loadUserData();
+
+}else{
+
+currentUser = null;
+
+authPage.classList.remove("hidden");
+appPage.classList.add("hidden");
+
+if(unsubscribeTournaments){
+unsubscribeTournaments();
+}
+
+}
+
+});
+
+
+async function ensureUserDocument(){
+
+const userRef = doc(db,"users",currentUser.uid);
+
+const snap = await getDoc(userRef);
+
+if(!snap.exists()){
+
+await setDoc(userRef,{
+email:currentUser.email,
+walletPoints:0,
+joinedCount:0,
+createdAt:serverTimestamp()
+});
+
+}
+
+}
+
+
+function listenTournaments(){
+
+if(unsubscribeTournaments){
+unsubscribeTournaments();
+}
+
+unsubscribeTournaments =
+onSnapshot(
+collection(db,"tournaments"),
+snapshot => {
+
+tournaments = snapshot.docs.map(item => ({
+id:item.id,
+...item.data()
+}));
+
+renderTournaments();
+
+if(currentUser.email === ADMIN_EMAIL){
+
+document
+.getElementById("adminPanel")
+.classList
+.remove("hidden");
+
+renderAdminList();
+
+}
+
+}
+
+);
+
+}
+
+
+function renderTournaments(){
+
+let filtered = tournaments.filter(item => {
+
+if(currentMode === "All") return true;
+
+return item.mode === currentMode;
+
+});
+
+tournamentCount.innerText = filtered.length;
+
+if(filtered.length === 0){
+
+tournamentGrid.innerHTML =
+'<div class="empty">এখন কোনো tournament নেই। Admin নতুন tournament যোগ করলে এখানে দেখা যাবে।</div>';
+
+return;
+
+}
+
+tournamentGrid.innerHTML = "";
+
+filtered.forEach(item => {
+
+const players =
+Array.isArray(item.players)
+? item.players
+: [];
+
+const maxPlayers =
+Number(item.maxPlayers || 0);
+
+const joined =
+players.length;
+
+const full =
+joined >= maxPlayers && maxPlayers > 0;
+
+const percentage =
+maxPlayers > 0
+? Math.min(100,(joined/maxPlayers)*100)
+: 0;
+
+const alreadyJoined =
+players.some(
+player =>
+player.uid === currentUser.uid
+);
+
+const card =
+document.createElement("div");
+
+card.className = "tournamentCard";
+
+card.innerHTML = `
+
+<div class="cardTop">
+
+<span class="modeBadge">
+${item.mode || "Solo"}
+</span>
+
+<h3>${escapeHtml(item.title || "Free Fire Tournament")}</h3>
+
+</div>
+
+<div class="cardBody">
+
+<div class="infoRow">
+<span>Players</span>
+<b>${joined}/${maxPlayers}</b>
+</div>
+
+<div class="progress">
+<div style="width:${percentage}%"></div>
+</div>
+
+<div class="slotText">
+${full ? "MATCH FULL" : (maxPlayers - joined) + " slot available"}
+</div>
+
+<div class="infoRow">
+<span>Prize / Reward</span>
+<b>${escapeHtml(item.prize || "TBA")}</b>
+</div>
+
+<div class="infoRow">
+<span>Status</span>
+<b>${escapeHtml(item.status || "Open")}</b>
+</div>
+
+<button
+class="joinBtn"
+${full && !alreadyJoined ? "disabled" : ""}
+>
+
+${
+alreadyJoined
+? "✓ JOINED"
+: full
+? "MATCH FULL"
+: "JOIN NOW"
+}
+
+</button>
+
+</div>
+`;
+
+const button =
+card.querySelector(".joinBtn");
+
+if(!alreadyJoined && !full){
+
+button.onclick = () => {
+
+selectedTournament = item;
+
+document.getElementById(
+"joinTournamentTitle"
+).innerText =
+"Join: " + item.title;
+
+joinModal.classList.remove("hidden");
+
+};
+
+}
+
+tournamentGrid.appendChild(card);
+
+});
+
+}
+
+
+document
+.querySelectorAll(".filterBtn")
+.forEach(button => {
+
+button.onclick = () => {
+
+document
+.querySelectorAll(".filterBtn")
+.forEach(item =>
+item.classList.remove("active")
+);
+
+button.classList.add("active");
+
+currentMode =
+button.dataset.mode;
+
+renderTournaments();
+
+};
+
+});
+
+
+document
+.getElementById("closeJoin")
+.onclick = () => {
+
+joinModal.classList.add("hidden");
+
+};
+
+
+document
+.getElementById("confirmJoin")
+.onclick = async () => {
+
+if(!selectedTournament){
+return;
+}
+
+const gameName =
+document
+.getElementById("gameName")
+.value
+.trim();
+
+const gameUid =
+document
+.getElementById("gameUid")
+.value
+.trim();
+
+if(!gameName || !gameUid){
+
+alert("Game Name এবং UID দিন");
+return;
+
+}
+
+const tournamentRef =
+doc(
+db,
+"tournaments",
+selectedTournament.id
+);
+
+const playerData = {
+
+uid:currentUser.uid,
+
+email:currentUser.email,
+
+gameName:gameName,
+
+gameUid:gameUid,
+
+joinedAt:new Date().toISOString()
+
+};
+
+try{
+
+await updateDoc(
+tournamentRef,
+{
+players:arrayUnion(playerData)
+}
+);
+
+await updateDoc(
+doc(db,"users",currentUser.uid),
+{
+joinedCount:
+await getJoinedCountAfterUpdate()
+}
+);
+
+joinModal.classList.add("hidden");
+
+document
+.getElementById("gameName")
+.value = "";
+
+document
+.getElementById("gameUid")
+.value = "";
+
+alert("Registration successful!");
+
+loadUserData();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+async function getJoinedCountAfterUpdate(){
+
+const all =
+await getDocs(
+collection(db,"tournaments")
+);
+
+let count = 0;
+
+all.forEach(item => {
+
+const data = item.data();
+
+const players =
+data.players || [];
+
+if(
+players.some(
+player =>
+player.uid === currentUser.uid
+)
+){
+count++;
+}
+
+});
+
+return count;
+
+}
+
+
+document
+.getElementById("profileBtn")
+.onclick = async () => {
+
+await loadProfile();
+
+profileModal.classList.remove("hidden");
+
+};
+
+
+document
+.getElementById("closeProfile")
+.onclick = () => {
+
+profileModal.classList.add("hidden");
+
+};
+
+
+async function loadUserData(){
+
+if(!currentUser) return;
+
+const snap =
+await getDoc(
+doc(db,"users",currentUser.uid)
+);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+walletPoints.innerText =
+data.walletPoints || 0;
+
+joinedCount.innerText =
+data.joinedCount || 0;
+
+}
+
+}
+
+
+async function loadProfile(){
+
+document
+.getElementById("profileEmail")
+.innerText =
+currentUser.email;
+
+const userSnap =
+await getDoc(
+doc(db,"users",currentUser.uid)
+);
+
+const userData =
+userSnap.data() || {};
+
+document
+.getElementById("profileWallet")
+.innerText =
+userData.walletPoints || 0;
+
+document
+.getElementById("profileJoined")
+.innerText =
+userData.joinedCount || 0;
+
+
+const myMatches =
+document.getElementById("myMatches");
+
+myMatches.innerHTML = "";
+
+let found = false;
+
+tournaments.forEach(item => {
+
+const players =
+item.players || [];
+
+const player =
+players.find(
+p =>
+p.uid === currentUser.uid
+);
+
+if(player){
+
+found = true;
+
+const div =
+document.createElement("div");
+
+div.className = "profileInfo";
+
+div.innerHTML = `
+
+<p><b>${escapeHtml(item.title)}</b></p>
+
+<p>
+Mode: ${escapeHtml(item.mode || "")}
+</p>
+
+<p>
+Game Name:
+${escapeHtml(player.gameName)}
+</p>
+
+<p>
+UID:
+${escapeHtml(player.gameUid)}
+</p>
+
+`;
+
+if(
+item.roomId &&
+item.roomPassword
+){
+
+div.innerHTML += `
+
+<div class="roomBox">
+
+<p><b>ROOM ID:</b>
+${escapeHtml(item.roomId)}
+</p>
+
+<p><b>PASSWORD:</b>
+${escapeHtml(item.roomPassword)}
+</p>
+
+</div>
+
+`;
+
+}else{
+
+div.innerHTML += `
+
+<p style="color:#9aa3b2">
+Room information এখনও দেওয়া হয়নি।
+</p>
+
+`;
+
+}
+
+myMatches.appendChild(div);
+
+}
+
+});
+
+if(!found){
+
+myMatches.innerHTML =
+'<div class="profileInfo">আপনি এখনও কোনো tournament join করেননি।</div>';
+
+}
+
+}
+
+
+/* ADMIN */
+
+
+document
+.getElementById("createTournament")
+.onclick = async () => {
+
+if(currentUser.email !== ADMIN_EMAIL){
+return;
+}
+
+const title =
+document
+.getElementById("adminTitle")
+.value
+.trim();
+
+const mode =
+document
+.getElementById("adminMode")
+.value;
+
+const maxPlayers =
+Number(
+document
+.getElementById("adminMaxPlayers")
+.value
+);
+
+const prize =
+document
+.getElementById("adminPrize")
+.value
+.trim();
+
+const status =
+document
+.getElementById("adminStatus")
+.value
+.trim() || "Open";
+
+
+if(!title || !maxPlayers){
+
+alert(
+"Tournament title এবং maximum players দিন"
+);
+
+return;
+
+}
+
+try{
+
+await addDoc(
+collection(db,"tournaments"),
+{
+
+title:title,
+
+mode:mode,
+
+maxPlayers:maxPlayers,
+
+prize:prize,
+
+status:status,
+
+players:[],
+
+roomId:"",
+
+roomPassword:"",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+document
+.getElementById("adminTitle")
+.value = "";
+
+document
+.getElementById("adminMaxPlayers")
+.value = "";
+
+document
+.getElementById("adminPrize")
+.value = "";
+
+document
+.getElementById("adminStatus")
+.value = "";
+
+alert("Tournament created!");
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+function renderAdminList(){
+
+const adminList =
+document.getElementById("adminList");
+
+adminList.innerHTML =
+"<h3>Manage Tournaments</h3>";
+
+tournaments.forEach(item => {
+
+const box =
+document.createElement("div");
+
+box.className =
+"adminTournament";
+
+const joined =
+(item.players || []).length;
+
+box.innerHTML = `
+
+<b>${escapeHtml(item.title)}</b>
+
+<p style="color:#9aa3b2;margin-top:5px">
+${item.mode} • ${joined}/${item.maxPlayers}
+</p>
+
+<input
+class="roomIdInput"
+placeholder="Room ID"
+value="${escapeAttribute(item.roomId || "")}"
+>
+
+<input
+class="roomPassInput"
+placeholder="Room Password"
+value="${escapeAttribute(item.roomPassword || "")}"
+>
+
+<button class="saveRoomBtn">
+Save Room Info
+</button>
+
+<button class="danger deleteBtn">
+Delete Tournament
+</button>
+
+`;
+
+box
+.querySelector(".saveRoomBtn")
+.onclick =
+async () => {
+
+const roomId =
+box
+.querySelector(".roomIdInput")
+.value
+.trim();
+
+const roomPassword =
+box
+.querySelector(".roomPassInput")
+.value
+.trim();
+
+await updateDoc(
+doc(db,"tournaments",item.id),
+{
+roomId:roomId,
+roomPassword:roomPassword
+}
+);
+
+alert("Room information saved!");
+
+};
+
+
+box
+.querySelector(".deleteBtn")
+.onclick =
+async () => {
+
+const confirmDelete =
+confirm(
+"Delete this tournament?"
+);
+
+if(!confirmDelete) return;
+
+await deleteDoc(
+doc(db,"tournaments",item.id)
+);
+
+};
+
+
+adminList.appendChild(box);
+
+});
+
+}
+
+
+/* SECURITY HELPERS */
+
+
+function escapeHtml(text){
+
+return String(text)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(text){
+
+return escapeHtml(text);
+
+}
+
 </script>
+
 </body>
 </html>
