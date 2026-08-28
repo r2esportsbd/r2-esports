@@ -16,561 +16,1410 @@
  --red:#ff4b3e;
  --green:#29c997;
  --line:#26324a;
+ --yellow:#ffd34d;
+ --purple:#9b3ecf;
 }
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body{
+ font-family:Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ min-height:100vh
+}
 button{cursor:pointer;border:0;font-weight:700}
-input{font-family:inherit}
+input,textarea,select{font-family:inherit}
 .hidden{display:none!important}
-#authPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at top,#263c71 0%,transparent 35%),#080d19}
-.authBox{width:100%;max-width:420px;background:#111a2a;border:1px solid #293854;border-radius:24px;padding:28px}
-.logo{text-align:center;font-size:30px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+#authPage{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:
+ radial-gradient(circle at top,#263c71 0%,transparent 35%),
+ #080d19
+}
+.authBox{
+ width:100%;
+ max-width:420px;
+ background:#111a2a;
+ border:1px solid #293854;
+ border-radius:24px;
+ padding:28px
+}
+.logo{
+ text-align:center;
+ font-size:30px;
+ font-weight:900;
+ margin-bottom:8px
+}
 .logo span{color:var(--pink)}
-.sub{text-align:center;color:var(--muted);margin-bottom:24px}
-.tabs{display:flex;background:#0b1220;border-radius:12px;padding:4px;margin-bottom:18px}
-.tabs button{width:50%;padding:12px;border-radius:9px;background:transparent;color:var(--muted)}
-.tabs button.active{background:#24314a;color:#fff}
-.fieldLabel{display:block;margin:12px 0 7px;font-size:14px;color:#c8d0df}
-.authInput{width:100%;padding:14px;border-radius:10px;border:1px solid #34425d;background:#0b1220;color:#fff}
-.primary{width:100%;margin-top:18px;padding:15px;border-radius:11px;color:white;background:linear-gradient(90deg,#ff356f,#ff4b3e)}
-.google{width:100%;margin-top:12px;padding:14px;border-radius:11px;background:#fff;color:#222}
-.or{text-align:center;color:var(--muted);margin:16px 0}
-.msg{text-align:center;margin-top:14px;font-size:14px;color:#ffb0b0}
+.sub{
+ text-align:center;
+ color:var(--muted);
+ margin-bottom:24px
+}
+.tabs{
+ display:flex;
+ background:#0b1220;
+ border-radius:12px;
+ padding:4px;
+ margin-bottom:18px
+}
+.tabs button{
+ width:50%;
+ padding:12px;
+ border-radius:9px;
+ background:transparent;
+ color:var(--muted)
+}
+.tabs button.active{
+ background:#24314a;
+ color:#fff
+}
+.fieldLabel{
+ display:block;
+ margin:12px 0 7px;
+ font-size:14px;
+ color:#c8d0df
+}
+.authInput,.adminInput{
+ width:100%;
+ padding:14px;
+ border-radius:10px;
+ border:1px solid #34425d;
+ background:#0b1220;
+ color:#fff
+}
+.primary{
+ width:100%;
+ margin-top:18px;
+ padding:15px;
+ border-radius:11px;
+ color:white;
+ background:linear-gradient(90deg,#ff356f,#ff4b3e)
+}
+.google{
+ width:100%;
+ margin-top:12px;
+ padding:14px;
+ border-radius:11px;
+ background:#fff;
+ color:#222
+}
+.or{
+ text-align:center;
+ color:var(--muted);
+ margin:16px 0
+}
+.msg{
+ text-align:center;
+ margin-top:14px;
+ font-size:14px;
+ color:#ffb0b0
+}
 #app{padding-bottom:85px}
-.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(11,16,32,.96);border-bottom:1px solid var(--line)}
+.topbar{
+ position:sticky;
+ top:0;
+ z-index:10;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:14px 16px;
+ background:rgba(11,16,32,.97);
+ border-bottom:1px solid var(--line)
+}
 .brand{font-size:21px;font-weight:900}
 .brand span{color:var(--pink)}
-.topRight{display:flex;gap:10px;align-items:center}
-.balance{background:#182238;border:1px solid #2a3853;padding:8px 11px;border-radius:10px;color:#77e6bf;font-size:13px}
-.iconBtn{background:#182238;color:#fff;padding:9px 12px;border-radius:10px}
-.page{display:none;padding:16px;max-width:900px;margin:auto}
+.topRight{display:flex;gap:8px;align-items:center}
+.balance{
+ background:#182238;
+ border:1px solid #2a3853;
+ padding:8px 10px;
+ border-radius:10px;
+ color:#77e6bf;
+ font-size:13px
+}
+.iconBtn{
+ background:#182238;
+ color:#fff;
+ padding:9px 10px;
+ border-radius:10px
+}
+.page{
+ display:none;
+ padding:16px;
+ max-width:900px;
+ margin:auto
+}
 .page.active{display:block}
-.hero{background:linear-gradient(135deg,#202e50,#111827);border:1px solid #293957;border-radius:18px;padding:18px;margin-bottom:14px}
-.sectionTitle{font-size:20px;font-weight:800;margin:18px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.modeCard,.tCard,.profileCard,.walletCard{background:var(--card);border:1px solid var(--line);border-radius:16px}
-.modeCard{padding:20px;min-height:120px;display:flex;flex-direction:column;justify-content:center}
-.modeCard h3{font-size:17px}
-.modeCard p{color:var(--muted);font-size:13px;margin-top:7px}
-.modeCard button{margin-top:14px;padding:10px;border-radius:9px;background:#263653;color:#fff}
+.hero{
+ position:relative;
+ overflow:hidden;
+ min-height:190px;
+ border-radius:18px;
+ margin-bottom:16px;
+ border:1px solid #293957;
+ background:#16213b
+}
+.hero img{
+ width:100%;
+ height:220px;
+ object-fit:cover;
+ display:block
+}
+.heroOverlay{
+ position:absolute;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ justify-content:flex-end;
+ padding:20px;
+ background:linear-gradient(
+  180deg,
+  transparent 15%,
+  rgba(4,8,18,.9) 100%
+ )
+}
+.heroOverlay h1{font-size:27px}
+.heroOverlay p{color:#dce5f5;margin-top:7px}
+.sectionTitle{
+ font-size:20px;
+ font-weight:800;
+ margin:18px 0 12px
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px
+}
+.modeCard,.tCard,.profileCard,.walletCard,.adminCard{
+ background:var(--card);
+ border:1px solid var(--line);
+ border-radius:16px
+}
+.modeCard{
+ padding:18px;
+ min-height:115px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center
+}
+.modeCard h3{font-size:16px}
+.modeCard button{
+ margin-top:14px;
+ padding:10px;
+ border-radius:9px;
+ background:#263653;
+ color:#fff
+}
 .tCard{padding:16px;margin-bottom:14px}
-.tHead{display:flex;justify-content:space-between;gap:10px}
+.tHead{
+ display:flex;
+ justify-content:space-between;
+ gap:10px
+}
 .tTitle{font-size:18px;font-weight:800}
-.badge{background:#d62e67;color:#fff;padding:6px 9px;border-radius:8px;font-size:12px;height:max-content}
-.tDesc{color:var(--muted);font-size:13px;margin:10px 0}
-.infoRow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-.info{background:#111827;padding:11px 6px;text-align:center;border-radius:10px}
-.info small{display:block;color:var(--muted);font-size:10px}
-.info b{display:block;margin-top:5px;font-size:14px}
-.tActions{display:flex;gap:8px}
-.tActions button{flex:1;padding:11px;border-radius:9px;background:#263653;color:#fff}
-.tActions.join{background:linear-gradient(90deg,#79b95b,#27a9b5)}
-.empty{color:var(--muted);padding:25px;text-align:center}
+.badge{
+ background:#d62e67;
+ color:#fff;
+ padding:6px 9px;
+ border-radius:8px;
+ font-size:11px
+}
+.tDesc{
+ color:var(--muted);
+ font-size:13px;
+ margin:10px 0
+}
+.infoRow{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin:14px 0
+}
+.info{
+ background:#111827;
+ padding:10px 5px;
+ text-align:center;
+ border-radius:10px
+}
+.info small{
+ display:block;
+ color:var(--muted);
+ font-size:9px
+}
+.info b{
+ display:block;
+ margin-top:5px;
+ font-size:13px
+}
+.tActions{
+ display:grid;
+ grid-template-columns:1fr 1fr 1fr;
+ gap:7px
+}
+.tActions button{
+ padding:10px 5px;
+ border-radius:9px;
+ background:#263653;
+ color:#fff;
+ font-size:11px
+}
+.tActions.join{
+ background:linear-gradient(90deg,#2aa874,#198bb8)
+}
+.notice{
+ background:#17233b;
+ border:1px solid #31496e;
+ padding:12px;
+ border-radius:10px;
+ color:#c8d6ec;
+ margin-bottom:14px;
+ font-size:13px;
+ line-height:1.5
+}
+.empty{
+ color:var(--muted);
+ padding:25px;
+ text-align:center
+}
 .profileCard{padding:18px;margin-bottom:12px}
-.profileName{font-size:20px;font-weight:bold}
-.profileEmail{color:var(--muted);font-size:13px;margin-top:5px}
-.profileBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.profileBtns button,.wideBtn{padding:13px;border-radius:10px;background:#263653;color:#fff}
-.adminBtn{background:#9b3ecf!important}
-.walletCard{padding:18px;margin-bottom:14px}
-.walletBalance{font-size:30px;color:#70e1b7;margin:8px 0}
-.actionRow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.actionRow button{padding:14px;border-radius:10px;color:#fff}
-.deposit{background:#209b75}.withdraw{background:#c66a37}
-.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#121a29;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px;z-index:20}
-.navBtn{background:transparent;color:#aab3c3;display:flex;flex-direction:column;gap:4px;align-items:center;font-size:11px;padding:4px 10px}
-.navBtn.active{color:#ffd34d}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:50;display:flex;align-items:flex-end}
-.modalBox{width:100%;max-width:700px;margin:auto;background:#121b2b;border-radius:22px 22px 0 0;padding:22px;max-height:88vh;overflow:auto}
-.close{float:right;background:#27334a;color:#fff;width:34px;height:34px;border-radius:50%}
-.detailTitle{font-size:24px;margin:10px 0}
-.ruleBox{background:#0c1422;border:1px solid #283550;padding:14px;border-radius:12px;margin:12px 0;line-height:1.6;color:#d6dbe5}
-.roomBox{background:#172237;border:1px dashed #405575;padding:14px;border-radius:12px;margin-top:12px}
-.adminPanel{padding:15px;background:#171126;border:1px solid #63377d;border-radius:14px}
-.adminPanel input,.adminPanel textarea,.adminPanel select{width:100%;padding:12px;margin-top:8px;margin-bottom:10px;background:#0b1220;border:1px solid #38445e;color:white;border-radius:9px}
-.adminPanel textarea{min-height:90px}
-.adminPanel button{padding:13px;width:100%;border-radius:10px;background:#9b3ecf;color:#fff}
-.notice{background:#17233b;border:1px solid #31496e;padding:12px;border-radius:10px;color:#b9c8e4;margin-bottom:14px;font-size:13px}
-@media(max-width:450px){.grid{grid-template-columns:1fr 1fr}.infoRow{gap:5px}}
+.profileName{font-size:21px;font-weight:bold}
+.profileEmail{
+ color:var(--muted);
+ font-size:13px;
+ margin-top:5px
+}
+.profileBalance{
+ margin-top:15px;
+ font-size:25px;
+ color:#70e1b7;
+ font-weight:bold
+}
+.profileBtns{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+ margin-top:18px
+}
+.profileBtns button,.wideBtn{
+ padding:13px;
+ border-radius:10px;
+ background:#263653;
+ color:#fff
+}
+.adminBtn{
+ background:var(--purple)!important;
+ margin-top:10px
+}
+.bottomNav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:#121a29;
+ border-top:1px solid var(--line);
+ display:flex;
+ justify-content:space-around;
+ padding:8px 2px;
+ z-index:20
+}
+.navBtn{
+ background:transparent;
+ color:#aab3c3;
+ display:flex;
+ flex-direction:column;
+ gap:4px;
+ align-items:center;
+ font-size:11px;
+ padding:4px 8px
+}
+.navBtn.active{color:var(--yellow)}
+.modal{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.75);
+ z-index:100;
+ display:flex;
+ align-items:flex-end
+}
+.modalBox{
+ width:100%;
+ max-width:700px;
+ margin:auto;
+ background:#121b2b;
+ border-radius:22px 22px 0 0;
+ padding:20px;
+ max-height:90vh;
+ overflow:auto
+}
+.close{
+ float:right;
+ background:#27334a;
+ color:#fff;
+ width:34px;
+ height:34px;
+ border-radius:50%
+}
+.detailTitle{
+ font-size:23px;
+ margin:8px 0 14px
+}
+.ruleBox,.roomBox{
+ background:#0c1422;
+ border:1px solid #283550;
+ padding:14px;
+ border-radius:12px;
+ margin:12px 0;
+ line-height:1.6
+}
+.roomBox{
+ border-style:dashed;
+ border-color:#405575
+}
+.walletCard{padding:18px;margin-bottom:12px}
+.walletBalance{
+ font-size:30px;
+ color:#70e1b7;
+ margin:8px 0
+}
+.actionRow{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+.actionRow button{
+ padding:14px;
+ border-radius:10px;
+ color:#fff
+}
+.deposit{background:#209b75}
+.withdraw{background:#c66a37}
+.adminCard{
+ padding:15px;
+ margin-bottom:14px
+}
+.adminCard h3{margin-bottom:12px}
+.adminCard input,
+.adminCard textarea,
+.adminCard select{
+ width:100%;
+ padding:12px;
+ margin-bottom:9px;
+ background:#0b1220;
+ border:1px solid #38445e;
+ color:white;
+ border-radius:9px
+}
+.adminCard textarea{min-height:90px}
+.adminSave{
+ padding:12px;
+ width:100%;
+ border-radius:10px;
+ background:var(--purple);
+ color:#fff
+}
+.adminItem{
+ background:#101827;
+ border:1px solid #283550;
+ padding:12px;
+ border-radius:10px;
+ margin-top:10px;
+ font-size:13px;
+ line-height:1.5
+}
+.smallBtns{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+ margin-top:10px
+}
+.smallBtns button{
+ padding:8px 10px;
+ border-radius:7px;
+ color:#fff;
+ background:#33445f
+}
+.okBtn{background:#24966f!important}
+.noBtn{background:#b8444f!important}
+.delBtn{background:#963943!important}
+.purpleBtn{background:#7542a8!important}
+.messageItem{
+ padding:12px;
+ background:#101827;
+ border:1px solid #283550;
+ border-radius:10px;
+ margin-bottom:10px
+}
+@media(max-width:450px){
+.grid{grid-template-columns:1fr 1fr}
+.hero img{height:190px}
+.tActions{grid-template-columns:1fr}
+.infoRow{gap:5px}
+}
 </style>
 </head>
 <body>
-
-<!-- LOGIN / SIGNUP -->
 <section id="authPage">
-  <div class="authBox">
-    <div class="logo">R2.0 <span>ESPORTS</span></div>
-    <div class="sub">Free Fire Tournament Platform</div>
-    <div class="tabs">
-      <button id="loginTab" class="active">Login</button>
-      <button id="signupTab">Sign Up</button>
-    </div>
-    <label class="fieldLabel">Email</label>
-    <input id="email" class="authInput" type="email" placeholder="Enter your email">
-    <label class="fieldLabel">Password</label>
-    <input id="password" class="authInput" type="password" placeholder="Minimum 6 characters">
-    <button id="emailAuthBtn" class="primary">Login</button>
-    <div class="or">OR</div>
-    <button id="googleBtn" class="google">Continue with Google</button>
-    <div id="authMsg" class="msg"></div>
+ <div class="authBox">
+  <div class="logo">R2.0 <span>ESPORTS</span></div>
+  <div class="sub">Free Fire Tournament Platform</div>
+  <div class="tabs">
+   <button id="loginTab" class="active">Login</button>
+   <button id="signupTab">Sign Up</button>
   </div>
+  <label class="fieldLabel">Email</label>
+  <input id="email" class="authInput" type="email" placeholder="Enter your email">
+  <label class="fieldLabel">Password</label>
+  <input id="password" class="authInput" type="password" placeholder="Minimum 6 characters">
+  <button id="emailAuthBtn" class="primary">Login</button>
+  <div class="or">OR</div>
+  <button id="googleBtn" class="google">Continue with Google</button>
+  <div id="authMsg" class="msg"></div>
+ </div>
 </section>
-
-<!-- MAIN APP -->
 <section id="app" class="hidden">
-  <header class="topbar">
-    <div class="brand">R2.0 <span>ESPORTS</span></div>
-    <div class="topRight">
-      <div class="balance">৳ <span id="topBalance">0</span></div>
-      <button class="iconBtn" id="logoutBtn">Logout</button>
-    </div>
-  </header>
-
-  <main id="playPage" class="page active">
-    <div class="hero">
-      <h1>🔥 Welcome to R2.0 ESPORTS</h1>
-      <p>Choose your favorite game mode and discover available tournaments.</p>
-    </div>
-    <h2 class="sectionTitle">FREE FIRE GAME MODES</h2>
-    <div class="grid">
-      <div class="modeCard"><h3>BR DUO MATCH</h3><p>Play with your duo partner</p><button onclick="openMode('BR DUO MATCH')">View Tournament</button></div>
-      <div class="modeCard"><h3>BR SOLO MATCH</h3><p>Fight alone and survive</p><button onclick="openMode('BR SOLO MATCH')">View Tournament</button></div>
-      <div class="modeCard"><h3>BR PRO LEAGUE</h3><p>Competitive tournament</p><button onclick="openMode('BR PRO LEAGUE')">View Tournament</button></div>
-      <div class="modeCard"><h3>SOLO SURVIVAL</h3><p>Survival challenge</p><button onclick="openMode('SOLO SURVIVAL')">View Tournament</button></div>
-      <div class="modeCard"><h3>LONE WOLF</h3><p>1v1 competition</p><button onclick="openMode('LONE WOLF')">View Tournament</button></div>
-      <div class="modeCard"><h3>LV HEAD HOST</h3><p>Special challenge</p><button onclick="openMode('LV HEAD HOST')">View Tournament</button></div>
-      <div class="modeCard"><h3>CLASH SQUAD</h3><p>Team battle</p><button onclick="openMode('CLASH SQUAD')">View Tournament</button></div>
-      <div class="modeCard"><h3>CS 1v1...2v2</h3><p>Custom battle</p><button onclick="openMode('CS 1v1...2v2')">View Tournament</button></div>
-      <div class="modeCard"><h3>LONE WOLF 1vs1</h3><p>Head to head</p><button onclick="openMode('LONE WOLF 1vs1')">View Tournament</button></div>
-      <div class="modeCard"><h3>LOST TO WIN</h3><p>Special event</p><button onclick="openMode('LOST TO WIN')">View Tournament</button></div>
-      <div class="modeCard"><h3>EXTREME TOUR SPECIAL MODE</h3><p>Extreme competition</p><button onclick="openMode('EXTREME TOUR SPECIAL MODE')">View Tournament</button></div>
-      <div class="modeCard"><h3>FREE MATCH</h3><p>Free entry tournament</p><button onclick="openMode('FREE MATCH')">View Tournament</button></div>
-    </div>
-  </main>
-
-  <main id="tournamentPage" class="page">
-    <button class="wideBtn" onclick="showPage('playPage')">[] Back to Game Modes</button>
-    <h2 class="sectionTitle" id="modeTitle">Tournament</h2>
-    <div id="tournamentList"></div>
-  </main>
-
-  <main id="matchesPage" class="page">
-    <h2 class="sectionTitle">My Matches</h2>
-    <div class="notice">আপনি যেসব টুর্নামেন্টে Join করবেন সেগুলো এখানে দেখা যাবে।</div>
-    <div id="myMatchesList" class="empty">No joined matches yet</div>
-  </main>
-
-  <main id="resultsPage" class="page">
-    <h2 class="sectionTitle">Results</h2>
-    <div class="notice">Completed tournament results এখানে দেখানো হবে।</div>
-    <div id="resultsList" class="empty">No results available yet</div>
-  </main>
-
-  <main id="profilePage" class="page">
-    <h2 class="sectionTitle">My Profile</h2>
-    <div class="profileCard">
-      <div class="profileName" id="profileName">Player</div>
-      <div class="profileEmail" id="profileEmail"></div>
-      <div class="profileBtns">
-        <button onclick="openWallet()">💳 Wallet</button>
-        <button onclick="showMyMessages()">💬 Messages</button>
-        <button onclick="showMyMatches()">🎮 My Joined Matches</button>
-        <button onclick="showPage('resultsPage')">🏆 Results</button>
-      </div>
-      <button id="adminOpenBtn" class="wideBtn adminBtn hidden" style="margin-top:10px" onclick="openAdmin()">👑 Open Admin Panel</button>
-    </div>
-  </main>
-
-  <nav class="bottomNav">
-    <button class="navBtn active" onclick="navTo('playPage',this)">🎮<span>Play</span></button>
-    <button class="navBtn" onclick="navTo('matchesPage',this)">📜<span>My Matches</span></button>
-    <button class="navBtn" onclick="navTo('resultsPage',this)">📊<span>Results</span></button>
-    <button class="navBtn" onclick="navTo('profilePage',this)">👤<span>Profile</span></button>
-  </nav>
-</section>
-
-<div id="modal" class="modal hidden">
-  <div class="modalBox">
-    <button class="close" onclick="closeModal()">X</button>
-    <div id="modalContent"></div>
+<header class="topbar">
+ <div class="brand">R2.0 <span>ESPORTS</span></div>
+ <div class="topRight">
+  <div class="balance">৳ <span id="topBalance">0</span></div>
+  <button class="iconBtn" id="logoutBtn">Logout</button>
+ </div>
+</header>
+<main id="playPage" class="page active">
+ <div class="hero">
+  <img id="bannerImage" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=90" alt="R2.0 ESPORTS Banner">
+  <div class="heroOverlay">
+   <h1 id="bannerTitle">R2.0 ESPORTS</h1>
+   <p id="bannerSubtitle">🔥 Free Fire Tournament Platform</p>
   </div>
+ </div>
+ <h2 class="sectionTitle">FREE FIRE GAME MODES</h2>
+ <div class="grid" id="gameModes"></div>
+</main>
+<main id="tournamentPage" class="page">
+ <button class="wideBtn" onclick="showPage('playPage')">← Back to Game Modes</button>
+ <h2 class="sectionTitle" id="modeTitle">Tournament</h2>
+ <div id="tournamentList"></div>
+</main>
+<main id="matchesPage" class="page">
+ <h2 class="sectionTitle">My Matches</h2>
+ <div class="notice">আপনি যেসব Tournament-এ Join করবেন, সেগুলো এখানে দেখা যাবে।</div>
+ <div id="myMatchesList" class="empty">No joined matches yet</div>
+</main>
+<main id="resultsPage" class="page">
+ <h2 class="sectionTitle">Results</h2>
+ <div id="resultsList"></div>
+</main>
+<main id="profilePage" class="page">
+ <h2 class="sectionTitle">My Profile</h2>
+ <div class="profileCard">
+  <div class="profileName" id="profileName">Player</div>
+  <div class="profileEmail" id="profileEmail"></div>
+  <div class="profileBalance">Wallet: ৳ <span id="profileBalance">0</span></div>
+  <div class="profileBtns">
+   <button onclick="openWallet()">💳 Wallet</button>
+   <button onclick="showMyMessages()">💬 My Messages</button>
+   <button onclick="showMyMatches()">🎮 My Matches</button>
+   <button onclick="showPage('resultsPage')">🏆 Results</button>
+   <button onclick="openSupport()">🆘 Support</button>
+   <button onclick="openProfileDeposit()">➕ Deposit</button>
+  </div>
+  <button id="adminOpenBtn" class="wideBtn adminBtn hidden" onclick="openAdmin()">👑 Open Admin Panel</button>
+ </div>
+</main>
+<main id="adminPage" class="page">
+ <button class="wideBtn" onclick="showPage('profilePage')">← Back to Profile</button>
+ <h2 class="sectionTitle">👑 Admin Panel</h2>
+ <div class="adminCard">
+  <h3>🖼 Banner Settings</h3>
+  <input id="adminBannerUrl" placeholder="Banner Image URL">
+  <input id="adminBannerTitle" placeholder="Banner Title">
+  <input id="adminBannerSubtitle" placeholder="Banner Subtitle">
+  <button class="adminSave" onclick="saveSiteSettings()">Save Banner Settings</button>
+ </div>
+ <div class="adminCard">
+  <h3>💰 Payment Settings</h3>
+  <input id="adminBkashNumber" placeholder="bKash Number">
+  <textarea id="adminDepositRules" placeholder="Deposit Rules"></textarea>
+  <textarea id="adminWithdrawRules" placeholder="Withdraw Rules"></textarea>
+  <button class="adminSave" onclick="saveSiteSettings()">Save Payment Settings</button>
+ </div>
+ <div class="adminCard">
+  <h3>🎮 Create Tournament</h3>
+  <input id="tMode" placeholder="Game Mode">
+  <input id="tTitle" placeholder="Tournament Title">
+  <input id="tPrize" type="number" placeholder="Prize Pool">
+  <input id="tKill" type="number" placeholder="Per Kill Prize">
+  <input id="tFee" type="number" placeholder="Entry Fee">
+  <input id="tDate" placeholder="Date / Time">
+  <input id="tTag" placeholder="Tournament Tag">
+  <textarea id="tDescription" placeholder="Description"></textarea>
+  <textarea id="tRules" placeholder="Tournament Rules"></textarea>
+  <input id="tRoomId" placeholder="Room ID">
+  <input id="tRoomPassword" placeholder="Room Password">
+  <button class="adminSave" onclick="createTournament()">Create Tournament</button>
+ </div>
+ <div class="adminCard">
+  <h3>🏦 Deposit Requests</h3>
+  <div id="adminDeposits"></div>
+ </div>
+ <div class="adminCard">
+  <h3>💸 Withdraw Requests</h3>
+  <div id="adminWithdraws"></div>
+ </div>
+ <div class="adminCard">
+  <h3>🆘 Support Numbers</h3>
+  <input id="supportNumberInput" placeholder="WhatsApp number e.g. 8801XXXXXXXXX">
+  <input id="supportNameInput" placeholder="Support Name">
+  <button class="adminSave" onclick="addSupportNumber()">Add Support Number</button>
+  <div id="adminSupportNumbers"></div>
+ </div>
+ <div class="adminCard">
+  <h3>💬 User Messages</h3>
+  <div id="adminMessages"></div>
+ </div>
+ <div class="adminCard">
+  <h3>🏆 Tournament Results</h3>
+  <input id="resultTournament" placeholder="Tournament Name">
+  <input id="resultWinner" placeholder="Winner Name">
+  <textarea id="resultText" placeholder="Result Details"></textarea>
+  <button class="adminSave" onclick="addResult()">Publish Result</button>
+ </div>
+</main>
+<nav class="bottomNav">
+ <button class="navBtn active" onclick="navTo('playPage',this)">🎮<span>Play</span></button>
+ <button class="navBtn" onclick="navTo('matchesPage',this)">📜<span>My Matches</span></button>
+ <button class="navBtn" onclick="navTo('resultsPage',this)">📊<span>Results</span></button>
+ <button class="navBtn" onclick="navTo('profilePage',this)">👤<span>Profile</span></button>
+</nav>
+</section>
+<div id="modal" class="modal hidden">
+ <div class="modalBox">
+  <button class="close" onclick="closeModal()">X</button>
+  <div id="modalContent"></div>
+ </div>
 </div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 const firebaseConfig = {
-  apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
-  authDomain: "r20-esports.firebaseapp.com",
-  projectId: "r20-esports",
-  storageBucket: "r20-esports.firebasestorage.app",
-  messagingSenderId: "1093098377356",
-  appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
-  measurementId: "G-28FJ7LF6TL"
+ apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
+ authDomain: "r20-esports.firebaseapp.com",
+ projectId: "r20-esports",
+ storageBucket: "r20-esports.firebasestorage.app",
+ messagingSenderId: "1093098377356",
+ appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
+ measurementId: "G-28FJ7LF6TL"
 };
-
 const ADMIN_EMAIL = "salasalauddin139@gmail.com";
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
-
+const $ = id => document.getElementById(id);
 let signupMode = false;
+let currentUser = null;
+let currentUserData = null;
 let currentMode = "";
 let tournaments = [];
-let currentUser = null;
-
-const $ = id => document.getElementById(id);
-
+let siteSettings = {};
+const gameModes = [
+ "BR DUO MATCH",
+ "BR SOLO MATCH",
+ "BR PRO LEAGUE",
+ "SOLO SURVIVAL",
+ "LONE WOLF",
+ "LV HEAD HOST",
+ "CLASH SQUAD",
+ "CS 1v1...2v2",
+ "LONE WOLF 1vs1",
+ "LOST TO WIN",
+ "EXTREME TOUR SPECIAL MODE",
+ "FREE MATCH"
+];
+function renderModes(){
+ $("gameModes").innerHTML = gameModes.map(mode => `
+ <div class="modeCard">
+  <h3>${escapeHTML(mode)}</h3>
+  <button onclick="openMode('${escapeJS(mode)}')">View Tournament</button>
+ </div>
+ `).join("");
+}
 $("loginTab").onclick = () => setAuthMode(false);
 $("signupTab").onclick = () => setAuthMode(true);
-
 function setAuthMode(signup){
-  signupMode = signup;
-  $("loginTab").classList.toggle("active",!signup);
-  $("signupTab").classList.toggle("active",signup);
-  $("emailAuthBtn").textContent = signup? "Create Account" : "Login";
-  $("authMsg").textContent = "";
+ signupMode = signup;
+ $("loginTab").classList.toggle("active",!signup);
+ $("signupTab").classList.toggle("active",signup);
+ $("emailAuthBtn").textContent = signup? "Create Account" : "Login";
+ $("authMsg").textContent = "";
 }
-
 $("emailAuthBtn").onclick = async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
-  if(!email ||!password){
-    $("authMsg").textContent = "Please enter email and password.";
-    return;
-  }
-  try{
-    $("authMsg").textContent = "Please wait...";
-    if(signupMode){
-      await createUserWithEmailAndPassword(auth,email,password);
-    }else{
-      await signInWithEmailAndPassword(auth,email,password);
-    }
-    $("authMsg").textContent = "";
-  }catch(e){
-    $("authMsg").textContent = e.message;
-  }
-};
-
-$("googleBtn").onclick = async () => {
-  try{
-    $("authMsg").textContent = "Opening Google...";
-    await signInWithPopup(auth,provider);
-    $("authMsg").textContent = "";
-  }catch(e){
-    $("authMsg").textContent = e.message;
-  }
-};
-
-$("logoutBtn").onclick = () => signOut(auth);
-
-onAuthStateChanged(auth,user => {
-  currentUser = user;
-  if(user){
-    $("authPage").classList.add("hidden");
-    $("app").classList.remove("hidden");
-    $("profileName").textContent = user.displayName || user.email.split("@")[0];
-    $("profileEmail").textContent = user.email;
-    if(user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-      $("adminOpenBtn").classList.remove("hidden");
-    }else{
-      $("adminOpenBtn").classList.add("hidden");
-    }
-    loadTournaments();
+ const email = $("email").value.trim();
+ const password = $("password").value;
+ if(!email ||!password){
+  $("authMsg").textContent = "Please enter email and password.";
+  return;
+ }
+ try{
+  $("authMsg").textContent = "Please wait...";
+  if(signupMode){
+   await createUserWithEmailAndPassword(auth,email,password);
   }else{
-    $("app").classList.add("hidden");
-    $("authPage").classList.remove("hidden");
+   await signInWithEmailAndPassword(auth,email,password);
   }
-});
-
-async function loadTournaments(){
-  try{
-    const snap = await getDocs(collection(db,"tournaments"));
-    tournaments = snap.docs.map(doc => ({ id:doc.id,...doc.data() }));
-    if(currentMode) renderTournaments(currentMode);
-  }catch(e){ console.log(e); }
-}
-
-window.openMode = mode => {
-  currentMode = mode;
-  $("modeTitle").textContent = mode;
-  renderTournaments(mode);
-  showPage("tournamentPage");
+ }catch(e){
+  $("authMsg").textContent = e.message;
+ }
 };
-
-function renderTournaments(mode){
-  const list = $("tournamentList");
-  const filtered = tournaments.filter(t => {
-    const tm = String(t.mode || t.gameMode || "").toLowerCase();
-    return tm === mode.toLowerCase();
-  });
-  if(!filtered.length){
-    list.innerHTML = `<div class="empty">বর্তমানে এই Game Mode-এ কোনো Tournament নেই।</div>`;
-    return;
+$("googleBtn").onclick = async () => {
+ try{
+  $("authMsg").textContent = "Opening Google...";
+  await signInWithPopup(auth,provider);
+ }catch(e){
+  $("authMsg").textContent = e.message;
+ }
+};
+$("logoutBtn").onclick = () => signOut(auth);
+onAuthStateChanged(auth,async user => {
+ currentUser = user;
+ if(user){
+  $("authPage").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  await createOrLoadUser();
+  $("profileName").textContent = user.displayName || currentUserData?.name || user.email.split("@")[0];
+  $("profileEmail").textContent = user.email;
+  if(user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
+   $("adminOpenBtn").classList.remove("hidden");
+  }else{
+   $("adminOpenBtn").classList.add("hidden");
   }
-  list.innerHTML = filtered.map(t => tournamentHTML(t)).join("");
+  renderModes();
+  await loadSettings();
+  await loadTournaments();
+  await loadBalance();
+  await loadResults();
+  await loadMyMatches();
+ }else{
+  currentUserData = null;
+  $("app").classList.add("hidden");
+  $("authPage").classList.remove("hidden");
+ }
+});
+async function createOrLoadUser(){
+ const userRef = doc(db,"users",currentUser.uid);
+ const snap = await getDoc(userRef);
+ if(!snap.exists()){
+  await setDoc(userRef,{
+   name:currentUser.displayName || currentUser.email.split("@")[0],
+   email:currentUser.email,
+   balance:0,
+   createdAt:serverTimestamp()
+  });
+ }
+ const newSnap = await getDoc(userRef);
+ currentUserData = newSnap.data();
 }
-
+async function loadBalance(){
+ if(!currentUser)return;
+ const snap = await getDoc(doc(db,"users",currentUser.uid));
+ if(snap.exists()){
+  currentUserData = snap.data();
+  const balance = Number(currentUserData.balance || 0);
+  $("topBalance").textContent = balance;
+  $("profileBalance").textContent = balance;
+ }
+}
+async function loadSettings(){
+ try{
+  const snap = await getDoc(doc(db,"siteSettings","main"));
+  if(snap.exists()){
+   siteSettings = snap.data();
+  }else{
+   siteSettings = {};
+  }
+  if(siteSettings.bannerUrl){ $("bannerImage").src = siteSettings.bannerUrl; }
+  if(siteSettings.bannerTitle){ $("bannerTitle").textContent = siteSettings.bannerTitle; }
+  if(siteSettings.bannerSubtitle){ $("bannerSubtitle").textContent = siteSettings.bannerSubtitle; }
+  if(isAdmin()){
+   $("adminBannerUrl").value = siteSettings.bannerUrl || "";
+   $("adminBannerTitle").value = siteSettings.bannerTitle || "";
+   $("adminBannerSubtitle").value = siteSettings.bannerSubtitle || "";
+   $("adminBkashNumber").value = siteSettings.bkashNumber || "";
+   $("adminDepositRules").value = siteSettings.depositRules || "";
+   $("adminWithdrawRules").value = siteSettings.withdrawRules || "";
+  }
+ }catch(e){ console.log(e); }
+}
+window.saveSiteSettings = async () => {
+ if(!isAdmin())return;
+ try{
+  await setDoc(doc(db,"siteSettings","main"),{
+    bannerUrl:$("adminBannerUrl").value.trim(),
+    bannerTitle:$("adminBannerTitle").value.trim(),
+    bannerSubtitle:$("adminBannerSubtitle").value.trim(),
+    bkashNumber:$("adminBkashNumber").value.trim(),
+    depositRules:$("adminDepositRules").value.trim(),
+    withdrawRules:$("adminWithdrawRules").value.trim(),
+    updatedAt:serverTimestamp()
+   },{merge:true});
+  alert("Settings saved!");
+  await loadSettings();
+ }catch(e){ alert(e.message); }
+};
+async function loadTournaments(){
+ const snap = await getDocs(collection(db,"tournaments"));
+ tournaments = snap.docs.map(d => ({ id:d.id,...d.data() }));
+ if(currentMode){ renderTournaments(currentMode); }
+}
+window.openMode = mode => {
+ currentMode = mode;
+ $("modeTitle").textContent = mode;
+ renderTournaments(mode);
+ showPage("tournamentPage");
+};
+function renderTournaments(mode){
+ const list = $("tournamentList");
+ const filtered = tournaments.filter(t => String(t.mode || "").toLowerCase() === mode.toLowerCase());
+ if(!filtered.length){
+  list.innerHTML = `<div class="empty">বর্তমানে এই Game Mode-এ কোনো Tournament নেই।</div>`;
+  return;
+ }
+ list.innerHTML = filtered.map(tournamentHTML).join("");
+}
 function tournamentHTML(t){
-  const title = escapeHTML(t.title || "Free Fire Tournament");
-  const fee = t.entryFee?? t.entry?? 0;
-  const prize = t.winPrize?? t.prize?? 0;
-  const kill = t.perKill?? t.killPrize?? 0;
-  const tag = escapeHTML(t.tag || "TOURNAMENT");
-  return `
-<div class="tCard">
+ const fee = Number(t.entryFee || 0);
+ return `
+ <div class="tCard">
   <div class="tHead">
-    <div class="tTitle">${title}</div>
-    <div class="badge">${tag}</div>
+   <div class="tTitle">${escapeHTML(t.title || "Tournament")}</div>
+   <div class="badge">${escapeHTML(t.tag || "TOURNAMENT")}</div>
   </div>
-  <div class="tDesc">${escapeHTML(t.description || "Competitive Free Fire tournament")}</div>
+  <div class="tDesc">${escapeHTML(t.description || "")}</div>
   <div class="infoRow">
-    <div class="info"><small>WIN PRIZE</small><b>${prize} TK</b></div>
-    <div class="info"><small>PER KILL</small><b>${kill} TK</b></div>
-    <div class="info"><small>ENTRY FEE</small><b>${fee} TK</b></div>
+   <div class="info"><small>PRIZE POOL</small><b>৳ ${Number(t.prize || 0)}</b></div>
+   <div class="info"><small>PER KILL</small><b>৳ ${Number(t.perKill || 0)}</b></div>
+   <div class="info"><small>ENTRY FEE</small><b>৳ ${fee}</b></div>
   </div>
   <div class="tActions">
-    <button onclick="viewTournament('${t.id}')">Tournament Details</button>
-    <button onclick="showRoom('${t.id}')">Room Details</button>
-    <button class="join" onclick="joinTournament('${t.id}')">Join</button>
+   <button onclick="viewTournament('${t.id}')">Details</button>
+   <button onclick="showRoom('${t.id}')">Room</button>
+   <button class="join" onclick="joinTournament('${t.id}')">Join</button>
   </div>
+ </div>`;
+}
+window.viewTournament = id => {
+ const t = tournaments.find(x => x.id === id);
+ if(!t)return;
+ openModal(`
+ <div class="detailTitle">${escapeHTML(t.title || "Tournament")}</div>
+ <div class="notice">${escapeHTML(t.description || "")}</div>
+ <div class="infoRow">
+  <div class="info"><small>PRIZE</small><b>৳ ${Number(t.prize || 0)}</b></div>
+  <div class="info"><small>PER KILL</small><b>৳ ${Number(t.perKill || 0)}</b></div>
+  <div class="info"><small>ENTRY</small><b>৳ ${Number(t.entryFee || 0)}</b></div>
+ </div>
+ <h3>📜 Tournament Rules</h3>
+ <div class="ruleBox">${escapeHTML(t.rules || "Rules not added yet.").replace(/\n/g,"<br>")}</div>`);
+};
+window.showRoom = id => {
+ const t = tournaments.find(x => x.id === id);
+ if(!t)return;
+ openModal(`
+ <div class="detailTitle">🔑 Room Details</div>
+ <div class="notice">ম্যাচ শুরু হওয়ার আগে Room তথ্য প্রকাশ করা হতে পারে।</div>
+ <div class="roomBox">
+  <b>Room ID:</b> ${escapeHTML(String(t.roomId || "Not released yet"))}
+  <br><br>
+  <b>Password:</b> ${escapeHTML(String(t.roomPassword || "Not released yet"))}
+ </div>`);
+};
+window.joinTournament = async id => {
+ const t = tournaments.find(x => x.id === id);
+ if(!t ||!currentUser)return;
+ await loadBalance();
+ const fee = Number(t.entryFee || 0);
+ const balance = Number(currentUserData?.balance || 0);
+ if(fee > balance){
+  alert("আপনার Wallet-এ পর্যাপ্ত টাকা নেই।");
+  return;
+ }
+ openModal(`
+ <div class="detailTitle">Join Tournament</div>
+ <div class="notice">Entry Fee: ৳ ${fee}<br>আপনার Wallet Balance: ৳ ${balance}</div>
+ <label class="fieldLabel">Player Name</label>
+ <input id="joinPlayerName" class="authInput" placeholder="Your player name">
+ <label class="fieldLabel">Free Fire UID</label>
+ <input id="joinPlayerUid" class="authInput" placeholder="Enter Free Fire UID">
+ <label class="fieldLabel">Team / Partner Name (Optional)</label>
+ <input id="joinTeam" class="authInput" placeholder="Team or partner">
+ <div class="ruleBox"><b>Rules:</b><br>${escapeHTML(t.rules || "Follow tournament rules.").replace(/\n/g,"<br>")}</div>
+ <button class="primary" onclick="confirmJoin('${id}')">Confirm Join</button>`);
+};
+window.confirmJoin = async id => {
+ const t = tournaments.find(x => x.id === id);
+ if(!t)return;
+ const playerName = $("joinPlayerName").value.trim();
+ const uid = $("joinPlayerUid").value.trim();
+ const team = $("joinTeam").value.trim();
+ if(!playerName ||!uid){
+  alert("Player Name এবং UID দিন।");
+  return;
+ }
+ const fee = Number(t.entryFee || 0);
+ await loadBalance();
+ if(Number(currentUserData.balance || 0) < fee){
+  alert("পর্যাপ্ত balance নেই।");
+  return;
+ }
+ try{
+  await addDoc(collection(db,"joinRequests"),{
+    tournamentId:id,
+    tournamentTitle:t.title || "",
+    mode:t.mode || "",
+    userId:currentUser.uid,
+    userEmail:currentUser.email,
+    playerName,
+    freeFireUid:uid,
+    team,
+    entryFee:fee,
+    status:"joined",
+    createdAt:serverTimestamp()
+   });
+  closeModal();
+  alert("Tournament Join Request submitted successfully!");
+  await loadMyMatches();
+ }catch(e){ alert("Join failed: "+e.message); }
+};
+window.openWallet = async () => {
+ await loadBalance();
+ const balance = Number(currentUserData?.balance || 0);
+ openModal(`
+ <div class="detailTitle">💳 Wallet</div>
+ <div class="walletCard">
+  <small>Available Balance</small>
+  <div class="walletBalance">৳ ${balance}</div>
+  <div class="actionRow">
+   <button class="deposit" onclick="depositInfo()">+ Deposit</button>
+   <button class="withdraw" onclick="withdrawInfo()">- Withdraw</button>
+  </div>
+ </div>`);
+};
+window.openProfileDeposit = () => depositInfo();
+window.depositInfo = () => {
+ const bkash = siteSettings.bkashNumber || "Admin bKash number not set";
+ const rules = siteSettings.depositRules || `১. সঠিক Amount পাঠান।\n২. bKash Transaction ID দিন।\n৩. একই Transaction ID একাধিকবার ব্যবহার করবেন না।\n৪. ভুল তথ্য দিলে Request Reject হতে পারে।`;
+ openModal(`
+ <div class="detailTitle">➕ bKash Deposit</div>
+ <div class="notice"><b>bKash Number:</b><br>${escapeHTML(bkash)}</div>
+ <div class="ruleBox"><b>Deposit Rules</b><br>${escapeHTML(rules).replace(/\n/g,"<br>")}</div>
+ <label class="fieldLabel">Deposit Amount</label>
+ <input id="depositAmount" class="authInput" type="number" placeholder="Enter amount">
+ <label class="fieldLabel">যে bKash নম্বর থেকে টাকা পাঠিয়েছেন</label>
+ <input id="depositSender" class="authInput" placeholder="01XXXXXXXXX">
+ <label class="fieldLabel">bKash Transaction ID</label>
+ <input id="depositTrx" class="authInput" placeholder="Enter Transaction ID">
+ <button class="primary" onclick="submitDeposit()">Submit Deposit Request</button>`);
+};
+window.submitDeposit = async () => {
+ const amount = Number($("depositAmount").value);
+ const sender = $("depositSender").value.trim();
+ const trx = $("depositTrx").value.trim();
+ if(!amount || amount <= 0 ||!sender ||!trx){
+  alert("সব তথ্য সঠিকভাবে দিন।");
+  return;
+ }
+ try{
+  const q = query(collection(db,"depositRequests"), where("transactionId","==",trx));
+  const old = await getDocs(q);
+  if(!old.empty){
+   alert("এই Transaction ID ইতোমধ্যে ব্যবহার করা হয়েছে।");
+   return;
+  }
+  await addDoc(collection(db,"depositRequests"),{
+    userId:currentUser.uid,
+    userEmail:currentUser.email,
+    userName:currentUser.displayName || currentUser.email.split("@")[0],
+    amount,
+    senderNumber:sender,
+    transactionId:trx,
+    status:"pending",
+    createdAt:serverTimestamp()
+   });
+  closeModal();
+  alert("Deposit request submitted. Admin verification-এর পর balance যোগ হবে।");
+ }catch(e){ alert("Deposit failed: "+e.message); }
+};
+window.withdrawInfo = async () => {
+ await loadBalance();
+ const balance = Number(currentUserData?.balance || 0);
+ const rules = siteSettings.withdrawRules || `১. সঠিক bKash নম্বর দিন।\n২. Request পাঠানোর সময় টাকা Wallet থেকে কেটে নেওয়া হবে।\n৩. টাকা পেতে দেরি হলে Support-এ যোগাযোগ করুন।`;
+ openModal(`
+ <div class="detailTitle">💸 Withdraw</div>
+ <div class="notice">Available Balance: ৳ ${balance}</div>
+ <div class="ruleBox"><b>Withdraw Rules</b><br>${escapeHTML(rules).replace(/\n/g,"<br>")}</div>
+ <label class="fieldLabel">Withdraw Amount</label>
+ <input id="withdrawAmount" class="authInput" type="number" placeholder="Enter amount">
+ <label class="fieldLabel">আপনার bKash Number</label>
+ <input id="withdrawNumber" class="authInput" placeholder="01XXXXXXXXX">
+ <button class="primary" onclick="submitWithdraw()">Submit Withdraw Request</button>`);
+};
+window.submitWithdraw = async () => {
+ const amount = Number($("withdrawAmount").value);
+ const number = $("withdrawNumber").value.trim();
+ await loadBalance();
+ const balance = Number(currentUserData?.balance || 0);
+ if(!amount || amount <= 0){
+  alert("সঠিক Amount দিন।");
+  return;
+ }
+ if(!number){
+  alert("আপনার bKash নম্বর দিন।");
+  return;
+ }
+ if(amount > balance){
+  alert("আপনার Wallet-এ পর্যাপ্ত টাকা নেই।");
+  return;
+ }
+ try{
+  await addDoc(collection(db,"withdrawRequests"),{
+    userId:currentUser.uid,
+    userEmail:currentUser.email,
+    userName:currentUser.displayName || currentUser.email.split("@")[0],
+    amount,
+    bkashNumber:number,
+    status:"pending",
+    createdAt:serverTimestamp()
+   });
+  closeModal();
+  alert("Withdraw request submitted successfully.");
+ }catch(e){ alert(e.message); }
+};
+async function loadMyMatches(){
+ if(!currentUser)return;
+ const q = query(collection(db,"joinRequests"), where("userId","==",currentUser.uid));
+ const snap = await getDocs(q);
+ const list = $("myMatchesList");
+ if(snap.empty){
+  list.innerHTML = `<div class="empty">No joined matches yet</div>`;
+  return;
+ }
+ list.innerHTML = snap.docs.map(d => {
+   const x = d.data();
+   return `
+   <div class="tCard">
+    <div class="tTitle">${escapeHTML(x.tournamentTitle || "Tournament")}</div>
+    <div class="tDesc">
+     Mode: ${escapeHTML(x.mode || "")}<br>
+     Player: ${escapeHTML(x.playerName || "")}<br>
+     UID: ${escapeHTML(x.freeFireUid || "")}<br>
+     Status: ${escapeHTML(x.status || "")}
+    </div>
+   </div>`;
+  }).join("");
+}
+window.showMyMatches = async () => {
+ await loadMyMatches();
+ showPage("matchesPage");
+};
+async function loadResults(){
+ const snap = await getDocs(collection(db,"results"));
+ const list = $("resultsList");
+ if(snap.empty){
+  list.innerHTML = `<div class="empty">No results available yet</div>`;
+  return;
+ }
+ list.innerHTML = snap.docs.map(d => {
+   const x = d.data();
+   return `
+   <div class="tCard">
+    <div class="tTitle">🏆 ${escapeHTML(x.tournament || "")}</div>
+    <div class="tDesc">
+     Winner: <b>${escapeHTML(x.winner || "")}</b><br><br>
+     ${escapeHTML(x.text || "").replace(/\n/g,"<br>")}
+    </div>
+   </div>`;
+  }).join("");
+}
+window.showMyMessages = async () => {
+ const q = query(collection(db,"messages"), where("userId","==",currentUser.uid));
+ const snap = await getDocs(q);
+ let html = `<div class="detailTitle">💬 My Messages</div><button class="primary" onclick="newSupportMessage()">Send New Message</button><br><br>`;
+ if(snap.empty){
+  html += `<div class="empty">No messages yet</div>`;
+ }else{
+  snap.docs.forEach(d => {
+   const x = d.data();
+   html += `<div class="messageItem"><b>Your Message:</b><br>${escapeHTML(x.message || "")}<br><br><b>Admin Reply:</b><br>${escapeHTML(x.reply || "Waiting for reply")}</div>`;
+  });
+ }
+ openModal(html);
+};
+window.newSupportMessage = () => {
+ openModal(`
+ <div class="detailTitle">Send Support Message</div>
+ <textarea id="userSupportMessage" class="authInput" style="min-height:130px" placeholder="আপনার সমস্যাটি লিখুন..."></textarea>
+ <button class="primary" onclick="submitSupportMessage()">Send Message</button>`);
+};
+window.submitSupportMessage = async () => {
+ const message = $("userSupportMessage").value.trim();
+ if(!message){
+  alert("আপনার Message লিখুন।");
+  return;
+ }
+ try{
+  await addDoc(collection(db,"messages"),{
+    userId:currentUser.uid,
+    userEmail:currentUser.email,
+    userName:currentUser.displayName || currentUser.email.split("@")[0],
+    message,
+    reply:"",
+    status:"pending",
+    createdAt:serverTimestamp()
+   });
+  closeModal();
+  alert("Message sent successfully.");
+ }catch(e){ alert(e.message); }
+};
+window.openSupport = async () => {
+ const snap = await getDocs(collection(db,"supportNumbers"));
+ let html = `<div class="detailTitle">🆘 Support</div><div class="notice">সমস্যার জন্য নিচের WhatsApp Support-এ যোগাযোগ করুন।</div>`;
+ if(snap.empty){
+  html += `<div class="empty">Support number not available yet.</div>`;
+ }else{
+  snap.docs.forEach(d => {
+   const x = d.data();
+   const number = String(x.number || "").replace(/[^\d]/g,"");
+   html += `<div class="adminItem"><b>${escapeHTML(x.name || "WhatsApp Support")}</b><br>${escapeHTML(x.number || "")}<div class="smallBtns"><button class="okBtn" onclick="window.open('https://wa.me/${number}','_blank')">Open WhatsApp</button></div></div>`;
+  });
+ }
+ openModal(html);
+};
+function isAdmin(){
+ return currentUser && currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+window.openAdmin = async () => {
+ if(!isAdmin())return;
+ showPage("adminPage");
+ await loadAdminDeposits();
+ await loadAdminWithdraws();
+ await loadAdminSupport();
+ await loadAdminMessages();
+};
+window.createTournament = async () => {
+ if(!isAdmin())return;
+ const mode = $("tMode").value.trim();
+ const title = $("tTitle").value.trim();
+ if(!mode ||!title){
+  alert("Game Mode এবং Tournament Title দিন।");
+  return;
+ }
+ try{
+  await addDoc(collection(db,"tournaments"),{
+    mode,
+    title,
+    prize:Number($("tPrize").value || 0),
+    perKill:Number($("tKill").value || 0),
+    entryFee:Number($("tFee").value || 0),
+    dateTime:$("tDate").value.trim(),
+    tag:$("tTag").value.trim() || "TOURNAMENT",
+    description:$("tDescription").value.trim(),
+    rules:$("tRules").value.trim(),
+    roomId:$("tRoomId").value.trim(),
+    roomPassword:$("tRoomPassword").value.trim(),
+    createdAt:serverTimestamp()
+   });
+  alert("Tournament created!");
+  ["tMode","tTitle","tPrize","tKill","tFee","tDate","tTag","tDescription","tRules","tRoomId","tRoomPassword"].forEach(id => $(id).value="");
+  await loadTournaments();
+ }catch(e){ alert(e.message); }
+};
+async function loadAdminDeposits(){
+ if(!isAdmin())return;
+ const snap = await getDocs(collection(db,"depositRequests"));
+ const box = $("adminDeposits");
+ if(snap.empty){
+  box.innerHTML = `<div class="empty">No deposit requests</div>`;
+  return;
+ }
+ box.innerHTML = snap.docs.map(d => {
+   const x = d.data();
+   return `<div class="adminItem"><b>${escapeHTML(x.userName || "")}</b><br>Email: ${escapeHTML(x.userEmail || "")}<br>bKash: ${escapeHTML(x.senderNumber || "")}<br>Amount: ৳ ${Number(x.amount || 0)}<br>TrxID: <b>${escapeHTML(x.transactionId || "")}</b><br>Status: <b>${escapeHTML(x.status || "")}</b><div class="smallBtns">${x.status==="pending"? `<button class="okBtn" onclick="approveDeposit('${d.id}')">Approve</button><button class="noBtn" onclick="rejectDeposit('${d.id}')">Reject</button>` : ""}</div></div>`;
+  }).join("");
+}
+window.approveDeposit = async id => {
+ if(!isAdmin())return;
+ const requestRef = doc(db,"depositRequests",id);
+ const requestSnap = await getDoc(requestRef);
+ if(!requestSnap.exists())return;
+ const data = requestSnap.data();
+ if(data.status!== "pending"){
+  alert("Already processed.");
+  return;
+ }
+ try{
+  await updateDoc(doc(db,"users",data.userId),{ balance:increment(Number(data.amount || 0)) });
+  await updateDoc(requestRef,{ status:"approved", approvedAt:serverTimestamp() });
+  await setDoc(doc(db,"usedTransactions", String(data.transactionId)),{ transactionId:data.transactionId, depositRequestId:id, usedAt:serverTimestamp() });
+  alert("Deposit approved and balance added!");
+  await loadAdminDeposits();
+ }catch(e){ alert(e.message); }
+};
+window.rejectDeposit = async id => {
+ if(!isAdmin())return;
+ await updateDoc(doc(db,"depositRequests",id),{ status:"rejected", rejectedAt:serverTimestamp() });
+ await loadAdminDeposits();
+};
+async function loadAdminWithdraws(){
+ if(!isAdmin())return;
+ const snap = await getDocs(collection(db,"withdrawRequests"));
+ const box = $("adminWithdraws");
+ if(snap.empty){
+  box.innerHTML = `<div class="empty">No withdraw requests</div>`;
+  return;
+ }
+ box.innerHTML = snap.docs.map(d => {
+   const x = d.data();
+   return `<div class="adminItem"><b>${escapeHTML(x.userName || "")}</b><br>Email: ${escapeHTML(x.userEmail || "")}<br>bKash: <b>${escapeHTML(x.bkashNumber || "")}</b><br>Amount: <b>৳ ${Number(x.amount || 0)}</b><br>Status: ${escapeHTML(x.status || "")}<div class="smallBtns">${x.status==="pending"? `<button class="okBtn" onclick="markWithdrawPaid('${d.id}')">Paid</button><button class="noBtn" onclick="rejectWithdraw('${d.id}')">Reject</button>` :""}</div></div>`;
+  }).join("");
+}
+window.markWithdrawPaid = async id => {
+ if(!isAdmin())return;
+ await updateDoc(doc(db,"withdrawRequests",id),{ status:"paid", paidAt:serverTimestamp() });
+ alert("Withdraw marked as paid.");
+ await loadAdminWithdraws();
+};
+window.rejectWithdraw = async id => {
+ if(!isAdmin())return;
+ await updateDoc(doc(db,"withdrawRequests",id),{ status:"rejected", rejectedAt:serverTimestamp() });
+ alert("Withdraw rejected.");
+ await loadAdminWithdraws();
+};
+window.addSupportNumber = async () => {
+ if(!isAdmin())return;
+ const number = $("supportNumberInput").value.trim();
+ const name = $("supportNameInput").value.trim();
+ if(!number){
+  alert("Support number দিন।");
+  return;
+ }
+ await addDoc(collection(db,"supportNumbers"),{ number, name:name || "WhatsApp Support", createdAt:serverTimestamp() });
+ $("supportNumberInput").value="";
+ $("supportNameInput").value="";
+ await loadAdminSupport();
+};
+async function loadAdminSupport(){
+ if(!isAdmin())return;
+ const snap = await getDocs(collection(db,"supportNumbers"));
+ ${escapeHTML(x.name || "WhatsApp Support")}<br>
+${escapeHTML(x.number || "")}
+<div class="smallBtns">
+<button class="delBtn" onclick="deleteSupportNumber('${d.id}')">Delete</button>
+</div>
 </div>`;
+ }).join("");
 }
 
-window.viewTournament = id => {
-  const t = tournaments.find(x => x.id === id);
-  if(!t) return;
-  const rules = t.rules || "";
-  const showRules = rules.trim().length > 0;
-  openModal(`
-    <div class="detailTitle">${escapeHTML(t.title || "Tournament")}</div>
-    <div class="tDesc">${escapeHTML(t.description || "")}</div>
-    <div class="infoRow">
-      <div class="info"><small>WIN PRIZE</small><b>${t.winPrize?? t.prize?? 0} TK</b></div>
-      <div class="info"><small>PER KILL</small><b>${t.perKill?? 0} TK</b></div>
-      <div class="info"><small>ENTRY FEE</small><b>${t.entryFee?? 0} TK</b></div>
-    </div>
-    ${showRules? `<h3>📜 Tournament Rules</h3><div class="ruleBox">${escapeHTML(rules).replace(/\n/g,"<br>")}</div>` : `<div class="notice">এই Tournament-এর Rules এখনো Admin থেকে যোগ করা হয়নি।</div>`}
-  `);
+window.deleteSupportNumber = async id => {
+ if(!isAdmin()) return;
+ if(!confirm("Delete this support number?")) return;
+
+ try{
+  await deleteDoc(doc(db,"supportNumbers",id));
+  await loadAdminSupport();
+ }catch(e){
+  alert(e.message);
+ }
 };
 
-window.showRoom = id => {
-  const t = tournaments.find(x => x.id === id);
-  if(!t) return;
-  openModal(`
-    <div class="detailTitle">🔑 Room Details</div>
-    <div class="notice">Room ID এবং Password সাধারণত ম্যাচ শুরু হওয়ার আগে প্রকাশ করা হবে।</div>
-    <div class="roomBox"><b>Room ID:</b> ${escapeHTML(String(t.roomId || "Not released yet"))}<br><br><b>Password:</b> ${escapeHTML(String(t.roomPassword || "Not released yet"))}</div>
-  `);
+async function loadAdminMessages(){
+ if(!isAdmin()) return;
+
+ const snap = await getDocs(collection(db,"messages"));
+ const box = $("adminMessages");
+
+ if(snap.empty){
+  box.innerHTML = `<div class="empty">No user messages</div>`;
+  return;
+ }
+
+ box.innerHTML = snap.docs.map(d => {
+  const x = d.data();
+
+  return `
+  <div class="adminItem">
+   <b>${escapeHTML(x.userName || "User")}</b><br>
+   Email: ${escapeHTML(x.userEmail || "")}<br><br>
+
+   <b>Message:</b><br>
+   ${escapeHTML(x.message || "").replace(/\n/g,"<br>")}
+   <br><br>
+
+   <b>Admin Reply:</b><br>
+   ${escapeHTML(x.reply || "No reply yet").replace(/\n/g,"<br>")}
+
+   <div class="smallBtns">
+    <button class="purpleBtn"
+     onclick="replyMessage('${d.id}')">
+     Reply
+    </button>
+
+    <button class="delBtn"
+     onclick="deleteMessage('${d.id}')">
+     Delete
+    </button>
+   </div>
+  </div>`;
+ }).join("");
+}
+
+window.replyMessage = async id => {
+ if(!isAdmin()) return;
+
+ const reply = prompt("Write your reply:");
+
+ if(reply === null) return;
+
+ try{
+  await updateDoc(doc(db,"messages",id),{
+   reply:reply.trim(),
+   status:"replied",
+   repliedAt:serverTimestamp()
+  });
+
+  alert("Reply sent!");
+  await loadAdminMessages();
+
+ }catch(e){
+  alert(e.message);
+ }
 };
 
-window.joinTournament = async id => {
-  const t = tournaments.find(x => x.id === id);
-  if(!t ||!currentUser) return;
-  openModal(`
-    <div class="detailTitle">Join Tournament</div>
-    <div class="notice">আপনি <b>${escapeHTML(t.title || "Tournament")}</b> Join করতে যাচ্ছেন। Entry Fee: ${t.entryFee?? 0} TK</div>
-    <button class="primary" onclick="confirmJoin('${id}')">Confirm Join</button>
-  `);
+window.deleteMessage = async id => {
+ if(!isAdmin()) return;
+
+ if(!confirm("Delete this message?")) return;
+
+ try{
+  await deleteDoc(doc(db,"messages",id));
+  await loadAdminMessages();
+
+ }catch(e){
+  alert(e.message);
+ }
 };
 
-window.confirmJoin = async id => {
-  try{
-    const t = tournaments.find(x => x.id === id);
-    await addDoc(collection(db,"joinRequests"),{
-      tournamentId:id,
-      tournamentTitle:t?.title || "",
-      userId:currentUser.uid,
-      userEmail:currentUser.email,
-      status:"pending",
-      createdAt:serverTimestamp()
-    });
-    closeModal();
-    alert("Join request submitted successfully!");
-  }catch(e){
-    alert("Join request failed: " + e.message);
-  }
+window.addResult = async () => {
+ if(!isAdmin()) return;
+
+ const tournament = $("resultTournament").value.trim();
+ const winner = $("resultWinner").value.trim();
+ const text = $("resultText").value.trim();
+
+ if(!tournament || !winner){
+  alert("Tournament Name এবং Winner Name দিন।");
+  return;
+ }
+
+ try{
+  await addDoc(collection(db,"results"),{
+   tournament,
+   winner,
+   text,
+   createdAt:serverTimestamp()
+  });
+
+  $("resultTournament").value = "";
+  $("resultWinner").value = "";
+  $("resultText").value = "";
+
+  alert("Result published!");
+
+  await loadResults();
+
+ }catch(e){
+  alert(e.message);
+ }
 };
 
-window.openWallet = () => {
-  openModal(`
-    <div class="detailTitle">💳 Wallet</div>
-    <div class="walletCard">
-      <small>Available Balance</small>
-      <div class="walletBalance">৳ 0</div>
-      <div class="actionRow">
-        <button class="deposit" onclick="depositInfo()">+ Deposit</button>
-        <button class="withdraw" onclick="withdrawInfo()">- Withdraw</button>
-      </div>
-    </div>
-    <div class="notice">Deposit এবং Withdraw বর্তমানে Admin review/ manual system অনুযায়ী পরিচালিত হবে।</div>
-  `);
-};
-
-window.depositInfo = () => {
-  openModal(`
-    <div class="detailTitle">+ Deposit</div>
-    <div class="notice">bKash payment system-এর তথ্য Admin dashboard থেকে পরিচালনা করা হবে।</div>
-    <label class="fieldLabel">Amount</label>
-    <input id="depositAmount" class="authInput" type="number" placeholder="Enter amount">
-    <label class="fieldLabel">Transaction ID</label>
-    <input id="depositTrx" class="authInput" placeholder="Enter bKash Transaction ID">
-    <button class="primary" onclick="submitDeposit()">Submit Deposit Request</button>
-  `);
-};
-
-window.withdrawInfo = () => {
-  openModal(`
-    <div class="detailTitle">- Withdraw</div>
-    <label class="fieldLabel">Amount</label>
-    <input id="withdrawAmount" class="authInput" type="number" placeholder="Enter amount">
-    <label class="fieldLabel">bKash Number</label>
-    <input id="withdrawNumber" class="authInput" placeholder="01XXXXXXXXX">
-    <button class="primary" onclick="submitWithdraw()">Submit Withdraw Request</button>
-  `);
-};
-
-window.submitDeposit = async () => {
-  try{
-    const amount = $("depositAmount").value;
-    const trx = $("depositTrx").value.trim();
-    if(!amount ||!trx) return alert("Please fill all fields.");
-    await addDoc(collection(db,"depositRequests"),{
-      userId:currentUser.uid,
-      email:currentUser.email,
-      amount:Number(amount),
-      transactionId:trx,
-      status:"pending",
-      createdAt:serverTimestamp()
-    });
-    closeModal();
-    alert("Deposit request submitted.");
-  }catch(e){ alert(e.message); }
-};
-
-window.submitWithdraw = async () => {
-  try{
-    const amount = $("withdrawAmount").value;
-    const number = $("withdrawNumber").value.trim();
-    if(!amount ||!number) return alert("Please fill all fields.");
-    await addDoc(collection(db,"withdrawRequests"),{
-      userId:currentUser.uid,
-      email:currentUser.email,
-      amount:Number(amount),
-      bkashNumber:number,
-      status:"pending",
-      createdAt:serverTimestamp()
-    });
-    closeModal();
-    alert("Withdraw request submitted.");
-  }catch(e){ alert(e.message); }
-};
-
-window.showMyMessages = () => {
-  openModal(`
-    <div class="detailTitle">💬 Messages</div>
-    <div class="empty">No messages yet</div>
-  `);
-};
-
-window.showMyMatches = () => {
-  showPage("matchesPage");
-  document.querySelectorAll(".navBtn").forEach(x=>x.classList.remove("active"));
-};
-
-window.openAdmin = () => {
-  if(!currentUser || currentUser.email.toLowerCase()!== ADMIN_EMAIL.toLowerCase()){
-    alert("Admin access denied.");
-    return;
-  }
-  openModal(`
-    <div class="detailTitle">👑 Admin Panel</div>
-    <div class="adminPanel">
-      <h3>Add Tournament</h3>
-      <input id="aTitle" placeholder="Tournament title">
-      <select id="aMode">
-        <option>BR DUO MATCH</option>
-        <option>BR SOLO MATCH</option>
-        <option>BR PRO LEAGUE</option>
-        <option>SOLO SURVIVAL</option>
-        <option>LONE WOLF</option>
-        <option>LV HEAD HOST</option>
-        <option>CLASH SQUAD</option>
-        <option>CS 1v1...2v2</option>
-        <option>LONE WOLF 1vs1</option>
-        <option>LOST TO WIN</option>
-        <option>EXTREME TOUR SPECIAL MODE</option>
-        <option>FREE MATCH</option>
-      </select>
-      <input id="aPrize" type="number" placeholder="Win Prize">
-      <input id="aKill" type="number" placeholder="Per Kill Prize">
-      <input id="aEntry" type="number" placeholder="Entry Fee">
-      <input id="aTag" placeholder="Tag (example: BR)">
-      <textarea id="aDesc" placeholder="Tournament description"></textarea>
-      <textarea id="aRules" placeholder="Tournament Rules (optional)"></textarea>
-      <button onclick="adminAddTournament()">Add Tournament</button>
-    </div>
-  `);
-};
-
-window.adminAddTournament = async () => {
-  if(!currentUser || currentUser.email.toLowerCase()!== ADMIN_EMAIL.toLowerCase()){
-    return alert("Admin only.");
-  }
-  try{
-    const title = $("aTitle").value.trim();
-    if(!title) return alert("Tournament title required.");
-    await addDoc(collection(db,"tournaments"),{
-      title:title,
-      mode:$("aMode").value,
-      winPrize:Number($("aPrize").value || 0),
-      perKill:Number($("aKill").value || 0),
-      entryFee:Number($("aEntry").value || 0),
-      tag:$("aTag").value.trim(),
-      description:$("aDesc").value.trim(),
-      rules:$("aRules").value.trim(),
-      active:true,
-      createdAt:serverTimestamp()
-    });
-    alert("Tournament added successfully!");
-    await loadTournaments();
-  }catch(e){
-    alert("Error: " + e.message);
-  }
-};
-
-window.navTo = (page,btn) => {
-  showPage(page);
-  document.querySelectorAll(".navBtn").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-};
-
-window.showPage = id => {
-  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
-  $(id).classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-};
-
-window.openModal = html => {
-  $("modalContent").innerHTML = html;
-  $("modal").classList.remove("hidden");
+window.openModal = content => {
+ $("modalContent").innerHTML = content;
+ $("modal").classList.remove("hidden");
 };
 
 window.closeModal = () => {
-  $("modal").classList.add("hidden");
+ $("modal").classList.add("hidden");
+ $("modalContent").innerHTML = "";
+};
+
+window.showPage = pageId => {
+ document.querySelectorAll(".page").forEach(page => {
+  page.classList.remove("active");
+ });
+
+ const page = $(pageId);
+ if(page){
+  page.classList.add("active");
+ }
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+};
+
+window.navTo = (pageId,button) => {
+ document.querySelectorAll(".navBtn").forEach(btn => {
+  btn.classList.remove("active");
+ });
+
+ if(button){
+  button.classList.add("active");
+ }
+
+ showPage(pageId);
+
+ if(pageId === "matchesPage"){
+  loadMyMatches();
+ }
+
+ if(pageId === "resultsPage"){
+  loadResults();
+ }
+
+ if(pageId === "profilePage"){
+  loadBalance();
+ }
 };
 
 function escapeHTML(value){
-  return String(value?? "")
-   .replace(/&/g,"&amp;")
-   .replace(/</g,"&lt;")
-   .replace(/>/g,"&gt;")
-   .replace(/"/g,"&quot;")
-   .replace(/'/g,"&#039;");
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 }
+
+function escapeJS(value){
+ return String(value ?? "")
+  .replace(/\\/g,"\\\\")
+  .replace(/'/g,"\\'")
+  .replace(/\n/g,"\\n")
+  .replace(/\r/g,"");
+}
+
+$("modal").addEventListener("click",e => {
+ if(e.target === $("modal")){
+  closeModal();
+ }
+});
+
+renderModes();
+
 </script>
 </body>
 </html>
