@@ -1,1425 +1,331 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>R2.0 ESPORTS</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
- --bg:#0b1020;
- --card:#151d2d;
- --card2:#101827;
- --text:#f4f6fb;
- --muted:#9da8bb;
- --pink:#ff356f;
- --red:#ff4b3e;
- --green:#29c997;
- --line:#26324a;
- --yellow:#ffd34d;
- --purple:#9b3ecf;
-}
-body{
- font-family:Arial,sans-serif;
- background:var(--bg);
- color:var(--text);
- min-height:100vh
-}
-button{cursor:pointer;border:0;font-weight:700}
-input,textarea,select{font-family:inherit}
-.hidden{display:none!important}
-#authPage{
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- background:
- radial-gradient(circle at top,#263c71 0%,transparent 35%),
- #080d19
-}
-.authBox{
- width:100%;
- max-width:420px;
- background:#111a2a;
- border:1px solid #293854;
- border-radius:24px;
- padding:28px
-}
-.logo{
- text-align:center;
- font-size:30px;
- font-weight:900;
- margin-bottom:8px
-}
-.logo span{color:var(--pink)}
-.sub{
- text-align:center;
- color:var(--muted);
- margin-bottom:24px
-}
-.tabs{
- display:flex;
- background:#0b1220;
- border-radius:12px;
- padding:4px;
- margin-bottom:18px
-}
-.tabs button{
- width:50%;
- padding:12px;
- border-radius:9px;
- background:transparent;
- color:var(--muted)
-}
-.tabs button.active{
- background:#24314a;
- color:#fff
-}
-.fieldLabel{
- display:block;
- margin:12px 0 7px;
- font-size:14px;
- color:#c8d0df
-}
-.authInput,.adminInput{
- width:100%;
- padding:14px;
- border-radius:10px;
- border:1px solid #34425d;
- background:#0b1220;
- color:#fff
-}
-.primary{
- width:100%;
- margin-top:18px;
- padding:15px;
- border-radius:11px;
- color:white;
- background:linear-gradient(90deg,#ff356f,#ff4b3e)
-}
-.google{
- width:100%;
- margin-top:12px;
- padding:14px;
- border-radius:11px;
- background:#fff;
- color:#222
-}
-.or{
- text-align:center;
- color:var(--muted);
- margin:16px 0
-}
-.msg{
- text-align:center;
- margin-top:14px;
- font-size:14px;
- color:#ffb0b0
-}
-#app{padding-bottom:85px}
-.topbar{
- position:sticky;
- top:0;
- z-index:10;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:14px 16px;
- background:rgba(11,16,32,.97);
- border-bottom:1px solid var(--line)
-}
-.brand{font-size:21px;font-weight:900}
-.brand span{color:var(--pink)}
-.topRight{display:flex;gap:8px;align-items:center}
-.balance{
- background:#182238;
- border:1px solid #2a3853;
- padding:8px 10px;
- border-radius:10px;
- color:#77e6bf;
- font-size:13px
-}
-.iconBtn{
- background:#182238;
- color:#fff;
- padding:9px 10px;
- border-radius:10px
-}
-.page{
- display:none;
- padding:16px;
- max-width:900px;
- margin:auto
-}
-.page.active{display:block}
-.hero{
- position:relative;
- overflow:hidden;
- min-height:190px;
- border-radius:18px;
- margin-bottom:16px;
- border:1px solid #293957;
- background:#16213b
-}
-.hero img{
- width:100%;
- height:220px;
- object-fit:cover;
- display:block
-}
-.heroOverlay{
- position:absolute;
- inset:0;
- display:flex;
- flex-direction:column;
- justify-content:flex-end;
- padding:20px;
- background:linear-gradient(
-  180deg,
-  transparent 15%,
-  rgba(4,8,18,.9) 100%
- )
-}
-.heroOverlay h1{font-size:27px}
-.heroOverlay p{color:#dce5f5;margin-top:7px}
-.sectionTitle{
- font-size:20px;
- font-weight:800;
- margin:18px 0 12px
-}
-.grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:12px
-}
-.modeCard,.tCard,.profileCard,.walletCard,.adminCard{
- background:var(--card);
- border:1px solid var(--line);
- border-radius:16px
-}
-.modeCard{
- padding:18px;
- min-height:115px;
- display:flex;
- flex-direction:column;
- justify-content:center
-}
-.modeCard h3{font-size:16px}
-.modeCard button{
- margin-top:14px;
- padding:10px;
- border-radius:9px;
- background:#263653;
- color:#fff
-}
-.tCard{padding:16px;margin-bottom:14px}
-.tHead{
- display:flex;
- justify-content:space-between;
- gap:10px
-}
-.tTitle{font-size:18px;font-weight:800}
-.badge{
- background:#d62e67;
- color:#fff;
- padding:6px 9px;
- border-radius:8px;
- font-size:11px
-}
-.tDesc{
- color:var(--muted);
- font-size:13px;
- margin:10px 0
-}
-.infoRow{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:7px;
- margin:14px 0
-}
-.info{
- background:#111827;
- padding:10px 5px;
- text-align:center;
- border-radius:10px
-}
-.info small{
- display:block;
- color:var(--muted);
- font-size:9px
-}
-.info b{
- display:block;
- margin-top:5px;
- font-size:13px
-}
-.tActions{
- display:grid;
- grid-template-columns:1fr 1fr 1fr;
- gap:7px
-}
-.tActions button{
- padding:10px 5px;
- border-radius:9px;
- background:#263653;
- color:#fff;
- font-size:11px
-}
-.tActions.join{
- background:linear-gradient(90deg,#2aa874,#198bb8)
-}
-.notice{
- background:#17233b;
- border:1px solid #31496e;
- padding:12px;
- border-radius:10px;
- color:#c8d6ec;
- margin-bottom:14px;
- font-size:13px;
- line-height:1.5
-}
-.empty{
- color:var(--muted);
- padding:25px;
- text-align:center
-}
-.profileCard{padding:18px;margin-bottom:12px}
-.profileName{font-size:21px;font-weight:bold}
-.profileEmail{
- color:var(--muted);
- font-size:13px;
- margin-top:5px
-}
-.profileBalance{
- margin-top:15px;
- font-size:25px;
- color:#70e1b7;
- font-weight:bold
-}
-.profileBtns{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
- margin-top:18px
-}
-.profileBtns button,.wideBtn{
- padding:13px;
- border-radius:10px;
- background:#263653;
- color:#fff
-}
-.adminBtn{
- background:var(--purple)!important;
- margin-top:10px
-}
-.bottomNav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- background:#121a29;
- border-top:1px solid var(--line);
- display:flex;
- justify-content:space-around;
- padding:8px 2px;
- z-index:20
-}
-.navBtn{
- background:transparent;
- color:#aab3c3;
- display:flex;
- flex-direction:column;
- gap:4px;
- align-items:center;
- font-size:11px;
- padding:4px 8px
-}
-.navBtn.active{color:var(--yellow)}
-.modal{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.75);
- z-index:100;
- display:flex;
- align-items:flex-end
-}
-.modalBox{
- width:100%;
- max-width:700px;
- margin:auto;
- background:#121b2b;
- border-radius:22px 22px 0 0;
- padding:20px;
- max-height:90vh;
- overflow:auto
-}
-.close{
- float:right;
- background:#27334a;
- color:#fff;
- width:34px;
- height:34px;
- border-radius:50%
-}
-.detailTitle{
- font-size:23px;
- margin:8px 0 14px
-}
-.ruleBox,.roomBox{
- background:#0c1422;
- border:1px solid #283550;
- padding:14px;
- border-radius:12px;
- margin:12px 0;
- line-height:1.6
-}
-.roomBox{
- border-style:dashed;
- border-color:#405575
-}
-.walletCard{padding:18px;margin-bottom:12px}
-.walletBalance{
- font-size:30px;
- color:#70e1b7;
- margin:8px 0
-}
-.actionRow{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px
-}
-.actionRow button{
- padding:14px;
- border-radius:10px;
- color:#fff
-}
-.deposit{background:#209b75}
-.withdraw{background:#c66a37}
-.adminCard{
- padding:15px;
- margin-bottom:14px
-}
-.adminCard h3{margin-bottom:12px}
-.adminCard input,
-.adminCard textarea,
-.adminCard select{
- width:100%;
- padding:12px;
- margin-bottom:9px;
- background:#0b1220;
- border:1px solid #38445e;
- color:white;
- border-radius:9px
-}
-.adminCard textarea{min-height:90px}
-.adminSave{
- padding:12px;
- width:100%;
- border-radius:10px;
- background:var(--purple);
- color:#fff
-}
-.adminItem{
- background:#101827;
- border:1px solid #283550;
- padding:12px;
- border-radius:10px;
- margin-top:10px;
- font-size:13px;
- line-height:1.5
-}
-.smallBtns{
- display:flex;
- gap:7px;
- flex-wrap:wrap;
- margin-top:10px
-}
-.smallBtns button{
- padding:8px 10px;
- border-radius:7px;
- color:#fff;
- background:#33445f
-}
-.okBtn{background:#24966f!important}
-.noBtn{background:#b8444f!important}
-.delBtn{background:#963943!important}
-.purpleBtn{background:#7542a8!important}
-.messageItem{
- padding:12px;
- background:#101827;
- border:1px solid #283550;
- border-radius:10px;
- margin-bottom:10px
-}
-@media(max-width:450px){
-.grid{grid-template-columns:1fr 1fr}
-.hero img{height:190px}
-.tActions{grid-template-columns:1fr}
-.infoRow{gap:5px}
-}
+:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1423,#060b14);color:var(--text);font-family:system-ui,Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}.app{max-width:850px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#111}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}.sub{font-size:12px;color:var(--muted)}
+main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0}.hero img{width:100%;display:block;max-height:300px;object-fit:cover}.fallback{padding:45px 18px;background:linear-gradient(135deg,#35152a,#12304a);font-size:26px;font-weight:900}
+.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.mode small{display:block;color:var(--muted);margin-top:7px}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}.stat{padding:10px;text-align:center;border-right:1px solid var(--line);font-size:12px}.stat:last-child{border:0}.stat b{display:block;font-size:15px;margin-top:5px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour .inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.rule{padding:10px;border-left:4px solid var(--gold);background:#0b1726;border-radius:8px;margin:7px 0}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524;border-top:1px solid var(--line);z-index:30}.nav{max-width:850px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.notice{padding:11px;border-radius:12px;background:#10223a;color:#d8e6f7;font-size:13px}.slider{position:relative;overflow:hidden}.slide{display:none}.slide.active{display:block}.dots{position:absolute;bottom:9px;left:0;right:0;text-align:center}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#bbb;margin:3px}.dot.on{background:var(--red)}.adminTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button{white-space:nowrap}.list{max-height:360px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.success{color:#57e6b7}.warn{color:#ffd166}.mini{padding:7px 10px;font-size:12px;margin-top:6px}.gap{margin-top:10px}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.brand{font-size:17px}.stats{font-size:11px}}
 </style>
 </head>
 <body>
-<section id="authPage">
- <div class="authBox">
-  <div class="logo">R2.0 <span>ESPORTS</span></div>
-  <div class="sub">Free Fire Tournament Platform</div>
-  <div class="tabs">
-   <button id="loginTab" class="active">Login</button>
-   <button id="signupTab">Sign Up</button>
-  </div>
-  <label class="fieldLabel">Email</label>
-  <input id="email" class="authInput" type="email" placeholder="Enter your email">
-  <label class="fieldLabel">Password</label>
-  <input id="password" class="authInput" type="password" placeholder="Minimum 6 characters">
-  <button id="emailAuthBtn" class="primary">Login</button>
-  <div class="or">OR</div>
-  <button id="googleBtn" class="google">Continue with Google</button>
-  <div id="authMsg" class="msg"></div>
- </div>
-</section>
-<section id="app" class="hidden">
-<header class="topbar">
- <div class="brand">R2.0 <span>ESPORTS</span></div>
- <div class="topRight">
-  <div class="balance">৳ <span id="topBalance">0</span></div>
-  <button class="iconBtn" id="logoutBtn">Logout</button>
- </div>
+<div class="app">
+<header class="top">
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/651b3cccae034725beb279c6c1951687.jpg" alt="R2.0 ESPORTS">
+<div><div class="brand">R2.0 <b>ESPORTS</b></div><div class="sub">Free Fire Tournament Platform</div></div>
 </header>
-<main id="playPage" class="page active">
- <div class="hero">
-  <img id="bannerImage" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=90" alt="R2.0 ESPORTS Banner">
-  <div class="heroOverlay">
-   <h1 id="bannerTitle">R2.0 ESPORTS</h1>
-   <p id="bannerSubtitle">🔥 Free Fire Tournament Platform</p>
-  </div>
- </div>
- <h2 class="sectionTitle">FREE FIRE GAME MODES</h2>
- <div class="grid" id="gameModes"></div>
-</main>
-<main id="tournamentPage" class="page">
- <button class="wideBtn" onclick="showPage('playPage')">← Back to Game Modes</button>
- <h2 class="sectionTitle" id="modeTitle">Tournament</h2>
- <div id="tournamentList"></div>
-</main>
-<main id="matchesPage" class="page">
- <h2 class="sectionTitle">My Matches</h2>
- <div class="notice">আপনি যেসব Tournament-এ Join করবেন, সেগুলো এখানে দেখা যাবে।</div>
- <div id="myMatchesList" class="empty">No joined matches yet</div>
-</main>
-<main id="resultsPage" class="page">
- <h2 class="sectionTitle">Results</h2>
- <div id="resultsList"></div>
-</main>
-<main id="profilePage" class="page">
- <h2 class="sectionTitle">My Profile</h2>
- <div class="profileCard">
-  <div class="profileName" id="profileName">Player</div>
-  <div class="profileEmail" id="profileEmail"></div>
-  <div class="profileBalance">Wallet: ৳ <span id="profileBalance">0</span></div>
-  <div class="profileBtns">
-   <button onclick="openWallet()">💳 Wallet</button>
-   <button onclick="showMyMessages()">💬 My Messages</button>
-   <button onclick="showMyMatches()">🎮 My Matches</button>
-   <button onclick="showPage('resultsPage')">🏆 Results</button>
-   <button onclick="openSupport()">🆘 Support</button>
-   <button onclick="openProfileDeposit()">➕ Deposit</button>
-  </div>
-  <button id="adminOpenBtn" class="wideBtn adminBtn hidden" onclick="openAdmin()">👑 Open Admin Panel</button>
- </div>
-</main>
-<main id="adminPage" class="page">
- <button class="wideBtn" onclick="showPage('profilePage')">← Back to Profile</button>
- <h2 class="sectionTitle">👑 Admin Panel</h2>
- <div class="adminCard">
-  <h3>🖼 Banner Settings</h3>
-  <input id="adminBannerUrl" placeholder="Banner Image URL">
-  <input id="adminBannerTitle" placeholder="Banner Title">
-  <input id="adminBannerSubtitle" placeholder="Banner Subtitle">
-  <button class="adminSave" onclick="saveSiteSettings()">Save Banner Settings</button>
- </div>
- <div class="adminCard">
-  <h3>💰 Payment Settings</h3>
-  <input id="adminBkashNumber" placeholder="bKash Number">
-  <textarea id="adminDepositRules" placeholder="Deposit Rules"></textarea>
-  <textarea id="adminWithdrawRules" placeholder="Withdraw Rules"></textarea>
-  <button class="adminSave" onclick="saveSiteSettings()">Save Payment Settings</button>
- </div>
- <div class="adminCard">
-  <h3>🎮 Create Tournament</h3>
-  <input id="tMode" placeholder="Game Mode">
-  <input id="tTitle" placeholder="Tournament Title">
-  <input id="tPrize" type="number" placeholder="Prize Pool">
-  <input id="tKill" type="number" placeholder="Per Kill Prize">
-  <input id="tFee" type="number" placeholder="Entry Fee">
-  <input id="tDate" placeholder="Date / Time">
-  <input id="tTag" placeholder="Tournament Tag">
-  <textarea id="tDescription" placeholder="Description"></textarea>
-  <textarea id="tRules" placeholder="Tournament Rules"></textarea>
-  <input id="tRoomId" placeholder="Room ID">
-  <input id="tRoomPassword" placeholder="Room Password">
-  <button class="adminSave" onclick="createTournament()">Create Tournament</button>
- </div>
- <div class="adminCard">
-  <h3>🏦 Deposit Requests</h3>
-  <div id="adminDeposits"></div>
- </div>
- <div class="adminCard">
-  <h3>💸 Withdraw Requests</h3>
-  <div id="adminWithdraws"></div>
- </div>
- <div class="adminCard">
-  <h3>🆘 Support Numbers</h3>
-  <input id="supportNumberInput" placeholder="WhatsApp number e.g. 8801XXXXXXXXX">
-  <input id="supportNameInput" placeholder="Support Name">
-  <button class="adminSave" onclick="addSupportNumber()">Add Support Number</button>
-  <div id="adminSupportNumbers"></div>
- </div>
- <div class="adminCard">
-  <h3>💬 User Messages</h3>
-  <div id="adminMessages"></div>
- </div>
- <div class="adminCard">
-  <h3>🏆 Tournament Results</h3>
-  <input id="resultTournament" placeholder="Tournament Name">
-  <input id="resultWinner" placeholder="Winner Name">
-  <textarea id="resultText" placeholder="Result Details"></textarea>
-  <button class="adminSave" onclick="addResult()">Publish Result</button>
- </div>
-</main>
-<nav class="bottomNav">
- <button class="navBtn active" onclick="navTo('playPage',this)">🎮<span>Play</span></button>
- <button class="navBtn" onclick="navTo('matchesPage',this)">📜<span>My Matches</span></button>
- <button class="navBtn" onclick="navTo('resultsPage',this)">📊<span>Results</span></button>
- <button class="navBtn" onclick="navTo('profilePage',this)">👤<span>Profile</span></button>
-</nav>
+
+<main>
+<section id="login" class="page active"><div class="card">
+<h2>Welcome</h2><p class="muted">Login অথবা নতুন account তৈরি করুন</p>
+<input id="email" class="input" type="email" placeholder="Email">
+<input id="password" class="input" type="password" placeholder="Password (কমপক্ষে 6 characters)">
+<div class="row"><button class="btn" onclick="loginUser()">Login</button><button class="btn alt" onclick="registerUser()">Create Account</button></div>
+<p class="notice">এই ওয়েবসাইটে tournament balance Credits হিসেবে পরিচালিত হয়। বাস্তব টাকা স্বয়ংক্রিয়ভাবে পাঠানো বা গ্রহণ করা হয় না।</p>
+</div></section>
+
+<section id="home" class="page"><div id="bannerWrap"></div><h2>Game Modes</h2><div id="modes" class="grid"></div></section>
+<section id="tournaments" class="page"><h2 id="modeTitle">Tournaments</h2><div id="tlist"></div></section>
+<section id="details" class="page"><button class="btn alt" onclick="go('tournaments')">← Back</button><div id="detailBox"></div></section>
+<section id="matches" class="page"><h2>My Matches</h2><div id="myMatchesList"></div></section>
+<section id="results" class="page"><h2>Results</h2><div id="resultsList"></div></section>
+
+<section id="profile" class="page">
+<div class="card center"><div class="avatar" id="av">R</div><h2 id="pname">Player</h2><div id="pemail" class="muted"></div></div>
+<div class="card"><div class="row space"><b>Credit Balance</b><b id="points">0 Credits</b></div><button class="btn gold gap" onclick="go('wallet')">Wallet / Credit Request</button></div>
+<button class="btn alt" onclick="logoutUser()">Logout</button>
 </section>
-<div id="modal" class="modal hidden">
- <div class="modalBox">
-  <button class="close" onclick="closeModal()">X</button>
-  <div id="modalContent"></div>
- </div>
+
+<section id="wallet" class="page">
+<h2>Wallet</h2>
+<div class="card"><div class="row space"><span>Available Credits</span><b id="walletPoints">0</b></div></div>
+<div class="card"><h3>Credit Request</h3><p class="notice">Request admin review-এর জন্য জমা হবে।</p>
+<select id="requestType" class="input"><option value="add">Add Credit Request</option><option value="withdraw">Withdrawal Review Request</option></select>
+<input id="requestAmount" class="input" type="number" min="1" placeholder="Amount / Credits">
+<textarea id="requestNote" class="input" placeholder="Reference / Note (ঐচ্ছিক)"></textarea>
+<button class="btn" onclick="submitWalletRequest()">Submit Request</button></div>
+<div class="card"><h3>My Requests</h3><div id="requestList"></div></div>
+</section>
+
+<section id="admin" class="page">
+<h2>Admin Panel</h2><p id="adminStatus" class="notice">Admin access required.</p>
+<div id="adminContent" class="hidden">
+<div class="adminTabs">
+<button class="btn alt" onclick="adminTab('settings')">Settings</button>
+<button class="btn alt" onclick="adminTab('banners')">Banners</button>
+<button class="btn alt" onclick="adminTab('modes')">Modes</button>
+<button class="btn alt" onclick="adminTab('tours')">Tournaments</button>
+<button class="btn alt" onclick="adminTab('requests')">Requests</button>
+<button class="btn alt" onclick="adminTab('results')">Results</button>
+</div><div id="adminBox"></div>
 </div>
+</section>
+</main>
+</div>
+
+<nav class="bottom"><div class="nav">
+<button id="nHome" onclick="go('home')">🎮<br>Play</button>
+<button id="nMatches" onclick="go('matches');loadMyMatches()">📋<br>Matches</button>
+<button id="nResults" onclick="go('results');loadResults()">🏆<br>Results</button>
+<button id="nProfile" onclick="go('profile')">👤<br>Profile</button>
+<button id="nAdmin" onclick="openAdmin()">⚙️<br>Admin</button>
+</div></nav>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-const firebaseConfig = {
- apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
- authDomain: "r20-esports.firebaseapp.com",
- projectId: "r20-esports",
- storageBucket: "r20-esports.firebasestorage.app",
- messagingSenderId: "1093098377356",
- appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
- measurementId: "G-28FJ7LF6TL"
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+import {getFirestore,collection,getDocs,doc,getDoc,setDoc,addDoc,updateDoc,deleteDoc,query,where,serverTimestamp,runTransaction} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+const firebaseConfig={
+ apiKey:"AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
+ authDomain:"r20-esports.firebaseapp.com",
+ projectId:"r20-esports",
+ storageBucket:"r20-esports.firebasestorage.app",
+ messagingSenderId:"1093098377356",
+ appId:"1:1093098377356:web:ca32c25bf149e317bceba9",
+ measurementId:"G-28FJ7LF6TL"
 };
-const ADMIN_EMAIL = "salasalauddin139@gmail.com";
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-const $ = id => document.getElementById(id);
-let signupMode = false;
-let currentUser = null;
-let currentUserData = null;
-let currentMode = "";
-let tournaments = [];
-let siteSettings = {};
-const gameModes = [
- "BR DUO MATCH",
- "BR SOLO MATCH",
- "BR PRO LEAGUE",
- "SOLO SURVIVAL",
- "LONE WOLF",
- "LV HEAD HOST",
- "CLASH SQUAD",
- "CS 1v1...2v2",
- "LONE WOLF 1vs1",
- "LOST TO WIN",
- "EXTREME TOUR SPECIAL MODE",
- "FREE MATCH"
-];
-function renderModes(){
- $("gameModes").innerHTML = gameModes.map(mode => `
- <div class="modeCard">
-  <h3>${escapeHTML(mode)}</h3>
-  <button onclick="openMode('${escapeJS(mode)}')">View Tournament</button>
- </div>
- `).join("");
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let user=null,isAdmin=false,sliderTimer=null;
+const defaultModes=['BR DUO MATCH','BR SOLO MATCH','ETB BR PRO LEAGUE','SOLO SURVIVAL','LONE WOLF','CLASH SQUAD','CS 1v1 / 2v2','LOST TO WIN','FREE MATCH'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const err=e=>alert(e?.message||'একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+
+window.go=id=>{
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ const page=$(id);if(page)page.classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+ const map={home:'nHome',matches:'nMatches',results:'nResults',profile:'nProfile',admin:'nAdmin'};
+ if(map[id])$(map[id]).classList.add('active');
+ scrollTo(0,0);
+ if(id==='wallet')loadWallet();
+};
+
+async function getSite(){try{const s=await getDoc(doc(db,'siteSettings','main'));return s.exists()?s.data():{}}catch{return{}}}
+
+async function loadHome(){
+ const site=await getSite();
+ $('siteLogo').src=site.logoUrl||"https://d3tx3wg2jy0sui.cloudfront.net/651b3cccae034725beb279c6c1951687.jpg";
+ let banners=[];
+ try{banners=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.active!==false)}catch{}
+ if(!banners.length)banners=[{imageUrl:site.bannerUrl||"https://d3tx3wg2jy0sui.cloudfront.net/1d9307a099b64ae1b459c3a5fdfc2ea4.jpg",title:'R2.0 ESPORTS'}];
+ $('bannerWrap').innerHTML='<div class="card hero slider">'+banners.map((b,i)=>`<div class="slide ${i===0?'active':''}">${b.imageUrl?`<img src="${esc(b.imageUrl)}" alt="${esc(b.title||'Banner')}">`:`<div class="fallback">${esc(b.title||'R2.0 ESPORTS')}</div>`}</div>`).join('')+'<div class="dots">'+banners.map((_,i)=>`<i class="dot ${i===0?'on':''}"></i>`).join('')+'</div></div>';
+ clearInterval(sliderTimer);let n=0;
+ if(banners.length>1)sliderTimer=setInterval(()=>{const ss=[...document.querySelectorAll('.slide')],ds=[...document.querySelectorAll('.dot')];if(!ss.length)return;ss[n]?.classList.remove('active');ds[n]?.classList.remove('on');n=(n+1)%ss.length;ss[n]?.classList.add('active');ds[n]?.classList.add('on')},3500);
+ let modes=[...defaultModes];
+ try{const ms=(await getDocs(collection(db,'gameModes'))).docs.map(d=>d.data().name).filter(Boolean);if(ms.length)modes=ms}catch{}
+ $('modes').innerHTML=modes.map(m=>`<button class="mode" onclick='openMode(${JSON.stringify(m)})'>${esc(m)}<small>Tap to view tournaments</small></button>`).join('');
 }
-$("loginTab").onclick = () => setAuthMode(false);
-$("signupTab").onclick = () => setAuthMode(true);
-function setAuthMode(signup){
- signupMode = signup;
- $("loginTab").classList.toggle("active",!signup);
- $("signupTab").classList.toggle("active",signup);
- $("emailAuthBtn").textContent = signup? "Create Account" : "Login";
- $("authMsg").textContent = "";
+
+window.openMode=async m=>{
+ $('modeTitle').textContent=m;go('tournaments');$('tlist').innerHTML='<div class="card muted">Loading...</div>';
+ try{const ts=(await getDocs(query(collection(db,'tournaments'),where('mode','==',m)))).docs.map(d=>({id:d.id,...d.data()}));renderTours(ts)}catch(e){$('tlist').innerHTML='<div class="card warn">Tournament load করা যায়নি।</div>';console.error(e)}
+};
+
+function renderTours(ts){
+ $('tlist').innerHTML=ts.length?ts.map(t=>`<div class="card tour"><div class="inside"><span class="tag">${esc(t.mode||'')}</span><h3>${esc(t.title||'Tournament')}</h3><div class="muted">${esc(t.dateTime||'সময় নির্ধারিত হয়নি')} • ${esc(t.map||'')}</div><div class="stats"><div class="stat">PRIZE<b>${Number(t.prizePool||0)} Credits</b></div><div class="stat">PER KILL<b>${Number(t.perKill||0)}</b></div><div class="stat">ENTRY<b>${Number(t.entryFee||0)} Credits</b></div></div></div><div class="actions"><button class="btn alt" onclick="openDetails('${t.id}')">Details</button><button class="btn green" onclick="joinTour('${t.id}')">Join</button></div></div>`).join(''):'<div class="card center muted">এই মোডে এখন কোনো tournament নেই।</div>';
 }
-$("emailAuthBtn").onclick = async () => {
- const email = $("email").value.trim();
- const password = $("password").value;
- if(!email ||!password){
-  $("authMsg").textContent = "Please enter email and password.";
-  return;
- }
+
+window.openDetails=async id=>{
+ go('details');$('detailBox').innerHTML='<div class="card muted">Loading...</div>';
  try{
-  $("authMsg").textContent = "Please wait...";
-  if(signupMode){
-   await createUserWithEmailAndPassword(auth,email,password);
-  }else{
-   await signInWithEmailAndPassword(auth,email,password);
-  }
- }catch(e){
-  $("authMsg").textContent = e.message;
- }
+  const s=await getDoc(doc(db,'tournaments',id));if(!s.exists())throw Error('Tournament পাওয়া যায়নি।');
+  const t={id:s.id,...s.data()};
+  const room=t.roomPublished?`<p>Room ID: <b>${esc(t.roomId||'')}</b></p><p>Password: <b>${esc(t.roomPassword||'')}</b></p>`:'<p class="muted">Room details match time-এর আগে প্রকাশ করা হবে না।</p>';
+  const rules=(Array.isArray(t.rules)&&t.rules.length?t.rules:['সঠিক সময়ে ম্যাচে উপস্থিত থাকতে হবে','অশোভন আচরণ বা cheating নিষিদ্ধ','Admin-এর সিদ্ধান্ত মেনে চলতে হবে','Room ID ও Password অন্যের সাথে শেয়ার করা যাবে না']);
+  $('detailBox').innerHTML=`<div class="card"><span class="tag">${esc(t.mode||'')}</span><h2>${esc(t.title||'')}</h2><p class="muted">${esc(t.dateTime||'')} • ${esc(t.map||'')}</p><div class="stats"><div class="stat">Prize<b>${Number(t.prizePool||0)} Credits</b></div><div class="stat">Per Kill<b>${Number(t.perKill||0)}</b></div><div class="stat">Entry<b>${Number(t.entryFee||0)} Credits</b></div></div></div><div class="card"><h3>🔑 Room Details</h3>${room}</div><div class="card"><h3>📌 Rules</h3>${rules.map(r=>`<div class="rule">${esc(r)}</div>`).join('')}</div><button class="btn green" onclick="joinTour('${t.id}')">Join Tournament</button>`;
+ }catch(e){$('detailBox').innerHTML=`<div class="card warn">${esc(e.message)}</div>`}
 };
-$("googleBtn").onclick = async () => {
+
+window.joinTour=async id=>{
+ if(!user){alert('আগে Login করুন');go('login');return}
  try{
-  $("authMsg").textContent = "Opening Google...";
-  await signInWithPopup(auth,provider);
- }catch(e){
-  $("authMsg").textContent = e.message;
- }
-};
-$("logoutBtn").onclick = () => signOut(auth);
-onAuthStateChanged(auth,async user => {
- currentUser = user;
- if(user){
-  $("authPage").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  await createOrLoadUser();
-  $("profileName").textContent = user.displayName || currentUserData?.name || user.email.split("@")[0];
-  $("profileEmail").textContent = user.email;
-  if(user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-   $("adminOpenBtn").classList.remove("hidden");
-  }else{
-   $("adminOpenBtn").classList.add("hidden");
-  }
-  renderModes();
-  await loadSettings();
-  await loadTournaments();
-  await loadBalance();
-  await loadResults();
-  await loadMyMatches();
- }else{
-  currentUserData = null;
-  $("app").classList.add("hidden");
-  $("authPage").classList.remove("hidden");
- }
-});
-async function createOrLoadUser(){
- const userRef = doc(db,"users",currentUser.uid);
- const snap = await getDoc(userRef);
- if(!snap.exists()){
-  await setDoc(userRef,{
-   name:currentUser.displayName || currentUser.email.split("@")[0],
-   email:currentUser.email,
-   balance:0,
-   createdAt:serverTimestamp()
+  const ref=doc(db,'users',user.uid),joinRef=doc(db,'users',user.uid,'joinedMatches',id),tref=doc(db,'tournaments',id);
+  await runTransaction(db,async tx=>{
+   const us=await tx.get(ref),ts=await tx.get(tref),js=await tx.get(joinRef);
+   if(js.exists())throw Error('আপনি ইতিমধ্যে Join করেছেন');
+   if(!ts.exists())throw Error('Tournament পাওয়া যায়নি');
+   const t=ts.data(),fee=Math.max(0,Number(t.entryFee||0)),bal=Number(us.exists()?us.data().credits||0:0);
+   if(bal<fee)throw Error('পর্যাপ্ত Credits নেই');
+   tx.set(ref,{email:user.email,credits:bal-fee,updatedAt:serverTimestamp()},{merge:true});
+   tx.set(joinRef,{tournamentId:id,title:t.title||'',mode:t.mode||'',entryFee:fee,joinedAt:serverTimestamp()});
   });
- }
- const newSnap = await getDoc(userRef);
- currentUserData = newSnap.data();
-}
-async function loadBalance(){
- if(!currentUser)return;
- const snap = await getDoc(doc(db,"users",currentUser.uid));
- if(snap.exists()){
-  currentUserData = snap.data();
-  const balance = Number(currentUserData.balance || 0);
-  $("topBalance").textContent = balance;
-  $("profileBalance").textContent = balance;
- }
-}
-async function loadSettings(){
+  alert('Tournament সফলভাবে Join হয়েছে।');await loadProfile();
+ }catch(e){err(e)}
+};
+
+async function loadProfile(){
+ if(!user)return;
  try{
-  const snap = await getDoc(doc(db,"siteSettings","main"));
-  if(snap.exists()){
-   siteSettings = snap.data();
-  }else{
-   siteSettings = {};
-  }
-  if(siteSettings.bannerUrl){ $("bannerImage").src = siteSettings.bannerUrl; }
-  if(siteSettings.bannerTitle){ $("bannerTitle").textContent = siteSettings.bannerTitle; }
-  if(siteSettings.bannerSubtitle){ $("bannerSubtitle").textContent = siteSettings.bannerSubtitle; }
-  if(isAdmin()){
-   $("adminBannerUrl").value = siteSettings.bannerUrl || "";
-   $("adminBannerTitle").value = siteSettings.bannerTitle || "";
-   $("adminBannerSubtitle").value = siteSettings.bannerSubtitle || "";
-   $("adminBkashNumber").value = siteSettings.bkashNumber || "";
-   $("adminDepositRules").value = siteSettings.depositRules || "";
-   $("adminWithdrawRules").value = siteSettings.withdrawRules || "";
-  }
- }catch(e){ console.log(e); }
+  const s=await getDoc(doc(db,'users',user.uid));const d=s.exists()?s.data():{};
+  const n=d.name||user.email?.split('@')[0]||'Player';
+  $('pname').textContent=n;$('pemail').textContent=user.email||'';$('av').textContent=n.charAt(0).toUpperCase();$('points').textContent=Number(d.credits||0)+' Credits';
+ }catch(e){console.error(e)}
 }
-window.saveSiteSettings = async () => {
- if(!isAdmin())return;
- try{
-  await setDoc(doc(db,"siteSettings","main"),{
-    bannerUrl:$("adminBannerUrl").value.trim(),
-    bannerTitle:$("adminBannerTitle").value.trim(),
-    bannerSubtitle:$("adminBannerSubtitle").value.trim(),
-    bkashNumber:$("adminBkashNumber").value.trim(),
-    depositRules:$("adminDepositRules").value.trim(),
-    withdrawRules:$("adminWithdrawRules").value.trim(),
-    updatedAt:serverTimestamp()
-   },{merge:true});
-  alert("Settings saved!");
-  await loadSettings();
- }catch(e){ alert(e.message); }
-};
-async function loadTournaments(){
- const snap = await getDocs(collection(db,"tournaments"));
- tournaments = snap.docs.map(d => ({ id:d.id,...d.data() }));
- if(currentMode){ renderTournaments(currentMode); }
-}
-window.openMode = mode => {
- currentMode = mode;
- $("modeTitle").textContent = mode;
- renderTournaments(mode);
- showPage("tournamentPage");
-};
-function renderTournaments(mode){
- const list = $("tournamentList");
- const filtered = tournaments.filter(t => String(t.mode || "").toLowerCase() === mode.toLowerCase());
- if(!filtered.length){
-  list.innerHTML = `<div class="empty">বর্তমানে এই Game Mode-এ কোনো Tournament নেই।</div>`;
-  return;
- }
- list.innerHTML = filtered.map(tournamentHTML).join("");
-}
-function tournamentHTML(t){
- const fee = Number(t.entryFee || 0);
- return `
- <div class="tCard">
-  <div class="tHead">
-   <div class="tTitle">${escapeHTML(t.title || "Tournament")}</div>
-   <div class="badge">${escapeHTML(t.tag || "TOURNAMENT")}</div>
-  </div>
-  <div class="tDesc">${escapeHTML(t.description || "")}</div>
-  <div class="infoRow">
-   <div class="info"><small>PRIZE POOL</small><b>৳ ${Number(t.prize || 0)}</b></div>
-   <div class="info"><small>PER KILL</small><b>৳ ${Number(t.perKill || 0)}</b></div>
-   <div class="info"><small>ENTRY FEE</small><b>৳ ${fee}</b></div>
-  </div>
-  <div class="tActions">
-   <button onclick="viewTournament('${t.id}')">Details</button>
-   <button onclick="showRoom('${t.id}')">Room</button>
-   <button class="join" onclick="joinTournament('${t.id}')">Join</button>
-  </div>
- </div>`;
-}
-window.viewTournament = id => {
- const t = tournaments.find(x => x.id === id);
- if(!t)return;
- openModal(`
- <div class="detailTitle">${escapeHTML(t.title || "Tournament")}</div>
- <div class="notice">${escapeHTML(t.description || "")}</div>
- <div class="infoRow">
-  <div class="info"><small>PRIZE</small><b>৳ ${Number(t.prize || 0)}</b></div>
-  <div class="info"><small>PER KILL</small><b>৳ ${Number(t.perKill || 0)}</b></div>
-  <div class="info"><small>ENTRY</small><b>৳ ${Number(t.entryFee || 0)}</b></div>
- </div>
- <h3>📜 Tournament Rules</h3>
- <div class="ruleBox">${escapeHTML(t.rules || "Rules not added yet.").replace(/\n/g,"<br>")}</div>`);
-};
-window.showRoom = id => {
- const t = tournaments.find(x => x.id === id);
- if(!t)return;
- openModal(`
- <div class="detailTitle">🔑 Room Details</div>
- <div class="notice">ম্যাচ শুরু হওয়ার আগে Room তথ্য প্রকাশ করা হতে পারে।</div>
- <div class="roomBox">
-  <b>Room ID:</b> ${escapeHTML(String(t.roomId || "Not released yet"))}
-  <br><br>
-  <b>Password:</b> ${escapeHTML(String(t.roomPassword || "Not released yet"))}
- </div>`);
-};
-window.joinTournament = async id => {
- const t = tournaments.find(x => x.id === id);
- if(!t ||!currentUser)return;
- await loadBalance();
- const fee = Number(t.entryFee || 0);
- const balance = Number(currentUserData?.balance || 0);
- if(fee > balance){
-  alert("আপনার Wallet-এ পর্যাপ্ত টাকা নেই।");
-  return;
- }
- openModal(`
- <div class="detailTitle">Join Tournament</div>
- <div class="notice">Entry Fee: ৳ ${fee}<br>আপনার Wallet Balance: ৳ ${balance}</div>
- <label class="fieldLabel">Player Name</label>
- <input id="joinPlayerName" class="authInput" placeholder="Your player name">
- <label class="fieldLabel">Free Fire UID</label>
- <input id="joinPlayerUid" class="authInput" placeholder="Enter Free Fire UID">
- <label class="fieldLabel">Team / Partner Name (Optional)</label>
- <input id="joinTeam" class="authInput" placeholder="Team or partner">
- <div class="ruleBox"><b>Rules:</b><br>${escapeHTML(t.rules || "Follow tournament rules.").replace(/\n/g,"<br>")}</div>
- <button class="primary" onclick="confirmJoin('${id}')">Confirm Join</button>`);
-};
-window.confirmJoin = async id => {
- const t = tournaments.find(x => x.id === id);
- if(!t)return;
- const playerName = $("joinPlayerName").value.trim();
- const uid = $("joinPlayerUid").value.trim();
- const team = $("joinTeam").value.trim();
- if(!playerName ||!uid){
-  alert("Player Name এবং UID দিন।");
-  return;
- }
- const fee = Number(t.entryFee || 0);
- await loadBalance();
- if(Number(currentUserData.balance || 0) < fee){
-  alert("পর্যাপ্ত balance নেই।");
-  return;
- }
- try{
-  await addDoc(collection(db,"joinRequests"),{
-    tournamentId:id,
-    tournamentTitle:t.title || "",
-    mode:t.mode || "",
-    userId:currentUser.uid,
-    userEmail:currentUser.email,
-    playerName,
-    freeFireUid:uid,
-    team,
-    entryFee:fee,
-    status:"joined",
-    createdAt:serverTimestamp()
-   });
-  closeModal();
-  alert("Tournament Join Request submitted successfully!");
-  await loadMyMatches();
- }catch(e){ alert("Join failed: "+e.message); }
-};
-window.openWallet = async () => {
- await loadBalance();
- const balance = Number(currentUserData?.balance || 0);
- openModal(`
- <div class="detailTitle">💳 Wallet</div>
- <div class="walletCard">
-  <small>Available Balance</small>
-  <div class="walletBalance">৳ ${balance}</div>
-  <div class="actionRow">
-   <button class="deposit" onclick="depositInfo()">+ Deposit</button>
-   <button class="withdraw" onclick="withdrawInfo()">- Withdraw</button>
-  </div>
- </div>`);
-};
-window.openProfileDeposit = () => depositInfo();
-window.depositInfo = () => {
- const bkash = siteSettings.bkashNumber || "Admin bKash number not set";
- const rules = siteSettings.depositRules || `১. সঠিক Amount পাঠান।\n২. bKash Transaction ID দিন।\n৩. একই Transaction ID একাধিকবার ব্যবহার করবেন না।\n৪. ভুল তথ্য দিলে Request Reject হতে পারে।`;
- openModal(`
- <div class="detailTitle">➕ bKash Deposit</div>
- <div class="notice"><b>bKash Number:</b><br>${escapeHTML(bkash)}</div>
- <div class="ruleBox"><b>Deposit Rules</b><br>${escapeHTML(rules).replace(/\n/g,"<br>")}</div>
- <label class="fieldLabel">Deposit Amount</label>
- <input id="depositAmount" class="authInput" type="number" placeholder="Enter amount">
- <label class="fieldLabel">যে bKash নম্বর থেকে টাকা পাঠিয়েছেন</label>
- <input id="depositSender" class="authInput" placeholder="01XXXXXXXXX">
- <label class="fieldLabel">bKash Transaction ID</label>
- <input id="depositTrx" class="authInput" placeholder="Enter Transaction ID">
- <button class="primary" onclick="submitDeposit()">Submit Deposit Request</button>`);
-};
-window.submitDeposit = async () => {
- const amount = Number($("depositAmount").value);
- const sender = $("depositSender").value.trim();
- const trx = $("depositTrx").value.trim();
- if(!amount || amount <= 0 ||!sender ||!trx){
-  alert("সব তথ্য সঠিকভাবে দিন।");
-  return;
- }
- try{
-  const q = query(collection(db,"depositRequests"), where("transactionId","==",trx));
-  const old = await getDocs(q);
-  if(!old.empty){
-   alert("এই Transaction ID ইতোমধ্যে ব্যবহার করা হয়েছে।");
-   return;
-  }
-  await addDoc(collection(db,"depositRequests"),{
-    userId:currentUser.uid,
-    userEmail:currentUser.email,
-    userName:currentUser.displayName || currentUser.email.split("@")[0],
-    amount,
-    senderNumber:sender,
-    transactionId:trx,
-    status:"pending",
-    createdAt:serverTimestamp()
-   });
-  closeModal();
-  alert("Deposit request submitted. Admin verification-এর পর balance যোগ হবে।");
- }catch(e){ alert("Deposit failed: "+e.message); }
-};
-window.withdrawInfo = async () => {
- await loadBalance();
- const balance = Number(currentUserData?.balance || 0);
- const rules = siteSettings.withdrawRules || `১. সঠিক bKash নম্বর দিন।\n২. Request পাঠানোর সময় টাকা Wallet থেকে কেটে নেওয়া হবে।\n৩. টাকা পেতে দেরি হলে Support-এ যোগাযোগ করুন।`;
- openModal(`
- <div class="detailTitle">💸 Withdraw</div>
- <div class="notice">Available Balance: ৳ ${balance}</div>
- <div class="ruleBox"><b>Withdraw Rules</b><br>${escapeHTML(rules).replace(/\n/g,"<br>")}</div>
- <label class="fieldLabel">Withdraw Amount</label>
- <input id="withdrawAmount" class="authInput" type="number" placeholder="Enter amount">
- <label class="fieldLabel">আপনার bKash Number</label>
- <input id="withdrawNumber" class="authInput" placeholder="01XXXXXXXXX">
- <button class="primary" onclick="submitWithdraw()">Submit Withdraw Request</button>`);
-};
-window.submitWithdraw = async () => {
- const amount = Number($("withdrawAmount").value);
- const number = $("withdrawNumber").value.trim();
- await loadBalance();
- const balance = Number(currentUserData?.balance || 0);
- if(!amount || amount <= 0){
-  alert("সঠিক Amount দিন।");
-  return;
- }
- if(!number){
-  alert("আপনার bKash নম্বর দিন।");
-  return;
- }
- if(amount > balance){
-  alert("আপনার Wallet-এ পর্যাপ্ত টাকা নেই।");
-  return;
- }
- try{
-  await addDoc(collection(db,"withdrawRequests"),{
-    userId:currentUser.uid,
-    userEmail:currentUser.email,
-    userName:currentUser.displayName || currentUser.email.split("@")[0],
-    amount,
-    bkashNumber:number,
-    status:"pending",
-    createdAt:serverTimestamp()
-   });
-  closeModal();
-  alert("Withdraw request submitted successfully.");
- }catch(e){ alert(e.message); }
-};
+
 async function loadMyMatches(){
- if(!currentUser)return;
- const q = query(collection(db,"joinRequests"), where("userId","==",currentUser.uid));
- const snap = await getDocs(q);
- const list = $("myMatchesList");
- if(snap.empty){
-  list.innerHTML = `<div class="empty">No joined matches yet</div>`;
-  return;
- }
- list.innerHTML = snap.docs.map(d => {
-   const x = d.data();
-   return `
-   <div class="tCard">
-    <div class="tTitle">${escapeHTML(x.tournamentTitle || "Tournament")}</div>
-    <div class="tDesc">
-     Mode: ${escapeHTML(x.mode || "")}<br>
-     Player: ${escapeHTML(x.playerName || "")}<br>
-     UID: ${escapeHTML(x.freeFireUid || "")}<br>
-     Status: ${escapeHTML(x.status || "")}
-    </div>
-   </div>`;
-  }).join("");
+ if(!user){$('myMatchesList').innerHTML='<div class="card">আগে Login করুন।</div>';return}
+ try{const j=await getDocs(collection(db,'users',user.uid,'joinedMatches'));const arr=j.docs.map(d=>d.data());$('myMatchesList').innerHTML=arr.length?arr.map(x=>`<div class="card"><b>${esc(x.title||'Tournament')}</b><div class="muted">${esc(x.mode||'')} • Entry: ${Number(x.entryFee||0)} Credits</div></div>`).join(''):'<div class="card muted">এখনো কোনো ম্যাচ Join করেননি।</div>'}catch(e){$('myMatchesList').innerHTML='<div class="card warn">Matches load করা যায়নি।</div>'}
 }
-window.showMyMatches = async () => {
- await loadMyMatches();
- showPage("matchesPage");
-};
+
 async function loadResults(){
- const snap = await getDocs(collection(db,"results"));
- const list = $("resultsList");
- if(snap.empty){
-  list.innerHTML = `<div class="empty">No results available yet</div>`;
-  return;
- }
- list.innerHTML = snap.docs.map(d => {
-   const x = d.data();
-   return `
-   <div class="tCard">
-    <div class="tTitle">🏆 ${escapeHTML(x.tournament || "")}</div>
-    <div class="tDesc">
-     Winner: <b>${escapeHTML(x.winner || "")}</b><br><br>
-     ${escapeHTML(x.text || "").replace(/\n/g,"<br>")}
-    </div>
-   </div>`;
-  }).join("");
+ try{const a=(await getDocs(collection(db,'results'))).docs.map(d=>d.data());$('resultsList').innerHTML=a.length?a.map(x=>`<div class="card"><b>${esc(x.title||'Result')}</b><p>${esc(x.text||'')}</p></div>`).join(''):'<div class="card muted">এখনো কোনো Result প্রকাশ হয়নি।</div>'}catch{$('resultsList').innerHTML='<div class="card warn">Results load করা যায়নি।</div>'}
 }
-window.showMyMessages = async () => {
- const q = query(collection(db,"messages"), where("userId","==",currentUser.uid));
- const snap = await getDocs(q);
- let html = `<div class="detailTitle">💬 My Messages</div><button class="primary" onclick="newSupportMessage()">Send New Message</button><br><br>`;
- if(snap.empty){
-  html += `<div class="empty">No messages yet</div>`;
- }else{
-  snap.docs.forEach(d => {
-   const x = d.data();
-   html += `<div class="messageItem"><b>Your Message:</b><br>${escapeHTML(x.message || "")}<br><br><b>Admin Reply:</b><br>${escapeHTML(x.reply || "Waiting for reply")}</div>`;
+
+async function loadWallet(){
+ if(!user)return;
+ try{
+  const s=await getDoc(doc(db,'users',user.uid));const d=s.exists()?s.data():{};$('walletPoints').textContent=Number(d.credits||0)+' Credits';
+  const q=await getDocs(collection(db,'walletRequests',user.uid,'items'));const a=q.docs.map(x=>x.data());
+  $('requestList').innerHTML=a.length?a.map(x=>`<div class="item"><b>${esc(x.type||'request')}</b> — ${Number(x.amount||0)}<br><span class="tiny muted">${esc(x.status||'pending')}</span></div>`).join(''):'<div class="muted">কোনো request নেই।</div>';
+ }catch(e){$('requestList').innerHTML='<div class="warn">Request load করা যায়নি।</div>'}
+}
+
+window.submitWalletRequest=async()=>{
+ if(!user)return;
+ const amount=Number($('requestAmount').value),type=$('requestType').value;
+ if(!Number.isFinite(amount)||amount<=0){alert('সঠিক amount দিন');return}
+ try{await addDoc(collection(db,'walletRequests',user.uid,'items'),{type,amount,note:$('requestNote').value.trim(),status:'pending',createdAt:serverTimestamp(),email:user.email,uid:user.uid});$('requestAmount').value='';$('requestNote').value='';alert('Request পাঠানো হয়েছে।');loadWallet()}catch(e){err(e)}
+};
+
+window.loginUser=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){err(e)}};
+window.registerUser=async()=>{
+ try{
+  const email=$('email').value.trim(),password=$('password').value;
+  const c=await createUserWithEmailAndPassword(auth,email,password);
+  await setDoc(doc(db,'users',c.user.uid),{email:c.user.email,credits:0,createdAt:serverTimestamp()},{merge:true});
+ }catch(e){err(e)}
+};
+window.logoutUser=async()=>{try{await signOut(auth)}catch(e){err(e)}};
+
+async function checkAdmin(){
+ if(!user){isAdmin=false;return false}
+ try{const s=await getDoc(doc(db,'admins',user.uid));isAdmin=s.exists()&&s.data().active!==false;return isAdmin}catch{isAdmin=false;return false}
+}
+
+window.openAdmin=async()=>{
+ go('admin');const ok=await checkAdmin();$('adminStatus').textContent=ok?'Admin access granted.':'এই account admin নয়।';$('adminContent').classList.toggle('hidden',!ok);if(ok)adminTab('settings');
+};
+
+window.adminTab=async tab=>{
+ if(!isAdmin)return;
+ const box=$('adminBox');
+ try{
+  if(tab==='settings'){const s=await getSite();box.innerHTML=`<div class="card"><h3>Site Settings</h3><input id="aLogo" class="input" value="${esc(s.logoUrl||'')}" placeholder="Logo URL"><input id="aBanner" class="input" value="${esc(s.bannerUrl||'')}" placeholder="Default Banner URL"><button class="btn" onclick="saveSettings()">Save Settings</button></div>`}
+  if(tab==='banners'){const b=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()}));box.innerHTML=`<div class="card"><h3>Add Banner</h3><input id="bTitle" class="input" placeholder="Title"><input id="bUrl" class="input" placeholder="Image URL"><button class="btn" onclick="addBanner()">Add Banner</button></div><div class="card list">${b.map(x=>`<div class="item">${esc(x.title||'Banner')}<br><span class="tiny">${esc(x.imageUrl||'')}</span><br><button class="btn danger mini" onclick="delBanner('${x.id}')">Delete</button></div>`).join('')||'No banners'}</div>`}
+  if(tab==='modes'){const m=(await getDocs(collection(db,'gameModes'))).docs.map(d=>({id:d.id,...d.data()}));box.innerHTML=`<div class="card"><input id="mName" class="input" placeholder="Game Mode Name"><button class="btn" onclick="addMode()">Add Mode</button></div><div class="card list">${m.map(x=>`<div class="item row space">${esc(x.name)}<button class="btn danger mini" onclick="delMode('${x.id}')">Delete</button></div>`).join('')||'Default modes are active when custom modes are empty.'}</div>`}
+  if(tab==='tours'){
+   const ts=(await getDocs(collection(db,'tournaments'))).docs.map(d=>({id:d.id,...d.data()}));
+   box.innerHTML=`<div class="card"><h3>Create Tournament</h3>
+   <input id="tTitle" class="input" placeholder="Title"><input id="tMode" class="input" placeholder="Mode">
+   <input id="tDate" class="input" placeholder="Date & Time"><input id="tMap" class="input" placeholder="Map">
+   <input id="tPrize" class="input" type="number" min="0" placeholder="Prize Credits">
+   <input id="tKill" class="input" type="number" min="0" placeholder="Per Kill">
+   <input id="tFee" class="input" type="number" min="0" placeholder="Entry Fee Credits">
+   <textarea id="tRules" class="input" placeholder="Rules — one per line"></textarea>
+   <button class="btn" onclick="addTournament()">Publish Tournament</button></div>
+   <div class="card list"><h3>Published Tournaments</h3>${ts.map(t=>`<div class="item"><b>${esc(t.title)}</b><br>
+   <span class="tiny muted">${esc(t.mode||'')} • Entry: ${Number(t.entryFee||0)}</span><br>
+   <button class="btn alt mini" onclick="editTournament('${t.id}')">Edit</button>
+   <button class="btn gold mini" onclick="manageRoom('${t.id}')">Room</button>
+   <button class="btn danger mini" onclick="delTournament('${t.id}')">Delete</button></div>`).join('')||'No tournaments'}</div>`}
+  if(tab==='requests'){
+   const rs=(await getDocs(collectionGroup(db,'items'))).docs.map(d=>({path:d.ref.path,id:d.id,...d.data()})).filter(x=>x.status==='pending');
+   box.innerHTML=`<div class="card"><h3>Pending Requests</h3><p class="tiny muted">Approve করলে Add Credit Request-এর credits যোগ হবে। Withdrawal শুধু review status হিসেবে approved হবে।</p>
+   <div class="list">${rs.map(r=>`<div class="item"><b>${esc(r.email||r.uid||'User')}</b><br>${esc(r.type||'request')} — ${Number(r.amount||0)} Credits<br><span class="tiny muted">${esc(r.note||'')}</span><br>
+   <button class="btn green mini" onclick="reviewRequest('${r.path}','approve')">Approve</button>
+   <button class="btn danger mini" onclick="reviewRequest('${r.path}','reject')">Reject</button></div>`).join('')||'No pending requests'}</div></div>`}
+  if(tab==='results'){
+   const rs=(await getDocs(collection(db,'results'))).docs.map(d=>({id:d.id,...d.data()}));
+   box.innerHTML=`<div class="card"><h3>Publish Result</h3><input id="rTitle" class="input" placeholder="Result Title"><textarea id="rText" class="input" placeholder="Winner / standings / result details"></textarea><button class="btn" onclick="addResult()">Publish Result</button></div><div class="card list"><h3>Published Results</h3>${rs.map(r=>`<div class="item"><b>${esc(r.title||'Result')}</b><br><span class="tiny muted">${esc(r.text||'')}</span><br><button class="btn danger mini" onclick="delResult('${r.id}')">Delete</button></div>`).join('')||'No results'}</div>`}
+ }catch(e){box.innerHTML=`<div class="card warn">${esc(e.message||'Admin data load করা যায়নি।')}</div>`}
+};
+
+window.saveSettings=async()=>{try{await setDoc(doc(db,'siteSettings','main'),{logoUrl:$('aLogo').value.trim(),bannerUrl:$('aBanner').value.trim()},{merge:true});alert('Saved');loadHome()}catch(e){err(e)}};
+window.addBanner=async()=>{try{const url=$('bUrl').value.trim();if(!url){alert('Image URL দিন');return}await addDoc(collection(db,'banners'),{title:$('bTitle').value.trim(),imageUrl:url,active:true,createdAt:serverTimestamp()});adminTab('banners');loadHome()}catch(e){err(e)}};
+window.delBanner=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'banners',id));adminTab('banners');loadHome()}catch(e){err(e)}};
+window.addMode=async()=>{const name=$('mName').value.trim();if(!name)return;try{await addDoc(collection(db,'gameModes'),{name,createdAt:serverTimestamp()});adminTab('modes');loadHome()}catch(e){err(e)}};
+window.delMode=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'gameModes',id));adminTab('modes');loadHome()}catch(e){err(e)}};
+window.addTournament=async()=>{
+ const data={title:$('tTitle').value.trim(),mode:$('tMode').value.trim(),dateTime:$('tDate').value.trim(),map:$('tMap').value.trim(),prizePool:Math.max(0,Number($('tPrize').value||0)),perKill:Math.max(0,Number($('tKill').value||0)),entryFee:Math.max(0,Number($('tFee').value||0)),rules:$('tRules').value.split('\n').map(x=>x.trim()).filter(Boolean),roomPublished:false,createdAt:serverTimestamp()};
+ if(!data.title||!data.mode){alert('Title এবং Mode দিন');return}
+ try{await addDoc(collection(db,'tournaments'),data);alert('Tournament published');adminTab('tours')}catch(e){err(e)}
+};
+window.delTournament=async id=>{if(!confirm('Tournament Delete করবেন?'))return;try{await deleteDoc(doc(db,'tournaments',id));adminTab('tours')}catch(e){err(e)}};
+
+
+window.editTournament=async id=>{
+ try{
+  const s=await getDoc(doc(db,'tournaments',id)); if(!s.exists())return alert('Tournament পাওয়া যায়নি');
+  const t=s.data();
+  const title=prompt('Title',t.title||''); if(title===null)return;
+  const mode=prompt('Mode',t.mode||''); if(mode===null)return;
+  const dateTime=prompt('Date & Time',t.dateTime||''); if(dateTime===null)return;
+  const map=prompt('Map',t.map||''); if(map===null)return;
+  const prize=prompt('Prize Credits',Number(t.prizePool||0)); if(prize===null)return;
+  const perKill=prompt('Per Kill',Number(t.perKill||0)); if(perKill===null)return;
+  const fee=prompt('Entry Fee Credits',Number(t.entryFee||0)); if(fee===null)return;
+  const rules=prompt('Rules (one rule per line)',(t.rules||[]).join('\n')); if(rules===null)return;
+  await updateDoc(doc(db,'tournaments',id),{title:title.trim(),mode:mode.trim(),dateTime:dateTime.trim(),map:map.trim(),prizePool:Math.max(0,Number(prize)||0),perKill:Math.max(0,Number(perKill)||0),entryFee:Math.max(0,Number(fee)||0),rules:rules.split('\n').map(x=>x.trim()).filter(Boolean),updatedAt:serverTimestamp()});
+  alert('Tournament updated'); adminTab('tours');
+ }catch(e){err(e)}
+};
+
+window.manageRoom=async id=>{
+ try{
+  const s=await getDoc(doc(db,'tournaments',id)); if(!s.exists())return;
+  const t=s.data();
+  const roomId=prompt('Room ID',t.roomId||''); if(roomId===null)return;
+  const roomPassword=prompt('Room Password',t.roomPassword||''); if(roomPassword===null)return;
+  const publish=confirm('OK = Room details publish, Cancel = lock রাখা');
+  await updateDoc(doc(db,'tournaments',id),{roomId:roomId.trim(),roomPassword:roomPassword.trim(),roomPublished:publish,updatedAt:serverTimestamp()});
+  alert(publish?'Room details published':'Room details saved but locked');
+ }catch(e){err(e)}
+};
+
+window.reviewRequest=async(path,action)=>{
+ try{
+  const ref=doc(db,...path.split('/'));
+  await runTransaction(db,async tx=>{
+   const rs=await tx.get(ref); if(!rs.exists())throw Error('Request পাওয়া যায়নি');
+   const r=rs.data(); if(r.status!=='pending')throw Error('Request already reviewed');
+   const status=action==='approve'?'approved':'rejected';
+   tx.update(ref,{status,reviewedAt:serverTimestamp(),reviewedBy:user.uid});
+   if(action==='approve' && r.type==='add'){
+     if(!r.uid)throw Error('User UID missing');
+     const uref=doc(db,'users',r.uid), us=await tx.get(uref);
+     const old=Number(us.exists()?us.data().credits||0:0);
+     tx.set(uref,{credits:old+Math.max(0,Number(r.amount)||0),updatedAt:serverTimestamp()},{merge:true});
+   }
   });
- }
- openModal(html);
+  alert(action==='approve'?'Request approved':'Request rejected'); adminTab('requests');
+ }catch(e){err(e)}
 };
-window.newSupportMessage = () => {
- openModal(`
- <div class="detailTitle">Send Support Message</div>
- <textarea id="userSupportMessage" class="authInput" style="min-height:130px" placeholder="আপনার সমস্যাটি লিখুন..."></textarea>
- <button class="primary" onclick="submitSupportMessage()">Send Message</button>`);
-};
-window.submitSupportMessage = async () => {
- const message = $("userSupportMessage").value.trim();
- if(!message){
-  alert("আপনার Message লিখুন।");
-  return;
- }
+
+window.addResult=async()=>{
  try{
-  await addDoc(collection(db,"messages"),{
-    userId:currentUser.uid,
-    userEmail:currentUser.email,
-    userName:currentUser.displayName || currentUser.email.split("@")[0],
-    message,
-    reply:"",
-    status:"pending",
-    createdAt:serverTimestamp()
-   });
-  closeModal();
-  alert("Message sent successfully.");
- }catch(e){ alert(e.message); }
+  const title=$('rTitle').value.trim(), text=$('rText').value.trim();
+  if(!title||!text){alert('Title এবং Result text দিন');return}
+  await addDoc(collection(db,'results'),{title,text,createdAt:serverTimestamp()});
+  $('rTitle').value='';$('rText').value='';adminTab('results');
+ }catch(e){err(e)}
 };
-window.openSupport = async () => {
- const snap = await getDocs(collection(db,"supportNumbers"));
- let html = `<div class="detailTitle">🆘 Support</div><div class="notice">সমস্যার জন্য নিচের WhatsApp Support-এ যোগাযোগ করুন।</div>`;
- if(snap.empty){
-  html += `<div class="empty">Support number not available yet.</div>`;
- }else{
-  snap.docs.forEach(d => {
-   const x = d.data();
-   const number = String(x.number || "").replace(/[^\d]/g,"");
-   html += `<div class="adminItem"><b>${escapeHTML(x.name || "WhatsApp Support")}</b><br>${escapeHTML(x.number || "")}<div class="smallBtns"><button class="okBtn" onclick="window.open('https://wa.me/${number}','_blank')">Open WhatsApp</button></div></div>`;
-  });
- }
- openModal(html);
-};
-function isAdmin(){
- return currentUser && currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-}
-window.openAdmin = async () => {
- if(!isAdmin())return;
- showPage("adminPage");
- await loadAdminDeposits();
- await loadAdminWithdraws();
- await loadAdminSupport();
- await loadAdminMessages();
-};
-window.createTournament = async () => {
- if(!isAdmin())return;
- const mode = $("tMode").value.trim();
- const title = $("tTitle").value.trim();
- if(!mode ||!title){
-  alert("Game Mode এবং Tournament Title দিন।");
-  return;
- }
- try{
-  await addDoc(collection(db,"tournaments"),{
-    mode,
-    title,
-    prize:Number($("tPrize").value || 0),
-    perKill:Number($("tKill").value || 0),
-    entryFee:Number($("tFee").value || 0),
-    dateTime:$("tDate").value.trim(),
-    tag:$("tTag").value.trim() || "TOURNAMENT",
-    description:$("tDescription").value.trim(),
-    rules:$("tRules").value.trim(),
-    roomId:$("tRoomId").value.trim(),
-    roomPassword:$("tRoomPassword").value.trim(),
-    createdAt:serverTimestamp()
-   });
-  alert("Tournament created!");
-  ["tMode","tTitle","tPrize","tKill","tFee","tDate","tTag","tDescription","tRules","tRoomId","tRoomPassword"].forEach(id => $(id).value="");
-  await loadTournaments();
- }catch(e){ alert(e.message); }
-};
-async function loadAdminDeposits(){
- if(!isAdmin())return;
- const snap = await getDocs(collection(db,"depositRequests"));
- const box = $("adminDeposits");
- if(snap.empty){
-  box.innerHTML = `<div class="empty">No deposit requests</div>`;
-  return;
- }
- box.innerHTML = snap.docs.map(d => {
-   const x = d.data();
-   return `<div class="adminItem"><b>${escapeHTML(x.userName || "")}</b><br>Email: ${escapeHTML(x.userEmail || "")}<br>bKash: ${escapeHTML(x.senderNumber || "")}<br>Amount: ৳ ${Number(x.amount || 0)}<br>TrxID: <b>${escapeHTML(x.transactionId || "")}</b><br>Status: <b>${escapeHTML(x.status || "")}</b><div class="smallBtns">${x.status==="pending"? `<button class="okBtn" onclick="approveDeposit('${d.id}')">Approve</button><button class="noBtn" onclick="rejectDeposit('${d.id}')">Reject</button>` : ""}</div></div>`;
-  }).join("");
-}
-window.approveDeposit = async id => {
- if(!isAdmin())return;
- const requestRef = doc(db,"depositRequests",id);
- const requestSnap = await getDoc(requestRef);
- if(!requestSnap.exists())return;
- const data = requestSnap.data();
- if(data.status!== "pending"){
-  alert("Already processed.");
-  return;
- }
- try{
-  await updateDoc(doc(db,"users",data.userId),{ balance:increment(Number(data.amount || 0)) });
-  await updateDoc(requestRef,{ status:"approved", approvedAt:serverTimestamp() });
-  await setDoc(doc(db,"usedTransactions", String(data.transactionId)),{ transactionId:data.transactionId, depositRequestId:id, usedAt:serverTimestamp() });
-  alert("Deposit approved and balance added!");
-  await loadAdminDeposits();
- }catch(e){ alert(e.message); }
-};
-window.rejectDeposit = async id => {
- if(!isAdmin())return;
- await updateDoc(doc(db,"depositRequests",id),{ status:"rejected", rejectedAt:serverTimestamp() });
- await loadAdminDeposits();
-};
-async function loadAdminWithdraws(){
- if(!isAdmin())return;
- const snap = await getDocs(collection(db,"withdrawRequests"));
- const box = $("adminWithdraws");
- if(snap.empty){
-  box.innerHTML = `<div class="empty">No withdraw requests</div>`;
-  return;
- }
- box.innerHTML = snap.docs.map(d => {
-   const x = d.data();
-   return `<div class="adminItem"><b>${escapeHTML(x.userName || "")}</b><br>Email: ${escapeHTML(x.userEmail || "")}<br>bKash: <b>${escapeHTML(x.bkashNumber || "")}</b><br>Amount: <b>৳ ${Number(x.amount || 0)}</b><br>Status: ${escapeHTML(x.status || "")}<div class="smallBtns">${x.status==="pending"? `<button class="okBtn" onclick="markWithdrawPaid('${d.id}')">Paid</button><button class="noBtn" onclick="rejectWithdraw('${d.id}')">Reject</button>` :""}</div></div>`;
-  }).join("");
-}
-window.markWithdrawPaid = async id => {
- if(!isAdmin())return;
- await updateDoc(doc(db,"withdrawRequests",id),{ status:"paid", paidAt:serverTimestamp() });
- alert("Withdraw marked as paid.");
- await loadAdminWithdraws();
-};
-window.rejectWithdraw = async id => {
- if(!isAdmin())return;
- await updateDoc(doc(db,"withdrawRequests",id),{ status:"rejected", rejectedAt:serverTimestamp() });
- alert("Withdraw rejected.");
- await loadAdminWithdraws();
-};
-window.addSupportNumber = async () => {
- if(!isAdmin())return;
- const number = $("supportNumberInput").value.trim();
- const name = $("supportNameInput").value.trim();
- if(!number){
-  alert("Support number দিন।");
-  return;
- }
- await addDoc(collection(db,"supportNumbers"),{ number, name:name || "WhatsApp Support", createdAt:serverTimestamp() });
- $("supportNumberInput").value="";
- $("supportNameInput").value="";
- await loadAdminSupport();
-};
-async function loadAdminSupport(){
- if(!isAdmin())return;
- const snap = await getDocs(collection(db,"supportNumbers"));
- ${escapeHTML(x.name || "WhatsApp Support")}<br>
-${escapeHTML(x.number || "")}
-<div class="smallBtns">
-<button class="delBtn" onclick="deleteSupportNumber('${d.id}')">Delete</button>
-</div>
-</div>`;
- }).join("");
-}
+window.delResult=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'results',id));adminTab('results')}catch(e){err(e)}};
 
-window.deleteSupportNumber = async id => {
- if(!isAdmin()) return;
- if(!confirm("Delete this support number?")) return;
-
- try{
-  await deleteDoc(doc(db,"supportNumbers",id));
-  await loadAdminSupport();
- }catch(e){
-  alert(e.message);
- }
-};
-
-async function loadAdminMessages(){
- if(!isAdmin()) return;
-
- const snap = await getDocs(collection(db,"messages"));
- const box = $("adminMessages");
-
- if(snap.empty){
-  box.innerHTML = `<div class="empty">No user messages</div>`;
-  return;
- }
-
- box.innerHTML = snap.docs.map(d => {
-  const x = d.data();
-
-  return `
-  <div class="adminItem">
-   <b>${escapeHTML(x.userName || "User")}</b><br>
-   Email: ${escapeHTML(x.userEmail || "")}<br><br>
-
-   <b>Message:</b><br>
-   ${escapeHTML(x.message || "").replace(/\n/g,"<br>")}
-   <br><br>
-
-   <b>Admin Reply:</b><br>
-   ${escapeHTML(x.reply || "No reply yet").replace(/\n/g,"<br>")}
-
-   <div class="smallBtns">
-    <button class="purpleBtn"
-     onclick="replyMessage('${d.id}')">
-     Reply
-    </button>
-
-    <button class="delBtn"
-     onclick="deleteMessage('${d.id}')">
-     Delete
-    </button>
-   </div>
-  </div>`;
- }).join("");
-}
-
-window.replyMessage = async id => {
- if(!isAdmin()) return;
-
- const reply = prompt("Write your reply:");
-
- if(reply === null) return;
-
- try{
-  await updateDoc(doc(db,"messages",id),{
-   reply:reply.trim(),
-   status:"replied",
-   repliedAt:serverTimestamp()
-  });
-
-  alert("Reply sent!");
-  await loadAdminMessages();
-
- }catch(e){
-  alert(e.message);
- }
-};
-
-window.deleteMessage = async id => {
- if(!isAdmin()) return;
-
- if(!confirm("Delete this message?")) return;
-
- try{
-  await deleteDoc(doc(db,"messages",id));
-  await loadAdminMessages();
-
- }catch(e){
-  alert(e.message);
- }
-};
-
-window.addResult = async () => {
- if(!isAdmin()) return;
-
- const tournament = $("resultTournament").value.trim();
- const winner = $("resultWinner").value.trim();
- const text = $("resultText").value.trim();
-
- if(!tournament || !winner){
-  alert("Tournament Name এবং Winner Name দিন।");
-  return;
- }
-
- try{
-  await addDoc(collection(db,"results"),{
-   tournament,
-   winner,
-   text,
-   createdAt:serverTimestamp()
-  });
-
-  $("resultTournament").value = "";
-  $("resultWinner").value = "";
-  $("resultText").value = "";
-
-  alert("Result published!");
-
-  await loadResults();
-
- }catch(e){
-  alert(e.message);
- }
-};
-
-window.openModal = content => {
- $("modalContent").innerHTML = content;
- $("modal").classList.remove("hidden");
-};
-
-window.closeModal = () => {
- $("modal").classList.add("hidden");
- $("modalContent").innerHTML = "";
-};
-
-window.showPage = pageId => {
- document.querySelectorAll(".page").forEach(page => {
-  page.classList.remove("active");
- });
-
- const page = $(pageId);
- if(page){
-  page.classList.add("active");
- }
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-};
-
-window.navTo = (pageId,button) => {
- document.querySelectorAll(".navBtn").forEach(btn => {
-  btn.classList.remove("active");
- });
-
- if(button){
-  button.classList.add("active");
- }
-
- showPage(pageId);
-
- if(pageId === "matchesPage"){
-  loadMyMatches();
- }
-
- if(pageId === "resultsPage"){
-  loadResults();
- }
-
- if(pageId === "profilePage"){
-  loadBalance();
- }
-};
-
-function escapeHTML(value){
- return String(value ?? "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-}
-
-function escapeJS(value){
- return String(value ?? "")
-  .replace(/\\/g,"\\\\")
-  .replace(/'/g,"\\'")
-  .replace(/\n/g,"\\n")
-  .replace(/\r/g,"");
-}
-
-$("modal").addEventListener("click",e => {
- if(e.target === $("modal")){
-  closeModal();
- }
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(u){
+  try{await setDoc(doc(db,'users',u.uid),{email:u.email,updatedAt:serverTimestamp()},{merge:true})}catch{}
+  await loadProfile();go('home');loadHome();
+ }else{isAdmin=false;go('login')}
 });
-
-renderModes();
-
 </script>
 </body>
 </html>
