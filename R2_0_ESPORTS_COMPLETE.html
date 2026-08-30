@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R2.0 ESPORTS</title>
+<style>
+:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1423,#060b14);color:var(--text);font-family:system-ui,Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}.app{max-width:850px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#111}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}.sub{font-size:12px;color:var(--muted)}
+main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0}.hero img{width:100%;display:block;max-height:300px;object-fit:cover}.fallback{padding:45px 18px;background:linear-gradient(135deg,#35152a,#12304a);font-size:26px;font-weight:900}
+.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.mode small{display:block;color:var(--muted);margin-top:7px}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}.stat{padding:10px;text-align:center;border-right:1px solid var(--line);font-size:12px}.stat:last-child{border:0}.stat b{display:block;font-size:15px;margin-top:5px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour .inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.rule{padding:10px;border-left:4px solid var(--gold);background:#0b1726;border-radius:8px;margin:7px 0}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524;border-top:1px solid var(--line);z-index:30}.nav{max-width:850px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.notice{padding:11px;border-radius:12px;background:#10223a;color:#d8e6f7;font-size:13px}.slider{position:relative;overflow:hidden}.slide{display:none}.slide.active{display:block}.dots{position:absolute;bottom:9px;left:0;right:0;text-align:center}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#bbb;margin:3px}.dot.on{background:var(--red)}.adminTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button{white-space:nowrap}.list{max-height:360px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.success{color:#57e6b7}.warn{color:#ffd166}.mini{padding:7px 10px;font-size:12px;margin-top:6px}.gap{margin-top:10px}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.brand{font-size:17px}.stats{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/651b3cccae034725beb279c6c1951687.jpg" alt="R2.0 ESPORTS">
+<div><div class="brand">R2.0 <b>ESPORTS</b></div><div class="sub">Free Fire Tournament Platform</div></div>
+</header>
+
+<main>
+<section id="login" class="page active"><div class="card">
+<h2>Welcome</h2><p class="muted">Login অথবা নতুন account তৈরি করুন</p>
+<input id="email" class="input" type="email" placeholder="Email">
+<input id="password" class="input" type="password" placeholder="Password (কমপক্ষে 6 characters)">
+<div class="row"><button class="btn" onclick="loginUser()">Login</button><button class="btn alt" onclick="registerUser()">Create Account</button></div>
+<p class="notice">এই ওয়েবসাইটে tournament balance Credits হিসেবে পরিচালিত হয়। বাস্তব টাকা স্বয়ংক্রিয়ভাবে পাঠানো বা গ্রহণ করা হয় না।</p>
+</div></section>
+
+<section id="home" class="page"><div id="bannerWrap"></div><h2>Game Modes</h2><div id="modes" class="grid"></div></section>
+<section id="tournaments" class="page"><h2 id="modeTitle">Tournaments</h2><div id="tlist"></div></section>
+<section id="details" class="page"><button class="btn alt" onclick="go('tournaments')">← Back</button><div id="detailBox"></div></section>
+<section id="matches" class="page"><h2>My Matches</h2><div id="myMatchesList"></div></section>
+<section id="results" class="page"><h2>Results</h2><div id="resultsList"></div></section>
+
+<section id="profile" class="page">
+<div class="card center"><div class="avatar" id="av">R</div><h2 id="pname">Player</h2><div id="pemail" class="muted"></div></div>
+<div class="card"><div class="row space"><b>Credit Balance</b><b id="points">0 Credits</b></div><button class="btn gold gap" onclick="go('wallet')">Wallet / Credit Request</button></div>
+<button class="btn alt" onclick="logoutUser()">Logout</button>
+</section>
+
+<section id="wallet" class="page">
+<h2>Wallet</h2>
+<div class="card"><div class="row space"><span>Available Credits</span><b id="walletPoints">0</b></div></div>
+<div class="card"><h3>Credit Request</h3><p class="notice">Request admin review-এর জন্য জমা হবে।</p>
+<select id="requestType" class="input"><option value="add">Add Credit Request</option><option value="withdraw">Withdrawal Review Request</option></select>
+<input id="requestAmount" class="input" type="number" min="1" placeholder="Amount / Credits">
+<textarea id="requestNote" class="input" placeholder="Reference / Note (ঐচ্ছিক)"></textarea>
+<button class="btn" onclick="submitWalletRequest()">Submit Request</button></div>
+<div class="card"><h3>My Requests</h3><div id="requestList"></div></div>
+</section>
+
+<section id="admin" class="page">
+<h2>Admin Panel</h2><p id="adminStatus" class="notice">Admin access required.</p>
+<div id="adminContent" class="hidden">
+<div class="adminTabs">
+<button class="btn alt" onclick="adminTab('settings')">Settings</button>
+<button class="btn alt" onclick="adminTab('banners')">Banners</button>
+<button class="btn alt" onclick="adminTab('modes')">Modes</button>
+<button class="btn alt" onclick="adminTab('tours')">Tournaments</button>
+<button class="btn alt" onclick="adminTab('requests')">Requests</button>
+<button class="btn alt" onclick="adminTab('results')">Results</button>
+</div><div id="adminBox"></div>
+</div>
+</section>
+</main>
+</div>
+
+<nav class="bottom"><div class="nav">
+<button id="nHome" onclick="go('home')">🎮<br>Play</button>
+<button id="nMatches" onclick="go('matches');loadMyMatches()">📋<br>Matches</button>
+<button id="nResults" onclick="go('results');loadResults()">🏆<br>Results</button>
+<button id="nProfile" onclick="go('profile')">👤<br>Profile</button>
+<button id="nAdmin" onclick="openAdmin()">⚙️<br>Admin</button>
+</div></nav>
+
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+import {getFirestore,collection,getDocs,doc,getDoc,setDoc,addDoc,updateDoc,deleteDoc,query,where,serverTimestamp,runTransaction} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+const firebaseConfig={
+ apiKey:"AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
+ authDomain:"r20-esports.firebaseapp.com",
+ projectId:"r20-esports",
+ storageBucket:"r20-esports.firebasestorage.app",
+ messagingSenderId:"1093098377356",
+ appId:"1:1093098377356:web:ca32c25bf149e317bceba9",
+ measurementId:"G-28FJ7LF6TL"
+};
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let user=null,isAdmin=false,sliderTimer=null;
+const defaultModes=['BR DUO MATCH','BR SOLO MATCH','ETB BR PRO LEAGUE','SOLO SURVIVAL','LONE WOLF','CLASH SQUAD','CS 1v1 / 2v2','LOST TO WIN','FREE MATCH'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const err=e=>alert(e?.message||'একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+
+window.go=id=>{
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ const page=$(id);if(page)page.classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+ const map={home:'nHome',matches:'nMatches',results:'nResults',profile:'nProfile',admin:'nAdmin'};
+ if(map[id])$(map[id]).classList.add('active');
+ scrollTo(0,0);
+ if(id==='wallet')loadWallet();
+};
+
+async function getSite(){try{const s=await getDoc(doc(db,'siteSettings','main'));return s.exists()?s.data():{}}catch{return{}}}
+
+async function loadHome(){
+ const site=await getSite();
+ $('siteLogo').src=site.logoUrl||"https://d3tx3wg2jy0sui.cloudfront.net/651b3cccae034725beb279c6c1951687.jpg";
+ let banners=[];
+ try{banners=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.active!==false)}catch{}
+ if(!banners.length)banners=[{imageUrl:site.bannerUrl||"https://d3tx3wg2jy0sui.cloudfront.net/1d9307a099b64ae1b459c3a5fdfc2ea4.jpg",title:'R2.0 ESPORTS'}];
+ $('bannerWrap').innerHTML='<div class="card hero slider">'+banners.map((b,i)=>`<div class="slide ${i===0?'active':''}">${b.imageUrl?`<img src="${esc(b.imageUrl)}" alt="${esc(b.title||'Banner')}">`:`<div class="fallback">${esc(b.title||'R2.0 ESPORTS')}</div>`}</div>`).join('')+'<div class="dots">'+banners.map((_,i)=>`<i class="dot ${i===0?'on':''}"></i>`).join('')+'</div></div>';
+ clearInterval(sliderTimer);let n=0;
+ if(banners.length>1)sliderTimer=setInterval(()=>{const ss=[...document.querySelectorAll('.slide')],ds=[...document.querySelectorAll('.dot')];if(!ss.length)return;ss[n]?.classList.remove('active');ds[n]?.classList.remove('on');n=(n+1)%ss.length;ss[n]?.classList.add('active');ds[n]?.classList.add('on')},3500);
+ let modes=[...defaultModes];
+ try{const ms=(await getDocs(collection(db,'gameModes'))).docs.map(d=>d.data().name).filter(Boolean);if(ms.length)modes=ms}catch{}
+ $('modes').innerHTML=modes.map(m=>`<button class="mode" onclick='openMode(${JSON.stringify(m)})'>${esc(m)}<small>Tap to view tournaments</small></button>`).join('');
+}
+
+window.openMode=async m=>{
+ $('modeTitle').textContent=m;go('tournaments');$('tlist').innerHTML='<div class="card muted">Loading...</div>';
+ try{const ts=(await getDocs(query(collection(db,'tournaments'),where('mode','==',m)))).docs.map(d=>({id:d.id,...d.data()}));renderTours(ts)}catch(e){$('tlist').innerHTML='<div class="card warn">Tournament load করা যায়নি।</div>';console.error(e)}
+};
+
+function renderTours(ts){
+ $('tlist').innerHTML=ts.length?ts.map(t=>`<div class="card tour"><div class="inside"><span class="tag">${esc(t.mode||'')}</span><h3>${esc(t.title||'Tournament')}</h3><div class="muted">${esc(t.dateTime||'সময় নির্ধারিত হয়নি')} • ${esc(t.map||'')}</div><div class="stats"><div class="stat">PRIZE<b>${Number(t.prizePool||0)} Credits</b></div><div class="stat">PER KILL<b>${Number(t.perKill||0)}</b></div><div class="stat">ENTRY<b>${Number(t.entryFee||0)} Credits</b></div></div></div><div class="actions"><button class="btn alt" onclick="openDetails('${t.id}')">Details</button><button class="btn green" onclick="joinTour('${t.id}')">Join</button></div></div>`).join(''):'<div class="card center muted">এই মোডে এখন কোনো tournament নেই।</div>';
+}
+
+window.openDetails=async id=>{
+ go('details');$('detailBox').innerHTML='<div class="card muted">Loading...</div>';
+ try{
+  const s=await getDoc(doc(db,'tournaments',id));if(!s.exists())throw Error('Tournament পাওয়া যায়নি।');
+  const t={id:s.id,...s.data()};
+  const room=t.roomPublished?`<p>Room ID: <b>${esc(t.roomId||'')}</b></p><p>Password: <b>${esc(t.roomPassword||'')}</b></p>`:'<p class="muted">Room details match time-এর আগে প্রকাশ করা হবে না।</p>';
+  const rules=(Array.isArray(t.rules)&&t.rules.length?t.rules:['সঠিক সময়ে ম্যাচে উপস্থিত থাকতে হবে','অশোভন আচরণ বা cheating নিষিদ্ধ','Admin-এর সিদ্ধান্ত মেনে চলতে হবে','Room ID ও Password অন্যের সাথে শেয়ার করা যাবে না']);
+  $('detailBox').innerHTML=`<div class="card"><span class="tag">${esc(t.mode||'')}</span><h2>${esc(t.title||'')}</h2><p class="muted">${esc(t.dateTime||'')} • ${esc(t.map||'')}</p><div class="stats"><div class="stat">Prize<b>${Number(t.prizePool||0)} Credits</b></div><div class="stat">Per Kill<b>${Number(t.perKill||0)}</b></div><div class="stat">Entry<b>${Number(t.entryFee||0)} Credits</b></div></div></div><div class="card"><h3>🔑 Room Details</h3>${room}</div><div class="card"><h3>📌 Rules</h3>${rules.map(r=>`<div class="rule">${esc(r)}</div>`).join('')}</div><button class="btn green" onclick="joinTour('${t.id}')">Join Tournament</button>`;
+ }catch(e){$('detailBox').innerHTML=`<div class="card warn">${esc(e.message)}</div>`}
+};
+
+window.joinTour=async id=>{
+ if(!user){alert('আগে Login করুন');go('login');return}
+ try{
+  const ref=doc(db,'users',user.uid),joinRef=doc(db,'users',user.uid,'joinedMatches',id),tref=doc(db,'tournaments',id);
+  await runTransaction(db,async tx=>{
+   const us=await tx.get(ref),ts=await tx.get(tref),js=await tx.get(joinRef);
+   if(js.exists())throw Error('আপনি ইতিমধ্যে Join করেছেন');
+   if(!ts.exists())throw Error('Tournament পাওয়া যায়নি');
+   const t=ts.data(),fee=Math.max(0,Number(t.entryFee||0)),bal=Number(us.exists()?us.data().credits||0:0);
+   if(bal<fee)throw Error('পর্যাপ্ত Credits নেই');
+   tx.set(ref,{email:user.email,credits:bal-fee,updatedAt:serverTimestamp()},{merge:true});
+   tx.set(joinRef,{tournamentId:id,title:t.title||'',mode:t.mode||'',entryFee:fee,joinedAt:serverTimestamp()});
+  });
+  alert('Tournament সফলভাবে Join হয়েছে।');await loadProfile();
+ }catch(e){err(e)}
+};
+
+async function loadProfile(){
+ if(!user)return;
+ try{
+  const s=await getDoc(doc(db,'users',user.uid));const d=s.exists()?s.data():{};
+  const n=d.name||user.email?.split('@')[0]||'Player';
+  $('pname').textContent=n;$('pemail').textContent=user.email||'';$('av').textContent=n.charAt(0).toUpperCase();$('points').textContent=Number(d.credits||0)+' Credits';
+ }catch(e){console.error(e)}
+}
+
+async function loadMyMatches(){
+ if(!user){$('myMatchesList').innerHTML='<div class="card">আগে Login করুন।</div>';return}
+ try{const j=await getDocs(collection(db,'users',user.uid,'joinedMatches'));const arr=j.docs.map(d=>d.data());$('myMatchesList').innerHTML=arr.length?arr.map(x=>`<div class="card"><b>${esc(x.title||'Tournament')}</b><div class="muted">${esc(x.mode||'')} • Entry: ${Number(x.entryFee||0)} Credits</div></div>`).join(''):'<div class="card muted">এখনো কোনো ম্যাচ Join করেননি।</div>'}catch(e){$('myMatchesList').innerHTML='<div class="card warn">Matches load করা যায়নি।</div>'}
+}
+
+async function loadResults(){
+ try{const a=(await getDocs(collection(db,'results'))).docs.map(d=>d.data());$('resultsList').innerHTML=a.length?a.map(x=>`<div class="card"><b>${esc(x.title||'Result')}</b><p>${esc(x.text||'')}</p></div>`).join(''):'<div class="card muted">এখনো কোনো Result প্রকাশ হয়নি।</div>'}catch{$('resultsList').innerHTML='<div class="card warn">Results load করা যায়নি।</div>'}
+}
+
+async function loadWallet(){
+ if(!user)return;
+ try{
+  const s=await getDoc(doc(db,'users',user.uid));const d=s.exists()?s.data():{};$('walletPoints').textContent=Number(d.credits||0)+' Credits';
+  const q=await getDocs(collection(db,'walletRequests',user.uid,'items'));const a=q.docs.map(x=>x.data());
+  $('requestList').innerHTML=a.length?a.map(x=>`<div class="item"><b>${esc(x.type||'request')}</b> — ${Number(x.amount||0)}<br><span class="tiny muted">${esc(x.status||'pending')}</span></div>`).join(''):'<div class="muted">কোনো request নেই।</div>';
+ }catch(e){$('requestList').innerHTML='<div class="warn">Request load করা যায়নি।</div>'}
+}
+
+window.submitWalletRequest=async()=>{
+ if(!user)return;
+ const amount=Number($('requestAmount').value),type=$('requestType').value;
+ if(!Number.isFinite(amount)||amount<=0){alert('সঠিক amount দিন');return}
+ try{await addDoc(collection(db,'walletRequests',user.uid,'items'),{type,amount,note:$('requestNote').value.trim(),status:'pending',createdAt:serverTimestamp(),email:user.email,uid:user.uid});$('requestAmount').value='';$('requestNote').value='';alert('Request পাঠানো হয়েছে।');loadWallet()}catch(e){err(e)}
+};
+
+window.loginUser=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){err(e)}};
+window.registerUser=async()=>{
+ try{
+  const email=$('email').value.trim(),password=$('password').value;
+  const c=await createUserWithEmailAndPassword(auth,email,password);
+  await setDoc(doc(db,'users',c.user.uid),{email:c.user.email,credits:0,createdAt:serverTimestamp()},{merge:true});
+ }catch(e){err(e)}
+};
+window.logoutUser=async()=>{try{await signOut(auth)}catch(e){err(e)}};
+
+async function checkAdmin(){
+ if(!user){isAdmin=false;return false}
+ try{const s=await getDoc(doc(db,'admins',user.uid));isAdmin=s.exists()&&s.data().active!==false;return isAdmin}catch{isAdmin=false;return false}
+}
+
+window.openAdmin=async()=>{
+ go('admin');const ok=await checkAdmin();$('adminStatus').textContent=ok?'Admin access granted.':'এই account admin নয়।';$('adminContent').classList.toggle('hidden',!ok);if(ok)adminTab('settings');
+};
+
+window.adminTab=async tab=>{
+ if(!isAdmin)return;
+ const box=$('adminBox');
+ try{
+  if(tab==='settings'){const s=await getSite();box.innerHTML=`<div class="card"><h3>Site Settings</h3><input id="aLogo" class="input" value="${esc(s.logoUrl||'')}" placeholder="Logo URL"><input id="aBanner" class="input" value="${esc(s.bannerUrl||'')}" placeholder="Default Banner URL"><button class="btn" onclick="saveSettings()">Save Settings</button></div>`}
+  if(tab==='banners'){const b=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()}));box.innerHTML=`<div class="card"><h3>Add Banner</h3><input id="bTitle" class="input" placeholder="Title"><input id="bUrl" class="input" placeholder="Image URL"><button class="btn" onclick="addBanner()">Add Banner</button></div><div class="card list">${b.map(x=>`<div class="item">${esc(x.title||'Banner')}<br><span class="tiny">${esc(x.imageUrl||'')}</span><br><button class="btn danger mini" onclick="delBanner('${x.id}')">Delete</button></div>`).join('')||'No banners'}</div>`}
+  if(tab==='modes'){const m=(await getDocs(collection(db,'gameModes'))).docs.map(d=>({id:d.id,...d.data()}));box.innerHTML=`<div class="card"><input id="mName" class="input" placeholder="Game Mode Name"><button class="btn" onclick="addMode()">Add Mode</button></div><div class="card list">${m.map(x=>`<div class="item row space">${esc(x.name)}<button class="btn danger mini" onclick="delMode('${x.id}')">Delete</button></div>`).join('')||'Default modes are active when custom modes are empty.'}</div>`}
+  if(tab==='tours'){
+   const ts=(await getDocs(collection(db,'tournaments'))).docs.map(d=>({id:d.id,...d.data()}));
+   box.innerHTML=`<div class="card"><h3>Create Tournament</h3>
+   <input id="tTitle" class="input" placeholder="Title"><input id="tMode" class="input" placeholder="Mode">
+   <input id="tDate" class="input" placeholder="Date & Time"><input id="tMap" class="input" placeholder="Map">
+   <input id="tPrize" class="input" type="number" min="0" placeholder="Prize Credits">
+   <input id="tKill" class="input" type="number" min="0" placeholder="Per Kill">
+   <input id="tFee" class="input" type="number" min="0" placeholder="Entry Fee Credits">
+   <textarea id="tRules" class="input" placeholder="Rules — one per line"></textarea>
+   <button class="btn" onclick="addTournament()">Publish Tournament</button></div>
+   <div class="card list"><h3>Published Tournaments</h3>${ts.map(t=>`<div class="item"><b>${esc(t.title)}</b><br>
+   <span class="tiny muted">${esc(t.mode||'')} • Entry: ${Number(t.entryFee||0)}</span><br>
+   <button class="btn alt mini" onclick="editTournament('${t.id}')">Edit</button>
+   <button class="btn gold mini" onclick="manageRoom('${t.id}')">Room</button>
+   <button class="btn danger mini" onclick="delTournament('${t.id}')">Delete</button></div>`).join('')||'No tournaments'}</div>`}
+  if(tab==='requests'){
+   const rs=(await getDocs(collectionGroup(db,'items'))).docs.map(d=>({path:d.ref.path,id:d.id,...d.data()})).filter(x=>x.status==='pending');
+   box.innerHTML=`<div class="card"><h3>Pending Requests</h3><p class="tiny muted">Approve করলে Add Credit Request-এর credits যোগ হবে। Withdrawal শুধু review status হিসেবে approved হবে।</p>
+   <div class="list">${rs.map(r=>`<div class="item"><b>${esc(r.email||r.uid||'User')}</b><br>${esc(r.type||'request')} — ${Number(r.amount||0)} Credits<br><span class="tiny muted">${esc(r.note||'')}</span><br>
+   <button class="btn green mini" onclick="reviewRequest('${r.path}','approve')">Approve</button>
+   <button class="btn danger mini" onclick="reviewRequest('${r.path}','reject')">Reject</button></div>`).join('')||'No pending requests'}</div></div>`}
+  if(tab==='results'){
+   const rs=(await getDocs(collection(db,'results'))).docs.map(d=>({id:d.id,...d.data()}));
+   box.innerHTML=`<div class="card"><h3>Publish Result</h3><input id="rTitle" class="input" placeholder="Result Title"><textarea id="rText" class="input" placeholder="Winner / standings / result details"></textarea><button class="btn" onclick="addResult()">Publish Result</button></div><div class="card list"><h3>Published Results</h3>${rs.map(r=>`<div class="item"><b>${esc(r.title||'Result')}</b><br><span class="tiny muted">${esc(r.text||'')}</span><br><button class="btn danger mini" onclick="delResult('${r.id}')">Delete</button></div>`).join('')||'No results'}</div>`}
+ }catch(e){box.innerHTML=`<div class="card warn">${esc(e.message||'Admin data load করা যায়নি।')}</div>`}
+};
+
+window.saveSettings=async()=>{try{await setDoc(doc(db,'siteSettings','main'),{logoUrl:$('aLogo').value.trim(),bannerUrl:$('aBanner').value.trim()},{merge:true});alert('Saved');loadHome()}catch(e){err(e)}};
+window.addBanner=async()=>{try{const url=$('bUrl').value.trim();if(!url){alert('Image URL দিন');return}await addDoc(collection(db,'banners'),{title:$('bTitle').value.trim(),imageUrl:url,active:true,createdAt:serverTimestamp()});adminTab('banners');loadHome()}catch(e){err(e)}};
+window.delBanner=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'banners',id));adminTab('banners');loadHome()}catch(e){err(e)}};
+window.addMode=async()=>{const name=$('mName').value.trim();if(!name)return;try{await addDoc(collection(db,'gameModes'),{name,createdAt:serverTimestamp()});adminTab('modes');loadHome()}catch(e){err(e)}};
+window.delMode=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'gameModes',id));adminTab('modes');loadHome()}catch(e){err(e)}};
+window.addTournament=async()=>{
+ const data={title:$('tTitle').value.trim(),mode:$('tMode').value.trim(),dateTime:$('tDate').value.trim(),map:$('tMap').value.trim(),prizePool:Math.max(0,Number($('tPrize').value||0)),perKill:Math.max(0,Number($('tKill').value||0)),entryFee:Math.max(0,Number($('tFee').value||0)),rules:$('tRules').value.split('\n').map(x=>x.trim()).filter(Boolean),roomPublished:false,createdAt:serverTimestamp()};
+ if(!data.title||!data.mode){alert('Title এবং Mode দিন');return}
+ try{await addDoc(collection(db,'tournaments'),data);alert('Tournament published');adminTab('tours')}catch(e){err(e)}
+};
+window.delTournament=async id=>{if(!confirm('Tournament Delete করবেন?'))return;try{await deleteDoc(doc(db,'tournaments',id));adminTab('tours')}catch(e){err(e)}};
+
+
+window.editTournament=async id=>{
+ try{
+  const s=await getDoc(doc(db,'tournaments',id)); if(!s.exists())return alert('Tournament পাওয়া যায়নি');
+  const t=s.data();
+  const title=prompt('Title',t.title||''); if(title===null)return;
+  const mode=prompt('Mode',t.mode||''); if(mode===null)return;
+  const dateTime=prompt('Date & Time',t.dateTime||''); if(dateTime===null)return;
+  const map=prompt('Map',t.map||''); if(map===null)return;
+  const prize=prompt('Prize Credits',Number(t.prizePool||0)); if(prize===null)return;
+  const perKill=prompt('Per Kill',Number(t.perKill||0)); if(perKill===null)return;
+  const fee=prompt('Entry Fee Credits',Number(t.entryFee||0)); if(fee===null)return;
+  const rules=prompt('Rules (one rule per line)',(t.rules||[]).join('\n')); if(rules===null)return;
+  await updateDoc(doc(db,'tournaments',id),{title:title.trim(),mode:mode.trim(),dateTime:dateTime.trim(),map:map.trim(),prizePool:Math.max(0,Number(prize)||0),perKill:Math.max(0,Number(perKill)||0),entryFee:Math.max(0,Number(fee)||0),rules:rules.split('\n').map(x=>x.trim()).filter(Boolean),updatedAt:serverTimestamp()});
+  alert('Tournament updated'); adminTab('tours');
+ }catch(e){err(e)}
+};
+
+window.manageRoom=async id=>{
+ try{
+  const s=await getDoc(doc(db,'tournaments',id)); if(!s.exists())return;
+  const t=s.data();
+  const roomId=prompt('Room ID',t.roomId||''); if(roomId===null)return;
+  const roomPassword=prompt('Room Password',t.roomPassword||''); if(roomPassword===null)return;
+  const publish=confirm('OK = Room details publish, Cancel = lock রাখা');
+  await updateDoc(doc(db,'tournaments',id),{roomId:roomId.trim(),roomPassword:roomPassword.trim(),roomPublished:publish,updatedAt:serverTimestamp()});
+  alert(publish?'Room details published':'Room details saved but locked');
+ }catch(e){err(e)}
+};
+
+window.reviewRequest=async(path,action)=>{
+ try{
+  const ref=doc(db,...path.split('/'));
+  await runTransaction(db,async tx=>{
+   const rs=await tx.get(ref); if(!rs.exists())throw Error('Request পাওয়া যায়নি');
+   const r=rs.data(); if(r.status!=='pending')throw Error('Request already reviewed');
+   const status=action==='approve'?'approved':'rejected';
+   tx.update(ref,{status,reviewedAt:serverTimestamp(),reviewedBy:user.uid});
+   if(action==='approve' && r.type==='add'){
+     if(!r.uid)throw Error('User UID missing');
+     const uref=doc(db,'users',r.uid), us=await tx.get(uref);
+     const old=Number(us.exists()?us.data().credits||0:0);
+     tx.set(uref,{credits:old+Math.max(0,Number(r.amount)||0),updatedAt:serverTimestamp()},{merge:true});
+   }
+  });
+  alert(action==='approve'?'Request approved':'Request rejected'); adminTab('requests');
+ }catch(e){err(e)}
+};
+
+window.addResult=async()=>{
+ try{
+  const title=$('rTitle').value.trim(), text=$('rText').value.trim();
+  if(!title||!text){alert('Title এবং Result text দিন');return}
+  await addDoc(collection(db,'results'),{title,text,createdAt:serverTimestamp()});
+  $('rTitle').value='';$('rText').value='';adminTab('results');
+ }catch(e){err(e)}
+};
+window.delResult=async id=>{if(!confirm('Delete করবেন?'))return;try{await deleteDoc(doc(db,'results',id));adminTab('results')}catch(e){err(e)}};
+
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(u){
+  try{await setDoc(doc(db,'users',u.uid),{email:u.email,updatedAt:serverTimestamp()},{merge:true})}catch{}
+  await loadProfile();go('home');loadHome();
+ }else{isAdmin=false;go('login')}
+});
+</script>
+</body>
+</html>
