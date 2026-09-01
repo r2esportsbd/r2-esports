@@ -124,20 +124,47 @@ const MODES=["ALL","SOLO BR","DUO","SQUAD","CLASH SQUAD","LONE WOLF 1V1","FREE M
 function renderChips(){modeChips.innerHTML=MODES.map(m=>`<span class="chip ${selectedMode===m?'active':''}" onclick="setMode('${m}')">${m}</span>`).join('')}
 window.setMode=(m)=>{selectedMode=m;renderChips();loadTournaments()}
 renderChips();
-
 function loadTournaments(){
-  let q=query(collection(db,'tournaments'), where('isActive','==',true), orderBy('matchTime','asc'));
+  let q=query(collection(db,'tournaments'),where('isActive','==',true),orderBy('matchTime','asc'));
   unsubs.push(onSnapshot(q,snap=>{
     let tours=snap.docs.map(d=>({id:d.id,...d.data()}));
     if(selectedMode!=='ALL') tours=tours.filter(t=>t.mode===selectedMode);
-    document.getElementById('aTours').innerText=snap.size;
+
     tournamentGrid.innerHTML=tours.map(t=>{
-      const pct=Math.min(100, (t.currentSlots/t.maxSlots)*100);
-      const isFull=t.currentSlots>=t.maxSlots;
-      return `<div class="glass card"><div style="display:flex;justify-content:space-between"><span class="chip">${t.mode}</span><span class="chip">${t.entryFee==0?'FREE':'৳'+t.entryFee}</span></div><h3 style="margin:8px 0">${t.title}</h3><p>💰 ${t.prizePool} | 🕒 ${t.matchTime?.toDate? t.matchTime.toDate().toLocaleString(): ''}</p><div style="margin:8px 0"><small>${t.currentSlots}/${t.maxSlots}</small><div class="progress"><div style="width:${pct}%"></div></div></div><div style="display:flex;gap:8px"><button class="btn" style="flex:1" onclick="viewDetails('${t.id}')">DETAILS</button><button class="btn btn-gold" style="flex:1" id="join_${t.id}" onclick="openJoin('${t.id}')">${isFull?'FULL':'JOIN NOW'}</button></div></div>`
+      const pct=Math.min(100,(t.currentSlots/t.maxSlots)*100);
+      const full=t.currentSlots>=t.maxSlots;
+
+      return `<div class="glass card">
+        <span class="chip">${t.mode}</span>
+        <span class="chip">${t.entryFee==0?'FREE':'৳'+t.entryFee}</span>
+        <h3 style="margin:8px 0">${t.title}</h3>
+        <p>💰 ${t.prizePool} | 🕒 ${t.matchTime?.toDate?t.matchTime.toDate().toLocaleString():''}</p>
+
+        <div style="margin:8px 0">
+          <small>${t.currentSlots}/${t.maxSlots}</small>
+          <div class="progress"><div style="width:${pct}%"></div></div>
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button class="btn" style="flex:1" onclick="viewDetails('${t.id}')">DETAILS</button>
+          <button class="btn btn-gold" style="flex:1" onclick="openJoin('${t.id}')" ${full?'disabled':''}>
+            ${full?'FULL':'JOIN NOW'}
+          </button>
+        </div>
+
+        <div style="margin-top:10px;padding:10px;border-radius:12px;background:#07152d;border:1px solid #22315f">
+          <b>🎮 ROOM</b>
+          ${t.roomReleased
+            ? `<p>🆔 Room ID: <b>${t.roomId}</b></p>
+               <p>🔑 Password: <b>${t.roomPass}</b></p>`
+            : `<p style="color:#8a95b5">🔒 Room Locked</p>`}
+        </div>
+      </div>`;
     }).join('') || '<p>কোনো Tournament নেই</p>';
+
     checkJoinedButtons(tours);
   }));
+}
 }
 async function checkJoinedButtons(tours){
   if(!currentUser) return;
@@ -228,8 +255,30 @@ function loadAdmin(){
   unsubs.push(onSnapshot(collection(db,'users'), s=>{aUsers.innerText=s.size}));
   unsubs.push(onSnapshot(query(collection(db,'deposits'), where('status','==','pending')), s=>{aDeps.innerText=s.size; adminDeps.innerHTML=s.docs.map(d=>{const x=d.data();return `<div class="glass card" style="margin-top:6px">${x.userEmail} - ৳${x.amount} - ${x.transactionId} <button class="btn" onclick="approveDep('${d.id}')">Approve</button> <button class="btn" style="background:#222" onclick="rejectDep('${d.id}')">Reject</button></div>`}).join('')}));
   unsubs.push(onSnapshot(query(collection(db,'withdrawals'), where('status','==','pending')), s=>{aWiths.innerText=s.size; adminWiths.innerHTML=s.docs.map(d=>{const x=d.data();return `<div class="glass card" style="margin-top:6px">${x.userEmail} - ৳${x.amount} <button class="btn" onclick="approveWith('${d.id}')">Paid</button> <button class="btn" style="background:#222" onclick="rejectWith('${d.id}')">Reject</button></div>`}).join('')}));
-  unsubs.push(onSnapshot(collection(db,'tournaments'), s=>{adminTours.innerHTML=s.docs.map(d=>{const t=d.data();return `<div class="glass card" style="margin-top:6px">${t.title} <button class="btn" onclick="releaseRoom('${d.id}')">Release</button> <input id="rid_${d.id}" placeholder="Room ID"><input id="rp_${d.id}" placeholder="Pass"></div>`}).join('')}));
-}
+  unsubs.push(onSnapshot(collection(db,'tournaments'),s=>{
+  adminTours.innerHTML=s.docs.map(d=>{
+    const t=d.data();
+
+    return `<div class="glass card" style="margin-top:8px">
+      <b>${t.title}</b>
+      <p style="margin:6px 0">${t.mode}</p>
+
+      <input id="rid_${d.id}" class="input"
+        placeholder="Room ID"
+        value="${t.roomId||''}">
+
+      <input id="rp_${d.id}" class="input"
+        style="margin-top:6px"
+        placeholder="Room Password"
+        value="${t.roomPass||''}">
+
+      <button class="btn" style="width:100%;margin-top:8px"
+        onclick="releaseRoom('${d.id}')">
+        ${t.roomReleased?'UPDATE ROOM':'PUBLISH ROOM'}
+      </button>
+    </div>`;
+  }).join('');
+}));
 window.approveDep = async (id)=>{
   const depRef=doc(db,'deposits',id);
   await runTransaction(db, async (tx)=>{
