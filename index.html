@@ -130,13 +130,6 @@ async function loadHome(){
  let bannerUrl = 'https://d3tx3wg2jy0sui.cloudfront.net/10c263e4daa3409da781929921a72ea1.jpg';
  $('bannerWrap').innerHTML=`<div class="card hero" style="position:relative;aspect-ratio:16/9;overflow:hidden;padding:0;background:#000"><img src="${esc(bannerUrl)}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.src='https://via.placeholder.com/640x360?text=R2.0+ESPORTS'"></div>`;
 }
-window.editBanner=()=>{}; window.addNewBanner=()=>{}; window.openBannerEditor=()=>{};
-};
-window.uploadBannerUrl=async()=>{
- let url=$('bannerUrlInput').value.trim(); if(!url){alert('URL দাও');return;}
- try{let bid=pendingEditId; if(bid && bid!=''){await updateDoc(doc(db,'banners',bid),{imageUrl:url,updatedAt:serverTimestamp()});} else{await addDoc(collection(db,'banners'),{title:'Main Banner',imageUrl:url,active:true,createdAt:serverTimestamp()});} alert('✅ Updated!'); loadHome(); adminTab('tours');}catch(e){err(e)}
-};
-window.editBanner=window.openBannerEditor; window.addNewBanner=window.openBannerEditor;
 function renderTours(ts){
  $('tlist').innerHTML=ts.length?ts.map(t=>{
    const max=Number(t.maxSlots||48), cur=Number(t.currentJoins||0), full=cur>=max;
