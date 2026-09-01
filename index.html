@@ -127,8 +127,28 @@ async function loadHome(){
  let modes=['BR DUO MATCH','BR SOLO MATCH','ETB BR PRO LEAGUE','SOLO SURVIVAL','LONE WOLF','CLASH SQUAD'];
  try{const ms=(await getDocs(collection(db,'gameModes'))).docs.map(d=>d.data().name).filter(Boolean);if(ms.length) modes=ms}catch{}
  $('modes').innerHTML=modes.map(m=>`<button class="mode" onclick='openMode(${JSON.stringify(m)})'>${esc(m)}</button>`).join('');
- let banners=[]; try{banners=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()}))}catch{} $('bannerWrap').innerHTML=banners.length?`<div class="card hero"><img src="${esc(banners[0].imageUrl)}"></div>`:'<div class="card hero" style="padding:30px;text-align:center;font-weight:900">R2.0 ESPORTS</div>';
+ let banners=[]; try{banners=(await getDocs(collection(db,'banners'))).docs.map(d=>({id:d.id,...d.data()}))}catch{}
+ let bannerUrl = banners.length? banners[0].imageUrl : 'https://via.placeholder.com/640x360?text=R2.0+ESPORTS';
+ let editBtn = '';
+ if(isAdmin){
+   editBtn = `<button onclick="editBanner('${banners.length?banners[0].id:''}','${esc(bannerUrl)}')" style="position:absolute;top:10px;right:10px;background:#facc15;color:#000;padding:6px 12px;border-radius:20px;font-weight:800;font-size:12px;border:none">✏️ Edit</button><button onclick="addNewBanner()" style="position:absolute;top:10px;right:80px;background:#22c55e;color:#fff;padding:6px 12px;border-radius:20px;font-weight:800;font-size:12px;border:none">➕ Add</button>`;
+ }
+ $('bannerWrap').innerHTML=`<div class="card hero" style="position:relative;aspect-ratio:16/9;overflow:hidden;padding:0;background:#000"><img src="${esc(bannerUrl)}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.src='https://via.placeholder.com/640x360?text=R2.0+ESPORTS'">${editBtn}</div>`;
 }
+window.editBanner=async (id, oldUrl)=>{
+ let newUrl = prompt('🔗 নতুন Banner URL দিন (16:9):', oldUrl);
+ if(!newUrl) return;
+ try{
+   if(id){await updateDoc(doc(db,'banners',id),{imageUrl:newUrl.trim(),updatedAt:serverTimestamp()});}
+   else{await addDoc(collection(db,'banners'),{title:'Main Banner',imageUrl:newUrl.trim(),active:true,createdAt:serverTimestamp()});}
+   alert('✅ Banner Updated'); loadHome();
+ }catch(e){err(e)}
+};
+window.addNewBanner=async ()=>{
+ let url = prompt('🔗 নতুন Banner URL (16:9):');
+ if(!url) return;
+ try{await addDoc(collection(db,'banners'),{title:'Banner',imageUrl:url.trim(),active:true,createdAt:serverTimestamp()}); alert('✅ Added'); loadHome();}catch(e){err(e)}
+};
 window.openMode=async m=>{$('modeTitle').textContent=m;go('tournaments');$('tlist').innerHTML='Loading...';try{const ts=(await getDocs(query(collection(db,'tournaments'),where('mode','==',m)))).docs.map(d=>({id:d.id,...d.data()}));renderTours(ts)}catch{$('tlist').innerHTML='Failed'}};
 
 function renderTours(ts){
