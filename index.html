@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>R2.0 ESPORTS V2 - Final</title>
 <style>
-:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
+:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d;--bkash:#d12053}
 *{box-sizing:border-box}body{margin:0;background:#060b14;color:var(--text);font-family:system-ui,Arial,sans-serif}
 button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}.sub{font-size:12px;color:var(--muted)}
-main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0}.hero img{width:100%;display:block;max-height:320px;object-fit:cover}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}.stat{padding:10px;text-align:center;border-right:1px solid var(--line);font-size:12px}.stat:last-child{border:0}.stat b{display:block;font-size:15px;margin-top:5px;color:var(--gold)}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button{white-space:nowrap}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
+main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0}.hero img{width:100%;display:block;max-height:320px;object-fit:cover}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}.stat{padding:10px;text-align:center;border-right:1px solid var(--line);font-size:12px}.stat:last-child{border:0}.stat b{display:block;font-size:15px;margin-top:5px;color:var(--gold)}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}.badge.full{background:#6d1f2b}
+.bkash-box{background:linear-gradient(135deg, #d12053, #8a0e33);padding:15px;border-radius:15px;color:white;margin:10px 0}
+.bkash-badge{background:#fff;color:#d12053;padding:4px 10px;border-radius:8px;font-weight:bold;display:inline-block;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -52,28 +54,83 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <section id="details" class="page"><button class="btn alt" onclick="go('tournaments')">← Back</button><div id="detailBox"></div></section>
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
+
 <section id="profile" class="page">
 <div class="card center"><div class="avatar" id="av">R</div><h2 id="pname">Player</h2><div id="pemail" class="muted"></div><div id="isAdminBadge" class="hidden"><span class="tag" style="background:var(--gold);color:#000;margin-top:8px">👑 ADMIN</span></div></div>
 <div class="card"><div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div><button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button></div>
 <button class="btn alt" onclick="logoutUser()">Logout</button>
 </section>
+
 <section id="wallet" class="page">
-<h2>💰 Wallet</h2>
-<div class="card"><div class="row space"><span>Available</span><b id="walletPoints" style="color:var(--gold);font-size:22px">0</b></div></div>
-<div class="card">
-<select id="requestType" class="input"><option value="add">💰 Deposit</option><option value="withdraw">💸 Withdraw</option></select>
-<input id="requestAmount" class="input" type="number" placeholder="Amount">
-<textarea id="requestNote" class="input" placeholder="TrxID / Bkash Number"></textarea>
-<button class="btn" onclick="submitWalletRequest()">Submit</button></div>
-<div class="card"><h3>My Requests</h3><div id="requestList"></div></div>
+  <h2>💰 My Wallet</h2>
+  <div class="card">
+    <div class="row space"><span>Available Balance</span><b id="walletPoints" style="color:var(--gold);font-size:22px">0 BDT</b></div>
+  </div>
+
+  <div class="wTabs" style="margin-bottom:10px">
+    <button class="btn alt mini" onclick="switchWTab('video')">🎥 Rules & Video</button>
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit</button>
+    <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
+  </div>
+
+  <!-- Tab 1: Video Guide -->
+  <div id="wTabVideo" class="card">
+    <h3>📺 কিভাবে ডিপোজিট করবেন?</h3>
+    <p class="tiny muted">ডিপোজিট করার সঠিক নিয়ম জানতে নিচের ভিডিওটি দেখুন:</p>
+    <div id="videoContainer" style="margin-top:10px">
+      <a id="tutorialBtn" href="#" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">▶️ Watch Tutorial Video</a>
+    </div>
+  </div>
+
+  <!-- Tab 2: Deposit -->
+  <div id="wTabDeposit" class="card hidden">
+    <h3>📥 Deposit (bKash)</h3>
+    <div class="bkash-box">
+      <div class="bkash-badge">bKash Personal</div>
+      <p style="margin:5px 0;font-size:14px">১. *247# ডায়াল করে অথবা bKash অ্যাপে যান।</p>
+      <p style="margin:5px 0;font-size:14px">২. <b>Send Money</b> অপশনটি বেছে নিন।</p>
+      <p style="margin:5px 0;font-size:14px">৩. প্রাপক নম্বর হিসেবে নিচের নম্বরটি ব্যবহার করুন:</p>
+      <div class="row space" style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:8px;margin:8px 0">
+        <b style="font-size:18px;letter-spacing:1px">01892036752</b>
+        <button class="btn mini gold" style="width:auto" onclick="navigator.clipboard.writeText('01892036752');alert('নম্বর কপি করা হয়েছে!')">📋 Copy</button>
+      </div>
+      <p style="margin:5px 0;font-size:13px">৪. টাকা পাঠানোর পর নিচের বক্সে তথ্যগুলো দিয়ে **SEND** বাটনে চাপ দিন।</p>
+    </div>
+
+    <input id="depTrx" class="input" placeholder="ট্রানজেকশন আইডি (TrxID) দিন">
+    <input id="depSender" class="input" type="number" placeholder="কোন নম্বর থেকে টাকা পাঠিয়েছেন (Sender Number)">
+    <input id="depAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Amount)">
+    <button class="btn green" style="margin-top:8px" onclick="submitDeposit()">SEND DEPOSIT REQUEST</button>
+  </div>
+
+  <!-- Tab 3: Withdraw -->
+  <div id="wTabWithdraw" class="card hidden">
+    <h3>📤 Withdraw (bKash)</h3>
+    <div class="bkash-box" style="background:linear-gradient(135deg,#1e3a8a,#0f172a)">
+      <div class="bkash-badge" style="background:#35d1c5;color:#000">Minimum 100 TK</div>
+      <p style="margin:5px 0;font-size:13px">আপনার বিকাশ নম্বর ও পরিমাণ বসিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন। সর্বনিম্ন উইথড্র ১০০ টাকা।</p>
+    </div>
+
+    <input id="witNum" class="input" type="number" placeholder="আপনার bKash নম্বর">
+    <input id="witAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Min 100 TK)">
+    <button class="btn gold" style="margin-top:8px" onclick="submitWithdraw()">SEND WITHDRAW REQUEST</button>
+  </div>
+
+  <div class="card">
+    <h3>📜 Transaction History</h3>
+    <div id="requestList"></div>
+  </div>
 </section>
+
 <section id="admin" class="page">
 <h2>⚙ Admin Panel</h2><p id="adminStatus" class="tiny muted"></p>
 <div id="adminContent" class="hidden">
 <div class="adminTabs">
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('players')">👥 Players</button>
-<button class="btn alt mini" onclick="adminTab('requests')">💳 Requests</button>
+<button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
+<button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
+<button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
 </div><div id="adminBox"></div>
 </div>
 </section>
@@ -260,7 +317,7 @@ window.confirmJoin = async () => {
 async function loadProfile(){
  if(!user) return;
  try {
-  const s = await getDoc(doc(doc(db, 'users', user.uid)));
+  const s = await getDoc(doc(db, 'users', user.uid));
   const d = s.data() || {};
   $('pname').textContent = d.name || user.email.split('@')[0];
   $('pemail').textContent = user.email;
@@ -294,20 +351,105 @@ async function loadResults(){
   } catch(e){}
 }
 
+// WALLET TABS SYSTEM
+window.switchWTab = tab => {
+  $('wTabVideo').classList.add('hidden');
+  $('wTabDeposit').classList.add('hidden');
+  $('wTabWithdraw').classList.add('hidden');
+  if(tab==='video') $('wTabVideo').classList.remove('hidden');
+  if(tab==='deposit') $('wTabDeposit').classList.remove('hidden');
+  if(tab==='withdraw') $('wTabWithdraw').classList.remove('hidden');
+};
+
 async function loadWallet(){
   try {
     const s = await getDoc(doc(db, 'users', user.uid));
-    $('walletPoints').textContent = Number(s.data().credits || 0);
+    $('walletPoints').textContent = Number(s.data().credits || 0) + ' BDT';
+    
+    // Load Video Tutorial Link
+    const setSnap = await getDoc(doc(db, 'settings', 'config'));
+    if(setSnap.exists() && setSnap.data().videoUrl){
+      $('tutorialBtn').href = setSnap.data().videoUrl;
+    } else {
+      $('tutorialBtn').href = "https://youtube.com";
+    }
+
+    // Load Requests
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
-    $('requestList').innerHTML = q.docs.map(d => `<div class="item">${esc(d.data().type)} - ${d.data().amount} - ${d.data().status}</div>`).join('') || 'No requests';
-  } catch(e){}
+    $('requestList').innerHTML = q.docs.map(d => {
+      const data = d.data();
+      let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
+      return `<div class="item" style="margin-top:8px">
+        <div class="row space">
+          <b>${data.type==='deposit'?'📥 Deposit':'📤 Withdraw'} (${data.amount} BDT)</b>
+          <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
+        </div>
+        <div class="tiny muted" style="margin-top:4px">
+          ${data.type==='deposit'? `TrxID: ${esc(data.trxId || 'N/A')} | Sender: ${esc(data.sender || 'N/A')}` : `Receiver: ${esc(data.receiver || 'N/A')}`}
+        </div>
+      </div>`;
+    }).join('') || '<p class="tiny muted">No history</p>';
+  } catch(e){ console.error(e); }
 }
 
-window.submitWalletRequest = async () => {
-  const amount = Number($('requestAmount').value), type = $('requestType').value, note = $('requestNote').value;
-  if(!amount) return alert('Amount দিন');
-  await addDoc(collection(db, 'walletRequests', user.uid, 'items'), { type, amount, note, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid });
-  alert('Submitted'); loadWallet();
+window.submitDeposit = async () => {
+  const trxId = $('depTrx').value.trim();
+  const sender = $('depSender').value.trim();
+  const amount = Number($('depAmount').value);
+
+  if(!trxId || !sender || !amount) return alert('সমস্ত তথ্য পূরণ করুন');
+  
+  try {
+    await addDoc(collection(db, 'walletRequests', user.uid, 'items'), {
+      type: 'deposit',
+      trxId,
+      sender,
+      amount,
+      status: 'pending',
+      createdAt: serverTimestamp(),
+      email: user.email,
+      uid: user.uid
+    });
+    alert('✅ ডিপোজিট রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে!');
+    $('depTrx').value = ''; $('depSender').value = ''; $('depAmount').value = '';
+    loadWallet();
+  } catch(e){ err(e); }
+};
+
+window.submitWithdraw = async () => {
+  const receiver = $('witNum').value.trim();
+  const amount = Number($('witAmount').value);
+
+  if(!receiver || !amount) return alert('সমস্ত তথ্য দিন');
+  if(amount < 100) return alert('⚠️ সর্বনিম্ন উইথড্র ১০০ টাকা');
+
+  try {
+    const uRef = doc(db, 'users', user.uid);
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const currentBal = Number(uSnap.data().credits || 0);
+      if(currentBal < amount) throw new Error('⚠️ পর্যাপ্ত ব্যালেন্স নেই!');
+      
+      // Deduct balance instantly
+      tx.update(uRef, { credits: currentBal - amount });
+
+      // Add Request
+      const reqRef = doc(collection(db, 'walletRequests', user.uid, 'items'));
+      tx.set(reqRef, {
+        type: 'withdraw',
+        receiver,
+        amount,
+        status: 'pending',
+        createdAt: serverTimestamp(),
+        email: user.email,
+        uid: user.uid
+      });
+    });
+
+    alert('✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে এবং ব্যালেন্স কাটা হয়েছে!');
+    $('witNum').value = ''; $('witAmount').value = '';
+    loadWallet();
+  } catch(e){ alert(e.message || 'Error occurred'); }
 };
 
 window.loginUser = async () => {
@@ -318,9 +460,7 @@ window.loginUser = async () => {
     $('authMsg').textContent = "Logging in...";
     await signInWithEmailAndPassword(auth, email, password);
     alert('✅ Login Successful');
-  } catch(e) {
-    err(e);
-  }
+  } catch(e) { err(e); }
 };
 
 window.registerUser = async () => {
@@ -403,7 +543,88 @@ window.adminTab = async tab => {
       `).join('')}
     </div>
   `;
+ } else if(tab === 'dep_requests' || tab === 'wit_requests') {
+   box.innerHTML = "Loading requests...";
+   const isDep = tab === 'dep_requests';
+   const reqs = [];
+   const usersSnap = await getDocs(collection(db, 'users'));
+   
+   for(const uDoc of usersSnap.docs){
+     const itemsSnap = await getDocs(collection(db, 'walletRequests', uDoc.id, 'items'));
+     itemsSnap.docs.forEach(idoc => {
+       const d = idoc.data();
+       if((isDep && d.type === 'deposit') || (!isDep && d.type === 'withdraw')){
+         reqs.push({ id: idoc.id, uid: uDoc.id, ...d });
+       }
+     });
+   }
+
+   box.innerHTML = `
+     <div class="card">
+       <h3>${isDep ? '📥 Deposit Requests' : '📤 Withdraw Requests'}</h3>
+       <div class="list">
+         ${reqs.map(r => `
+           <div class="item" style="margin-top:8px">
+             <b>${esc(r.email)}</b> - <b style="color:var(--gold)">${r.amount} TK</b>
+             <p class="tiny muted" style="margin:4px 0">
+               ${isDep ? `TrxID: <b>${esc(r.trxId)}</b> | Sender: <b>${esc(r.sender)}</b>` : `bKash Receiver: <b>${esc(r.receiver)}</b>`}
+             </p>
+             <span class="badge">${r.status.toUpperCase()}</span>
+             ${r.status === 'pending' ? `
+               <div class="row" style="margin-top:6px">
+                 <button class="btn green mini" onclick="processWalletReq('${r.uid}', '${r.id}', '${r.type}', ${r.amount}, 'approve')">Approve</button>
+                 <button class="btn danger mini" onclick="processWalletReq('${r.uid}', '${r.id}', '${r.type}', ${r.amount}, 'reject')">Reject</button>
+               </div>
+             ` : ''}
+           </div>
+         `).join('') || '<p class="tiny muted">No Requests</p>'}
+       </div>
+     </div>
+   `;
+ } else if(tab === 'settings') {
+   box.innerHTML = `
+     <div class="card">
+       <h3>🎥 Deposit Video Guide Link</h3>
+       <input id="admVidUrl" class="input" placeholder="YouTube Video URL">
+       <button class="btn gold" onclick="saveVidUrl()">Save Link</button>
+     </div>
+   `;
  }
+};
+
+window.saveVidUrl = async () => {
+  const url = $('admVidUrl').value.trim();
+  if(!url) return alert('URL দিন');
+  await setDoc(doc(db, 'settings', 'config'), { videoUrl: url }, { merge: true });
+  alert('✅ Video Link Saved!');
+};
+
+window.processWalletReq = async (uid, reqId, type, amount, action) => {
+  try {
+    const rRef = doc(db, 'walletRequests', uid, 'items', reqId);
+    const uRef = doc(db, 'users', uid);
+
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const currentBal = Number(uSnap.data().credits || 0);
+
+      if(action === 'approve'){
+        if(type === 'deposit'){
+          tx.update(uRef, { credits: currentBal + amount });
+        }
+        tx.update(rRef, { status: 'approved' });
+      } else if(action === 'reject'){
+        if(type === 'withdraw'){
+          // Refund balance on withdraw rejection
+          tx.update(uRef, { credits: currentBal + amount });
+        }
+        tx.update(rRef, { status: 'rejected' });
+      }
+    });
+
+    alert('✅ Processed: ' + action);
+    adminTab(type === 'deposit' ? 'dep_requests' : 'wit_requests');
+  } catch(e){ alert('Error: ' + e.message); }
 };
 
 window.addTournament = async () => {
