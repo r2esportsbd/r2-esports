@@ -130,12 +130,35 @@ async function loadHome(){
  let bannerUrl = 'https://d3tx3wg2jy0sui.cloudfront.net/10c263e4daa3409da781929921a72ea1.jpg';
  $('bannerWrap').innerHTML=`<div class="card hero" style="position:relative;aspect-ratio:16/9;overflow:hidden;padding:0;background:#000"><img src="${esc(bannerUrl)}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.src='https://via.placeholder.com/640x360?text=R2.0+ESPORTS'"></div>`;
 }
-function renderTours(ts){
- $('tlist').innerHTML=ts.length?ts.map(t=>{
-   const max=Number(t.maxSlots||48), cur=Number(t.currentJoins||0), full=cur>=max;
-   return `<div class="card tour"><div class="inside"><div class="row space"><span class="tag">${esc(t.mode||'')}</span><span class="badge ${full?'full':''}">${cur}/${max}</span></div><h3>${esc(t.title||'')}</h3><div class="muted">${esc(t.dateTime||'')} • ${esc(t.map||'')}</div><div class="stats"><div class="stat">PRIZE<b>${Number(t.prizePool||0)}</b></div><div class="stat">KILL<b>${Number(t.perKill||0)}</b></div><div class="stat">ENTRY<b>${Number(t.entryFee||0)}</b></div><div class="stat">SLOTS<b>${cur}/${max}</b></div></div></div><div class="actions"><button class="btn alt" onclick="openDetails('${t.id}')">Details</button><button class="btn" style="background:#1e3a8a" onclick="handleRoomClick('${t.id}')">🔑 ROOM</button><button class="btn green" ${full?'disabled':''} onclick="joinTour('${t.id}')">${full?'Full':'Join'}</button></div></div>`;
- }).join(''):'<div class="card">No tournaments</div>';
-}
+window.openMode=async mode=>{
+  try{
+
+    go('tournaments');
+
+    $('modeTitle').textContent='🎮 '+mode;
+
+    const snap=await getDocs(collection(db,'tournaments'));
+
+    const tours=snap.docs
+      .map(d=>({id:d.id,...d.data()}))
+      .filter(t=>
+        String(t.mode||'').trim().toLowerCase()===
+        String(mode||'').trim().toLowerCase()
+      )
+      .sort((a,b)=>
+        new Date(a.dateTime||0)-new Date(b.dateTime||0)
+      );
+
+    renderTours(tours);
+
+  }catch(e){
+
+    console.error(e);
+
+    $('tlist').innerHTML=
+      '<div class="card">❌ Tournament Load Failed</div>';
+  }
+};
 
 window.openDetails=async id=>{
  go('details');$('detailBox').innerHTML='Loading...';
@@ -217,11 +240,83 @@ window.logoutUser=async()=>{await signOut(auth)};
 async function checkAdmin(){if(!user) return false; if(ADMIN_EMAILS.includes(user.email)) {isAdmin=true;return true} try{const s=await getDoc(doc(db,'admins',user.uid));isAdmin=s.exists();return isAdmin}catch{return false}}
 window.openAdmin=async()=>{go('admin');const ok=await checkAdmin();$('adminStatus').textContent=ok?'Admin: '+user.email:'Not Admin';$('adminContent').classList.toggle('hidden',!ok);if(ok) adminTab('tours')};
 window.adminTab=async tab=>{
- const box=$('adminBox');
- if(tab==='tours'){const ts=(await getDocs(collection(db,'tournaments'))).docs.map(d=>({id:d.id,...d.data()}));box.innerHTML=`<div class="card"><h3>Create</h3><input id="tTitle" class="input" placeholder="Title"><input id="tMode" class="input" placeholder="Mode"><input id="tDate" class="input" placeholder="Date"><input id="tMap" class="input" placeholder="Map"><input id="tPrize" class="input" type="number" placeholder="Prize"><input id="tFee" class="input" type="number" placeholder="Fee"><input id="tSlots" class="input" type="number" placeholder="Slots 48"><button class="btn" onclick="addTournament()">Publish</button></div><div class="card list">${ts.map(t=>`<div class="item"><b>${esc(t.title)}</b> ${t.roomPublished?'<span class="badge" style="background:green">LIVE</span>':'<span class="badge">LOCKED</span>'}<br><button class="btn alt mini" onclick="editTournament('${t.id}')">Edit</button><button class="btn gold mini" onclick="manageRoom('${t.id}')">🔑 Room</button><button class="btn danger mini" onclick="delTournament('${t.id}')">Del</button></div>`).join('')}</div>`}
- if(tab==='players'){let html='<div class="card"><h3>Players</h3>';const tours=(await getDocs(collection(db,'tournaments'))).docs.map(d=>({id:d.id}));for(const t of tours){const ps=(await getDocs(collection(db,'tournaments',t.id,'players'))).docs.map(d=>d.data());html+=`<div class="tiny">${t.id}: ${ps.length} players</div>`+ps.map(p=>`<div class="item tiny"><b>${esc(p.ign)}</b> ${esc(p.ffUid)}</div>`).join('')}html+='</div>';box.innerHTML=html}
- if(tab==='requests'){const rs=(await getDocs(collectionGroup(db,'items'))).docs.map(d=>({path:d.ref.path,...d.data()})).filter(x=>x.status==='pending');box.innerHTML=`<div class="card"><h3>Requests ${rs.length}</h3>${rs.map(r=>`<div class="item"><b>${esc(r.email)} ${r.type} ${r.amount}</b><br><button class="btn green mini" onclick="reviewRequest('${r.path}','approve')">Approve</button><button class="btn danger mini" onclick="reviewRequest('${r.path}','reject')">Reject</button></div>`).join('')}</div>`}
-};
+ if(tab==='tours'){
+  const ts=(await getDocs(collection(db,'tournaments'))).docs.map(d=>({id:d.id,...d.data()}));
+
+  let modes=['BR DUO MATCH','BR SOLO MATCH','ETB BR PRO LEAGUE','SOLO SURVIVAL','LONE WOLF','CLASH SQUAD'];
+
+  try{
+    const ms=(await getDocs(collection(db,'gameModes'))).docs
+      .map(d=>d.data().name)
+      .filter(Boolean);
+
+    if(ms.length) modes=ms;
+  }catch{}
+
+  box.innerHTML=`
+    <div class="card">
+      <h3>🏆 Create Tournament</h3>
+
+      <select id="tMode" class="input">
+        <option value="">🎮 Select Game Mode</option>
+        ${modes.map(m=>`<option value="${esc(m)}">${esc(m)}</option>`).join('')}
+      </select>
+
+      <input id="tTitle" class="input" placeholder="Tournament Title">
+
+      <input id="tDate" class="input" type="date">
+
+      <input id="tTime" class="input" type="time">
+
+      <input id="tMap" class="input" placeholder="Map">
+
+      <input id="tPrize" class="input" type="number" min="0" placeholder="Win Prize (TK)">
+
+      <input id="tKill" class="input" type="number" min="0" placeholder="Per Kill (TK)">
+
+      <input id="tFee" class="input" type="number" min="0" placeholder="Entry Fee (TK)">
+
+      <input id="tSlots" class="input" type="number" min="1" placeholder="Maximum Slots">
+
+      <textarea id="tRules" class="input" placeholder="Tournament Rules"></textarea>
+
+      <button class="btn" onclick="addTournament()">🚀 Publish Tournament</button>
+    </div>
+
+    <div class="card list">
+      ${ts.map(t=>`
+        <div class="item">
+          <b>${esc(t.title||'Tournament')}</b>
+          <span class="badge">${esc(t.mode||'')}</span>
+
+          ${t.roomPublished
+            ? '<span class="badge" style="background:green">ROOM LIVE</span>'
+            : '<span class="badge">ROOM LOCKED</span>'}
+
+          <br>
+
+          <span class="tiny muted">
+            ${esc(t.dateTime||'')} |
+            Prize: ${Number(t.prizePool||0)} TK |
+            Kill: ${Number(t.perKill||0)} TK |
+            Entry: ${Number(t.entryFee||0)} TK
+          </span>
+
+          <br>
+
+          <button class="btn alt mini"
+            onclick="editTournament('${t.id}')">✏ Edit</button>
+
+          <button class="btn gold mini"
+            onclick="manageRoom('${t.id}')">🔑 Room</button>
+
+          <button class="btn danger mini"
+            onclick="delTournament('${t.id}')">🗑 Del</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
 window.addTournament=async()=>{const data={title:$('tTitle').value,mode:$('tMode').value,dateTime:$('tDate').value,map:$('tMap').value,prizePool:Number($('tPrize').value||0),entryFee:Number($('tFee').value||0),maxSlots:Number($('tSlots').value||48),currentJoins:0,roomPublished:false,roomId:'',roomPassword:'',createdAt:serverTimestamp()};await addDoc(collection(db,'tournaments'),data);alert('Published');adminTab('tours')};
 window.delTournament=async id=>{if(!confirm('Delete?'))return;await deleteDoc(doc(db,'tournaments',id));adminTab('tours')};
 window.editTournament=async id=>{const s=await getDoc(doc(db,'tournaments',id));const t=s.data();pendingEditId=id;$('eTitle').value=t.title||'';$('eMode').value=t.mode||'';$('eDate').value=t.dateTime||'';$('eMap').value=t.map||'';$('ePrize').value=t.prizePool||0;$('eFee').value=t.entryFee||0;$('eSlots').value=t.maxSlots||48;$('editModal').classList.add('on')};
