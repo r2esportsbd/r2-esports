@@ -231,8 +231,30 @@ async function loadMyMatches(){
 async function loadResults(){try{const a=(await getDocs(collection(db,'results'))).docs.map(d=>d.data());$('resultsList').innerHTML=a.map(x=>`<div class="card"><b>${esc(x.title||'')}</b><p>${esc(x.text||'')}</p></div>`).join('')||'No results'}catch{}}
 async function loadWallet(){try{const s=await getDoc(doc(db,'users',user.uid));$('walletPoints').textContent=Number(s.data().credits||0);const q=await getDocs(collection(db,'walletRequests',user.uid,'items'));$('requestList').innerHTML=q.docs.map(d=>`<div class="item">${esc(d.data().type)} - ${d.data().amount} - ${d.data().status}</div>`).join('')||'No requests'}catch{}}
 window.submitWalletRequest=async()=>{const amount=Number($('requestAmount').value),type=$('requestType').value,note=$('requestNote').value;if(!amount) return alert('Amount দিন');await addDoc(collection(db,'walletRequests',user.uid,'items'),{type,amount,note,status:'pending',createdAt:serverTimestamp(),email:user.email,uid:user.uid});alert('Submitted');loadWallet()};
+window.loginUser=async()=>{
+  try{
+    const email=$('email').value.trim();
+    const password=$('password').value;
 
-window.loginUser=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){err(e)}};
+    if(!email){
+      alert('Email দিন');
+      return;
+    }
+
+    if(!password){
+      alert('Password দিন');
+      return;
+    }
+
+    await signInWithEmailAndPassword(auth,email,password);
+
+    alert('✅ Login Successful');
+
+  }catch(e){
+    console.error('LOGIN ERROR:',e);
+    alert('Login Error: '+(e.code||e.message||'Unknown Error'));
+  }
+};
 window.registerUser=async()=>{try{const email=$('email').value.trim(),pass=$('password').value,name=$('username').value.trim();const c=await createUserWithEmailAndPassword(auth,email,pass);await setDoc(doc(db,'users',c.user.uid),{email,name,credits:0,createdAt:serverTimestamp()},{merge:true});alert('Account Created')}catch(e){err(e)}};
 window.googleLogin=async()=>{try{const provider=new GoogleAuthProvider();const res=await signInWithPopup(auth,provider);await setDoc(doc(db,'users',res.user.uid),{email:res.user.email,name:res.user.displayName||res.user.email.split('@')[0],credits:0,updatedAt:serverTimestamp()},{merge:true})}catch(e){err(e)}};
 window.logoutUser=async()=>{await signOut(auth)};
