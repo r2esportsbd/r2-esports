@@ -149,14 +149,15 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 import {getFirestore,collection,collectionGroup,getDocs,doc,getDoc,setDoc,addDoc,updateDoc,deleteDoc,query,where,serverTimestamp,runTransaction,increment} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
-
-const firebaseConfig={apiKey:"AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",authDomain:"r20-esports.firebaseapp.com",projectId:"r20-esports",storageBucket:"r20-esports.firebasestorage.app",messagingSenderId:"1093098377356",appId:"1:1093098377356:web:ca32c25bf149e317bceba9"};
+const firebaseConfig={apiKey:"AIzaSyD6uFXH6PtNK166MA7IdgVI1YrrWe81I44",authDomain:"r20-esports.firebaseapp.com",projectId:"r20-esports",storageBucket:"r20-esports.firebasestorage.app",messagingSenderId:"258162032528",appId:"1:258162032528:web:7a1c2e5f9b0c1234567890"};
+const ADMIN_EMAILS=["salasalauddin139@gmail.com"];
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAILS=["salasalauddin139@gmail.com"];
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 let user=null,isAdmin=false,pendingJoinId=null,pendingEditId=null,pendingRoomId=null;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const err=e=>alert(e?.message||'Error');
+const err=e=>{document.getElementById('authMsg').textContent=e.code||e.message;};
 
 window.go=id=>{
  if(!user && id!=='login'){ go('login'); return; }
@@ -388,7 +389,7 @@ window.addTournament=async()=>{const data={title:$('tTitle').value,mode:$('tMode
 window.delTournament=async id=>{if(!confirm('Delete?'))return;await deleteDoc(doc(db,'tournaments',id));adminTab('tours')};
 window.editTournament=async id=>{const s=await getDoc(doc(db,'tournaments',id));const t=s.data();pendingEditId=id;$('eTitle').value=t.title||'';$('eMode').value=t.mode||'';$('eDate').value=t.dateTime||'';$('eMap').value=t.map||'';$('ePrize').value=t.prizePool||0;$('eFee').value=t.entryFee||0;$('eSlots').value=t.maxSlots||48;$('editModal').classList.add('on')};
 window.closeEditModal=()=>{$('editModal').classList.remove('on');pendingEditId=null};
-window.saveEditTournament=async()=>{await updateDoc(doc(db,'tournaments',pendingEditId),{title:$('eTitle').value,mode:$('eMode').value,dateTime:$('eDate').value,map:$('eMap').value,prizePool:Number($('ePrize').value||0),entryFee:Number($('eFee').value||0),maxSlots:Number($('eSlots').value||48)});closeEditModal();adminTab('tours')};
+prizePool:Number($('ePrize').value||0),perKill:Number($('eKill').value||0),entryFee:Number($('eFee').value||0)
 window.manageRoom=async id=>{const s=await getDoc(doc(db,'tournaments',id));pendingRoomId=id;$('rId').value=s.data().roomId||'';$('rPass').value=s.data().roomPassword||'';$('rPublished').checked=!!s.data().roomPublished;$('roomModal').classList.add('on')};
 window.closeRoomModal=()=>{$('roomModal').classList.remove('on');pendingRoomId=null};
 window.saveRoom=async()=>{await updateDoc(doc(db,'tournaments',pendingRoomId),{roomId:$('rId').value,roomPassword:$('rPass').value,roomPublished:$('rPublished').checked});closeRoomModal();alert($('rPublished').checked?'Published - Join করা User দেখবে':'Saved as Locked');adminTab('tours')};
