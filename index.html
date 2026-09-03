@@ -169,7 +169,18 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <textarea id="eRules" class="input" placeholder="Rules"></textarea>
 <div class="row"><button class="btn alt" onclick="closeEditModal()">Cancel</button><button class="btn" onclick="saveEditTournament()">Save</button></div>
 </div></div>
+<!-- Popup Notice Modal -->
+<div id="noticeModal" class="modal">
+  <div class="modalBox" style="border:1px solid var(--gold);max-height:80vh">
+    <h3 style="color:var(--gold);display:flex;align-items:center;gap:8px">ℹ️ Notice</h3>
+    
+    <div id="noticeTextContent" style="text-align:left;font-size:14px;line-height:1.6;max-height:50vh;overflow-y:auto;padding-right:5px;margin:12px 0" class="muted">
+      WELCOME TO R2.0 ESPORTS
+    </div>
 
+    <button class="btn gold" style="margin-top:10px" onclick="closeNoticeModal()">Got it</button>
+  </div>
+</div>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
@@ -589,6 +600,12 @@ window.adminTab = async tab => {
        <input id="admVidUrl" class="input" placeholder="YouTube Video URL">
        <button class="btn gold" onclick="saveVidUrl()">Save Link</button>
      </div>
+<!-- Admin Notice Input -->
+<div class="card" style="margin-top:10px">
+  <h3>📢 Edit Popup Notice</h3>
+  <textarea id="admNoticeText" class="input" rows="4" placeholder="নতুন নোটিশ লিখুন..."></textarea>
+  <button class="btn gold" style="margin-top:10px" onclick="saveNoticeText()">💾 Update Notice</button>
+</div>
    `;
  }
 };
@@ -599,7 +616,31 @@ window.saveVidUrl = async () => {
   await setDoc(doc(db, 'settings', 'config'), { videoUrl: url }, { merge: true });
   alert('✅ Video Link Saved!');
 };
+// ১. পপআপ নোটিশ বন্ধ করা
+window.closeNoticeModal = () => {
+  document.getElementById('noticeModal').classList.remove('on');
+};
 
+// ২. হোম পেজে পপআপ দেখানোর লজিক
+async function checkAndShowNotice() {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'config'));
+    if (s.exists() && s.data().noticeText) {
+      document.getElementById('noticeTextContent').innerHTML = s.data().noticeText.replace(/\n/g, '<br>');
+      document.getElementById('noticeModal').classList.add('on');
+    }
+  } catch(e) { console.error(e); }
+}
+
+// ৩. এডমিন থেকে নোটিশ সেভ করার লজিক
+window.saveNoticeText = async () => {
+  const text = document.getElementById('admNoticeText').value.trim();
+  if(!text) return alert('দয়া করে কোনো নোটিশ লিখুন');
+  try {
+    await setDoc(doc(db, 'settings', 'config'), { noticeText: text }, { merge: true });
+    alert('✅ Notice Updated Successfully!');
+  } catch(e) { console.error(e); }
+};
 window.processWalletReq = async (uid, reqId, type, amount, action) => {
   try {
     const rRef = doc(db, 'walletRequests', uid, 'items', reqId);
@@ -678,7 +719,7 @@ onAuthStateChanged(auth, async u => {
  user = u;
  if(u){
   await setDoc(doc(db, 'users', u.uid), { email: u.email, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-  await loadProfile(); go('home'); loadHome();
+go('profile'); go('home'); loadHome(); checkAndShowNotice();
  } else {
   go('login');
  }
