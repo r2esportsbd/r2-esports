@@ -21,18 +21,63 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 </header>
 
 <main>
-<!-- LOGIN PAGE - CLEANED -->
 <section id="login" class="page active">
-<div class="card" style="max-width:400px;margin:40px auto">
-<h2 style="text-align:center">Login / Sign Up</h2>
-<input id="username" class="input" placeholder="Username - যেমন R2 SALA">
-<input id="email" class="input" type="email" placeholder="Email">
-<input id="password" class="input" type="password" placeholder="Password (6+ chars)">
-<button class="btn" onclick="loginUser()">Login</button>
-<button class="btn alt" style="margin-top:8px" onclick="registerUser()">Create Account</button>
-<div style="text-align:center;margin:12px 0;color:var(--muted)">or</div>
-<button class="btn google" onclick="googleLogin()">🔵 Continue with Google</button>
-</div>
+  <div class="card" style="max-width:400px;margin:40px auto">
+    
+    <div class="center">
+      <div class="avatar" style="width:65px;height:65px;font-size:26px">R</div>
+      <h2>🎮 R2.0 ESPORTS</h2>
+      <p class="muted">Login অথবা নতুন Account তৈরি করুন</p>
+    </div>
+
+    <input id="username" class="input"
+      placeholder="👤 Username - যেমন R2 SALA"
+      autocomplete="username">
+
+    <input id="email" class="input"
+      type="email"
+      placeholder="📧 Email"
+      autocomplete="email">
+
+    <div style="position:relative">
+      <input id="password" class="input"
+        type="password"
+        placeholder="🔒 Password (6+ chars)"
+        autocomplete="current-password"
+        style="padding-right:50px">
+
+      <button type="button"
+        onclick="togglePassword()"
+        style="position:absolute;right:8px;top:8px;background:#20314a;color:white;border-radius:8px;padding:7px 10px">
+        👁️
+      </button>
+    </div>
+
+    <button id="loginBtn" class="btn" onclick="loginUser()">
+      🔐 Login
+    </button>
+
+    <button id="registerBtn" class="btn alt"
+      style="margin-top:8px"
+      onclick="registerUser()">
+      🆕 Create Account
+    </button>
+
+    <div style="text-align:center;margin:14px 0;color:var(--muted)">
+      ─── অথবা ───
+    </div>
+
+    <button id="googleBtn" class="btn google"
+      onclick="googleLogin()">
+      🔵 Continue with Google
+    </button>
+
+    <p id="authMsg"
+      class="tiny muted"
+      style="text-align:center;margin-top:12px">
+    </p>
+
+  </div>
 </section>
 
 <section id="home" class="page"><div id="bannerWrap"></div><h2>🎮 Game Modes</h2><div id="modes" class="grid"></div></section>
