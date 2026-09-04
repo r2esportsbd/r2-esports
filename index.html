@@ -121,6 +121,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <h3>📜 Transaction History</h3>
     <div id="requestList"></div>
   </div>
+<div style="margin-top: 15px; text-align: center;">
+  <button onclick="showPrivacyPolicy()" style="background: none; border: none; color: #888; text-decoration: underline; font-size: 13px; cursor: pointer;">
+    Privacy Policy & Rules
+  </button>
+</div>
 </section>
 
 <section id="admin" class="page">
@@ -132,6 +137,12 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
+<div id="admNoticeBox" style="margin-top: 15px;">
+  <h4>Edit Privacy Policy & Rules</h4>
+  <textarea id="admPrivacyText" class="input" placeholder="Type privacy policy here..." style="height:80px;"></textarea>
+  <button class="btn gold" onclick="savePrivacyText()" style="margin-top:5px;">Save Policy</button>
+</div>
+</div>
 </div><div id="adminBox"></div>
 </div>
 </section>
@@ -631,7 +642,22 @@ async function checkAndShowNotice() {
     }
   } catch(e) { console.error(e); }
 }
+window.savePrivacyText = async () => {
+  const text = document.getElementById('admPrivacyText').value.trim();
+  if(!text) return alert('পলিসি লিখুন');
+  try {
+    await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
+    alert('✅ Privacy Policy Updated Successfully!');
+  } catch(e) { console.error(e); }
+};
 
+window.showPrivacyPolicy = async () => {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'privacy'));
+    const text = s.exists() ? s.data().privacyText : 'No policy updated yet.';
+    alert('R2.0 Esports Privacy Policy & Rules:\n\n' + text);
+  } catch(e) { alert('Error loading policy'); }
+};
 // ৩. এডমিন থেকে নোটিশ সেভ করার লজিক
 window.saveNoticeText = async () => {
   const text = document.getElementById('admNoticeText').value.trim();
@@ -646,29 +672,23 @@ window.processWalletReq = async (uid, reqId, type, amount, action) => {
     const rRef = doc(db, 'walletRequests', uid, 'items', reqId);
     const uRef = doc(db, 'users', uid);
 
-    await runTransaction(db, async tx => {
-      const uSnap = await tx.get(uRef);
-      const currentBal = Number(uSnap.data().credits || 0);
-
-      if(action === 'approve'){
-        if(type === 'deposit'){
-          tx.update(uRef, { credits: currentBal + amount });
-        }
-        tx.update(rRef, { status: 'approved' });
-      } else if(action === 'reject'){
-        if(type === 'withdraw'){
-          // Refund balance on withdraw rejection
-          tx.update(uRef, { credits: currentBal + amount });
-        }
-        tx.update(rRef, { status: 'rejected' });
+    if (action === 'approve') {
+      if (type === 'deposit') {
+        await updateDoc(uRef, { credits: increment(amount) });
       }
-    });
+      await updateDoc(rRef, { status: 'approved' });
+    } else if (action === 'reject') {
+      if (type === 'withdraw') {
+        // Refund balance on withdraw rejection
+        await updateDoc(uRef, { credits: increment(amount) });
+      }
+      await updateDoc(rRef, { status: 'rejected' });
+    }
 
     alert('✅ Processed: ' + action);
     adminTab(type === 'deposit' ? 'dep_requests' : 'wit_requests');
   } catch(e){ alert('Error: ' + e.message); }
 };
-
 window.addTournament = async () => {
   const data = {
     title: $('tTitle').value, mode: $('tMode').value, dateTime: $('tDate').value + ' ' + $('tTime').value,
@@ -679,13 +699,13 @@ window.addTournament = async () => {
   await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
 };
 
-window.delTournament = async id => { if(!confirm('Delete?')) return; await deleteDoc(doc(db, 'tournaments', id)); adminTab('tours'); };
-
 window.editTournament = async id => {
   const s = await getDoc(doc(db, 'tournaments', id)); const t = s.data(); pendingEditId = id;
   $('eTitle').value = t.title || ''; $('eMode').value = t.mode || ''; $('eDate').value = t.dateTime || '';
   $('eMap').value = t.map || ''; $('ePrize').value = t.prizePool || 0; $('eKill').value = t.perKill || 0;
-  $('eFee').value = t.entryFee || 0; $('eSlots').value = t.maxSlots || 48; $('editModal').classList.add('on');
+  $('eFee').value = t.entryFee || 0; $('eSlots').value = t.maxSlots || 48; 
+  $('eRules').value = t.rules || '';
+  $('editModal').classList.add('on');
 };
 
 window.closeEditModal = () => { $('editModal').classList.remove('on'); pendingEditId = null; };
@@ -695,7 +715,8 @@ window.saveEditTournament = async () => {
   await updateDoc(doc(db, 'tournaments', pendingEditId), {
     title: $('eTitle').value, mode: $('eMode').value, dateTime: $('eDate').value, map: $('eMap').value,
     prizePool: Number($('ePrize').value || 0), perKill: Number($('eKill').value || 0),
-    entryFee: Number($('eFee').value || 0), maxSlots: Number($('eSlots').value || 48)
+    entryFee: Number($('eFee').value || 0), maxSlots: Number($('eSlots').value || 48),
+    rules: $('eRules').value
   });
   closeEditModal(); alert('Updated'); adminTab('tours');
 };
