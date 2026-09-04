@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>R2.0 ESPORTS V2 - Final</title>
+<title>R2.0 ESPORTS</title>
 <style>
 :root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d;--bkash:#d12053}
 *{box-sizing:border-box}body{margin:0;background:#060b14;color:var(--text);font-family:system-ui,Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}.sub{font-size:12px;color:var(--muted)}
-main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0}.hero img{width:100%;display:block;max-height:320px;object-fit:cover}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}.stat{padding:10px;text-align:center;border-right:1px solid var(--line);font-size:12px}.stat:last-child{border:0}.stat b{display:block;font-size:15px;margin-top:5px;color:var(--gold)}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}.badge.full{background:#6d1f2b}
-.bkash-box{background:linear-gradient(135deg, #d12053, #8a0e33);padding:15px;border-radius:15px;color:white;margin:10px 0}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}
+main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0;position:relative;aspect-ratio:16/9;background:#000;border-radius:18px}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.5s ease-in-out}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}.bkash-box{background:linear-gradient(135deg, #d12053, #8a0e33);padding:15px;border-radius:15px;color:white;margin:10px 0}
 .bkash-badge{background:#fff;color:#d12053;padding:4px 10px;border-radius:8px;font-weight:bold;display:inline-block;margin-bottom:8px}
+.wa-item{display:flex;justify-content:space-between;align-items:center;background:#091422;padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--line)}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
-<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/eef6c3293f5b46c3b89b315b92d3e0f2.jpg">
-<div><div class="brand">R2.0 <b>ESPORTS</b></div><div class="sub">V2 Final • Room System</div></div>
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/ccbadef162f5463e94eb43972b406189.jpg">
+<div><div class="brand">R2.0 <b>ESPORTS</b></div></div>
 </header>
 
 <main>
@@ -31,7 +31,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
       <p class="muted">Login অথবা নতুন Account তৈরি করুন</p>
     </div>
 
-    <input id="username" class="input" placeholder="👤 Username - যেমন R2 SALA" autocomplete="username">
+    <input id="username" class="input" placeholder="👤 Username" autocomplete="username">
     <input id="email" class="input" type="email" placeholder="📧 Email" autocomplete="email">
 
     <div style="position:relative">
@@ -49,16 +49,31 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 </section>
 
-<section id="home" class="page"><div id="bannerWrap"></div><h2>🎮 Game Modes</h2><div id="modes" class="grid"></div></section>
+<section id="home" class="page">
+  <div id="bannerWrap"></div>
+  <h2>🎮 Game Modes</h2>
+  <div id="modes" class="grid"></div>
+</section>
+
 <section id="tournaments" class="page"><h2 id="modeTitle">Tournaments</h2><div id="tlist"></div></section>
 <section id="details" class="page"><button class="btn alt" onclick="go('tournaments')">← Back</button><div id="detailBox"></div></section>
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
 
 <section id="profile" class="page">
-<div class="card center"><div class="avatar" id="av">R</div><h2 id="pname">Player</h2><div id="pemail" class="muted"></div><div id="isAdminBadge" class="hidden"><span class="tag" style="background:var(--gold);color:#000;margin-top:8px">👑 ADMIN</span></div></div>
-<div class="card"><div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div><button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button></div>
-<a id="supportBtn" href="https://wa.me/8801892036752" target="_blank" class="btn green" style="margin-top:10px;text-align:center;display:block;text-decoration:none">💬 Contact Support (WhatsApp)</a>
+<div class="card center">
+  <div class="avatar" id="av">R</div>
+  <h2 id="pname">Player</h2>
+  <div id="pemail" class="muted"></div>
+  <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
+</div>
+<div class="card">
+  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div>
+  <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
+</div>
+
+<button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
+
 <div style="margin-top: 15px; text-align: center;">
   <button onclick="showPrivacyPolicy()" style="background: none; border: none; color: #888; text-decoration: underline; font-size: 13px; cursor: pointer;">
     Privacy Policy & Rules
@@ -79,7 +94,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
   </div>
 
-  <!-- Tab 1: Video Guide -->
   <div id="wTabVideo" class="card">
     <h3>📺 কিভাবে ডিপোজিট করবেন?</h3>
     <p class="tiny muted">ডিপোজিট করার সঠিক নিয়ম জানতে নিচের ভিডিওটি দেখুন:</p>
@@ -88,7 +102,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     </div>
   </div>
 
-  <!-- Tab 2: Deposit -->
   <div id="wTabDeposit" class="card hidden">
     <h3>📥 Deposit (bKash)</h3>
     <div class="bkash-box">
@@ -104,17 +117,16 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     </div>
 
     <input id="depTrx" class="input" placeholder="ট্রানজেকশন আইডি (TrxID) দিন">
-    <input id="depSender" class="input" type="number" placeholder="কোন নম্বর থেকে টাকা পাঠিয়েছেন (Sender Number)">
-    <input id="depAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Amount)">
+    <input id="depSender" class="input" type="number" placeholder="Sender Number">
+    <input id="depAmount" class="input" type="number" placeholder="Amount">
     <button class="btn green" style="margin-top:8px" onclick="submitDeposit()">SEND DEPOSIT REQUEST</button>
   </div>
 
-  <!-- Tab 3: Withdraw -->
   <div id="wTabWithdraw" class="card hidden">
     <h3>📤 Withdraw (bKash)</h3>
     <div class="bkash-box" style="background:linear-gradient(135deg,#1e3a8a,#0f172a)">
       <div class="bkash-badge" style="background:#35d1c5;color:#000">Minimum 100 TK</div>
-      <p style="margin:5px 0;font-size:13px">আপনার বিকাশ নম্বর ও পরিমাণ বসিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন। সর্বনিম্ন উইথড্র ১০০ টাকা।</p>
+      <p style="margin:5px 0;font-size:13px">আপনার বিকাশ নম্বর ও পরিমাণ বসিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন।</p>
     </div>
 
     <input id="witNum" class="input" type="number" placeholder="আপনার bKash নম্বর">
@@ -133,7 +145,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div id="adminContent" class="hidden">
 <div class="adminTabs">
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
-<button class="btn alt mini" onclick="adminTab('players')">👥 Players</button>
+<button class="btn alt mini" onclick="adminTab('players')">👥 Players & Balance</button>
 <button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
@@ -152,11 +164,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button id="nAdmin" onclick="openAdmin()">⚙<br>Admin</button>
 </div></nav>
 
+<!-- Modals -->
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
 <input id="joinIGN" class="input" placeholder="IGN - R2•SALA">
 <input id="joinUID" class="input" placeholder="Free Fire UID">
-<input id="joinContact" class="input" placeholder="WhatsApp (optional)">
 <div class="row"><button class="btn alt" onclick="closeJoinModal()">Cancel</button><button class="btn green" onclick="confirmJoin()">Confirm Join</button></div>
 </div></div>
 
@@ -164,30 +176,23 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <h3>🔑 Room Setup</h3>
 <input id="rId" class="input" placeholder="Room ID">
 <input id="rPass" class="input" placeholder="Password">
-<label class="tiny"><input type="checkbox" id="rPublished"> Publish Now (Join করা User দেখবে)</label>
+<label class="tiny"><input type="checkbox" id="rPublished"> Publish Now</label>
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
 </div></div>
 
-<div id="editModal" class="modal"><div class="modalBox">
-<h3>✏ Edit Tournament</h3>
-<input id="eTitle" class="input" placeholder="Title"><input id="eMode" class="input" placeholder="Mode"><input id="eDate" class="input" placeholder="Date"><input id="eMap" class="input" placeholder="Map">
-<input id="ePrize" class="input" type="number" placeholder="Prize"><input id="eKill" class="input" type="number" placeholder="Per Kill"><input id="eFee" class="input" type="number" placeholder="Entry Fee"><input id="eSlots" class="input" type="number" placeholder="Slots">
-<textarea id="eRules" class="input" placeholder="Rules"></textarea>
-<div class="row"><button class="btn alt" onclick="closeEditModal()">Cancel</button><button class="btn" onclick="saveEditTournament()">Save</button></div>
+<div id="privacyModal" class="modal"><div class="modalBox">
+<h3>📜 Privacy Policy & Rules</h3>
+<div id="privacyPolicyContent" style="white-space:pre-wrap;font-size:14px;line-height:1.5;margin:12px 0;max-height:60vh;overflow-y:auto" class="muted"></div>
+<button class="btn alt" onclick="closePrivacyModal()">Close</button>
 </div></div>
 
-<!-- Popup Notice Modal -->
-<div id="noticeModal" class="modal">
-  <div class="modalBox" style="border:1px solid var(--gold);max-height:80vh">
-    <h3 style="color:var(--gold);display:flex;align-items:center;gap:8px">ℹ️ Notice</h3>
-    
-    <div id="noticeTextContent" style="text-align:left;font-size:14px;line-height:1.6;max-height:50vh;overflow-y:auto;padding-right:5px;margin:12px 0" class="muted">
-      WELCOME TO R2.0 ESPORTS
-    </div>
-
-    <button class="btn gold" style="margin-top:10px" onclick="closeNoticeModal()">Got it</button>
-  </div>
-</div>
+<div id="whatsappModal" class="modal"><div class="modalBox">
+<h3>💬 Support & Community</h3>
+<p class="tiny muted">সরাসরি কথা বলতে বা সহায়তার জন্য আমাদের টিমের সাথে যোগাযোগ করুন:</p>
+<div id="waList" style="margin:12px 0"></div>
+<div id="waCommunityWrap" style="margin-top:10px"></div>
+<button class="btn alt" style="margin-top:10px" onclick="closeWhatsAppModal()">Close</button>
+</div></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
@@ -209,14 +214,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let user = null, isAdmin = false, pendingJoinId = null, pendingEditId = null, pendingRoomId = null;
+let user = null, isAdmin = false, pendingJoinId = null, pendingRoomId = null;
+let bannerInterval = null;
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const err = e => { 
-  console.error(e);
-  $('authMsg').textContent = e.code || e.message || 'Error occurred'; 
-};
+const err = e => { console.error(e); $('authMsg').textContent = e.code || e.message || 'Error occurred'; };
 
 window.togglePassword = () => {
   const p = $('password');
@@ -240,8 +243,25 @@ async function loadHome(){
    if(ms.length) modes = ms;
  } catch(e){}
  $('modes').innerHTML = modes.map(m => `<button class="mode" onclick='openMode(${JSON.stringify(m)})'>${esc(m)}</button>`).join('');
- let bannerUrl = 'https://d3tx3wg2jy0sui.cloudfront.net/10c263e4daa3409da781929921a72ea1.jpg';
- $('bannerWrap').innerHTML = `<div class="card hero" style="position:relative;aspect-ratio:16/9;overflow:hidden;padding:0;background:#000"><img src="${esc(bannerUrl)}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.src='https://via.placeholder.com/640x360?text=R2.0+ESPORTS'"></div>`;
+ 
+ let banners = ["https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg"];
+ try {
+   const s = await getDoc(doc(db, 'settings', 'banners'));
+   if(s.exists() && s.data().list && s.data().list.length > 0){
+     banners = s.data().list;
+   }
+ } catch(e){}
+
+ if(bannerInterval) clearInterval(bannerInterval);
+ let idx = 0;
+ $('bannerWrap').innerHTML = `<div class="card hero"><img id="bannerImg" src="${esc(banners[0])}"></div>`;
+ if(banners.length > 1){
+   bannerInterval = setInterval(() => {
+     idx = (idx + 1) % banners.length;
+     const img = $('bannerImg');
+     if(img) img.src = banners[idx];
+   }, 4000);
+ }
 }
 
 function renderTours(tours) {
@@ -275,7 +295,6 @@ window.openMode = async mode => {
       .filter(t => String(t.mode || '').trim().toLowerCase() === String(mode || '').trim().toLowerCase());
     renderTours(tours);
   } catch(e) {
-    console.error(e);
     $('tlist').innerHTML = '<div class="card">❌ Tournament Load Failed</div>';
   }
 };
@@ -291,19 +310,8 @@ window.openDetails = async id => {
     else if(!t.roomPublished) roomHtml = '<p class="muted">🔒 ROOM LOCKED - Publish হয়নি</p>';
     else roomHtml = `<p>ID: <b>${esc(t.roomId || '')}</b></p><p>Pass: <b>${esc(t.roomPassword || '')}</b></p>`;
   }
-  $('detailBox').innerHTML = `<div class="card"><h2>${esc(t.title || '')}</h2><p class="muted">${esc(t.dateTime || '')}</p></div><div class="card"><h3>🔑 Room</h3>${roomHtml}</div><button class="btn" style="background:#1e3a8a" onclick="handleRoomClick('${t.id}')">🔑 ROOM</button>`;
+  $('detailBox').innerHTML = `<div class="card"><h2>${esc(t.title || '')}</h2><p class="muted">${esc(t.dateTime || '')}</p></div><div class="card"><h3>🔑 Room</h3>${roomHtml}</div>`;
  } catch(e){ $('detailBox').innerHTML = 'Failed'; }
-};
-
-window.handleRoomClick = async id => {
- if(!user){ alert('Login করুন'); return; }
- try {
-  const j = await getDoc(doc(db, 'users', user.uid, 'joinedMatches', id));
-  if(!j.exists()){ alert('❌ আপনি Join করেননি'); return; }
-  const t = await getDoc(doc(db, 'tournaments', id)); const d = t.data();
-  if(!d.roomPublished) { alert('🔒 ROOM LOCKED\nAdmin এখনো Publish করেনি'); return; }
-  alert(`ROOM DETAILS\n\nID: ${d.roomId}\nPass: ${d.roomPassword}`);
- } catch(e){ err(e); }
 };
 
 window.joinTour = id => { pendingJoinId = id; $('joinModal').classList.add('on'); };
@@ -343,7 +351,12 @@ async function loadProfile(){
   $('pemail').textContent = user.email;
   $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
   $('points').textContent = Number(d.credits || 0) + ' Credits';
-  if(ADMIN_EMAILS.includes(user.email)) $('isAdminBadge').classList.remove('hidden');
+  
+  if(ADMIN_EMAILS.includes(user.email)){
+    $('roleBadge').innerHTML = '<span class="tag" style="background:var(--gold);color:#000">👑 ADMIN</span>';
+  } else {
+    $('roleBadge').innerHTML = '<span class="tag" style="background:var(--line);color:#fff">Player</span>';
+  }
  } catch(e){}
 }
 
@@ -371,7 +384,6 @@ async function loadResults(){
   } catch(e){}
 }
 
-// WALLET TABS SYSTEM
 window.switchWTab = tab => {
   $('wTabVideo').classList.add('hidden');
   $('wTabDeposit').classList.add('hidden');
@@ -386,15 +398,11 @@ async function loadWallet(){
     const s = await getDoc(doc(db, 'users', user.uid));
     $('walletPoints').textContent = Number(s.data().credits || 0) + ' BDT';
     
-    // Load Video Tutorial Link
     const setSnap = await getDoc(doc(db, 'settings', 'config'));
     if(setSnap.exists() && setSnap.data().videoUrl){
       $('tutorialBtn').href = setSnap.data().videoUrl;
-    } else {
-      $('tutorialBtn').href = "https://youtube.com";
     }
 
-    // Load Requests
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
     $('requestList').innerHTML = q.docs.map(d => {
       const data = d.data();
@@ -403,9 +411,6 @@ async function loadWallet(){
         <div class="row space">
           <b>${data.type==='deposit'?'📥 Deposit':'📤 Withdraw'} (${data.amount} BDT)</b>
           <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
-        </div>
-        <div class="tiny muted" style="margin-top:4px">
-          ${data.type==='deposit'? `TrxID: ${esc(data.trxId || 'N/A')} | Sender: ${esc(data.sender || 'N/A')}` : `Receiver: ${esc(data.receiver || 'N/A')}`}
         </div>
       </div>`;
     }).join('') || '<p class="tiny muted">No history</p>';
@@ -416,21 +421,13 @@ window.submitDeposit = async () => {
   const trxId = $('depTrx').value.trim();
   const sender = $('depSender').value.trim();
   const amount = Number($('depAmount').value);
-
   if(!trxId || !sender || !amount) return alert('সমস্ত তথ্য পূরণ করুন');
   
   try {
     await addDoc(collection(db, 'walletRequests', user.uid, 'items'), {
-      type: 'deposit',
-      trxId,
-      sender,
-      amount,
-      status: 'pending',
-      createdAt: serverTimestamp(),
-      email: user.email,
-      uid: user.uid
+      type: 'deposit', trxId, sender, amount, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid
     });
-    alert('✅ ডিপোজিট রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে!');
+    alert('✅ ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে!');
     $('depTrx').value = ''; $('depSender').value = ''; $('depAmount').value = '';
     loadWallet();
   } catch(e){ err(e); }
@@ -439,7 +436,6 @@ window.submitDeposit = async () => {
 window.submitWithdraw = async () => {
   const receiver = $('witNum').value.trim();
   const amount = Number($('witAmount').value);
-
   if(!receiver || !amount) return alert('সমস্ত তথ্য দিন');
   if(amount < 100) return alert('⚠️ সর্বনিম্ন উইথড্র ১০০ টাকা');
 
@@ -450,23 +446,12 @@ window.submitWithdraw = async () => {
       const currentBal = Number(uSnap.data().credits || 0);
       if(currentBal < amount) throw new Error('⚠️ পর্যাপ্ত ব্যালেন্স নেই!');
       
-      // Deduct balance instantly
       tx.update(uRef, { credits: currentBal - amount });
-
-      // Add Request
       const reqRef = doc(collection(db, 'walletRequests', user.uid, 'items'));
-      tx.set(reqRef, {
-        type: 'withdraw',
-        receiver,
-        amount,
-        status: 'pending',
-        createdAt: serverTimestamp(),
-        email: user.email,
-        uid: user.uid
-      });
+      tx.set(reqRef, { type: 'withdraw', receiver, amount, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid });
     });
 
-    alert('✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে এবং ব্যালেন্স কাটা হয়েছে!');
+    alert('✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!');
     $('witNum').value = ''; $('witAmount').value = '';
     loadWallet();
   } catch(e){ alert(e.message || 'Error occurred'); }
@@ -479,7 +464,6 @@ window.loginUser = async () => {
     if(!email || !password) return alert('Email এবং Password দিন');
     $('authMsg').textContent = "Logging in...";
     await signInWithEmailAndPassword(auth, email, password);
-    alert('✅ Login Successful');
   } catch(e) { err(e); }
 };
 
@@ -491,7 +475,6 @@ window.registerUser = async () => {
     if(!email || !pass) return alert('Email & Password দিন');
     const c = await createUserWithEmailAndPassword(auth, email, pass);
     await setDoc(doc(db, 'users', c.user.uid), { email, name: name || email.split('@')[0], credits: 0, createdAt: serverTimestamp() }, { merge: true });
-    alert('Account Created');
   } catch(e) { err(e); }
 };
 
@@ -507,221 +490,205 @@ window.logoutUser = async () => { await signOut(auth); };
 
 async function checkAdmin(){
   if(!user) return false; 
-  if(ADMIN_EMAILS.includes(user.email)) { isAdmin = true; return true; } 
-  try { const s = await getDoc(doc(db, 'admins', user.uid)); isAdmin = s.exists(); return isAdmin; } catch(e){ return false; }
+  return ADMIN_EMAILS.includes(user.email);
 }
 
 window.openAdmin = async () => {
-  go('admin');
   const ok = await checkAdmin();
-  $('adminStatus').textContent = ok ? 'Admin: ' + user.email : 'Not Admin';
-  $('adminContent').classList.toggle('hidden', !ok);
-  if(ok) adminTab('tours');
+  if(!ok){ alert('⚠️ Access Denied'); return; }
+  go('admin');
+  $('adminStatus').textContent = 'Admin: ' + user.email;
+  $('adminContent').classList.remove('hidden');
+  adminTab('tours');
 };
 
 window.adminTab = async tab => {
  const box = $('adminBox');
  if(tab === 'tours'){
   const ts = (await getDocs(collection(db, 'tournaments'))).docs.map(d => ({id: d.id, ...d.data()}));
-  let modes = ['BR DUO MATCH', 'BR SOLO MATCH', 'ETB BR PRO LEAGUE', 'SOLO SURVIVAL', 'LONE WOLF', 'CLASH SQUAD'];
-  try {
-    const ms = (await getDocs(collection(db, 'gameModes'))).docs.map(d => d.data().name).filter(Boolean);
-    if(ms.length) modes = ms;
-  } catch(e){}
-
   box.innerHTML = `
     <div class="card">
       <h3>🏆 Create Tournament</h3>
-      <select id="tMode" class="input">
-        <option value="">🎮 Select Game Mode</option>
-        ${modes.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('')}
-      </select>
-      <input id="tTitle" class="input" placeholder="Tournament Title">
-      <input id="tDate" class="input" type="date">
-      <input id="tTime" class="input" type="time">
+      <input id="tMode" class="input" placeholder="Game Mode">
+      <input id="tTitle" class="input" placeholder="Title">
+      <input id="tDate" class="input" placeholder="Date & Time">
       <input id="tMap" class="input" placeholder="Map">
-      <input id="tPrize" class="input" type="number" min="0" placeholder="Win Prize (TK)">
-      <input id="tKill" class="input" type="number" min="0" placeholder="Per Kill (TK)">
-      <input id="tFee" class="input" type="number" min="0" placeholder="Entry Fee (TK)">
-      <input id="tSlots" class="input" type="number" min="1" placeholder="Maximum Slots">
-      <textarea id="tRules" class="input" placeholder="Tournament Rules"></textarea>
-      <button class="btn" onclick="addTournament()">🚀 Publish Tournament</button>
+      <input id="tPrize" class="input" type="number" placeholder="Prize Pool">
+      <input id="tFee" class="input" type="number" placeholder="Entry Fee">
+      <button class="btn" onclick="addTournament()">Publish</button>
+    </div>
+    <div class="card">
+      <h3>⚡ Manual Player Direct Join (Admin)</h3>
+      <select id="admJoinTourId" class="input">
+        <option value="">Select Tournament</option>
+        ${ts.map(t => `<option value="${t.id}">${esc(t.title)} (${esc(t.mode)})</option>`).join('')}
+      </select>
+      <input id="admUserEmail" class="input" placeholder="User Email (যেমন user@gmail.com)">
+      <input id="admUserIGN" class="input" placeholder="In Game Name (IGN)">
+      <input id="admUserUID" class="input" placeholder="Free Fire UID">
+      <button class="btn green" style="margin-top:6px" onclick="admDirectJoin()">Direct Join Player</button>
     </div>
     <div class="card list">
-      ${ts.map(t => `
-        <div class="item">
-          <b>${esc(t.title || 'Tournament')}</b>
-          <span class="badge">${esc(t.mode || '')}</span>
-          ${t.roomPublished ? '<span class="badge" style="background:green">ROOM LIVE</span>' : '<span class="badge">ROOM LOCKED</span>'}
-          <br>
-          <span class="tiny muted">${esc(t.dateTime || '')} | Prize: ${Number(t.prizePool || 0)} TK | Entry: ${Number(t.entryFee || 0)} TK</span>
-          <br>
-          <button class="btn alt mini" onclick="editTournament('${t.id}')">✏ Edit</button>
-          <button class="btn gold mini" onclick="manageRoom('${t.id}')">🔑 Room</button>
-          <button class="btn danger mini" onclick="delTournament('${t.id}')">🗑 Del</button>
-        </div>
-      `).join('')}
+      ${ts.map(t => `<div class="item"><b>${esc(t.title)}</b><button class="btn gold mini" onclick="manageRoom('${t.id}')">🔑 Room</button></div>`).join('')}
     </div>
   `;
- } else if(tab === 'dep_requests' || tab === 'wit_requests') {
-   box.innerHTML = "Loading requests...";
-   const isDep = tab === 'dep_requests';
-   const reqs = [];
-   const usersSnap = await getDocs(collection(db, 'users'));
-   
-   for(const uDoc of usersSnap.docs){
-     const itemsSnap = await getDocs(collection(db, 'walletRequests', uDoc.id, 'items'));
-     itemsSnap.docs.forEach(idoc => {
-       const d = idoc.data();
-       if((isDep && d.type === 'deposit') || (!isDep && d.type === 'withdraw')){
-         reqs.push({ id: idoc.id, uid: uDoc.id, ...d });
-       }
-     });
-   }
-
+ } else if(tab === 'players') {
+   box.innerHTML = "Loading players...";
+   const snap = await getDocs(collection(db, 'users'));
+   const users = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
      <div class="card">
-       <h3>${isDep ? '📥 Deposit Requests' : '📤 Withdraw Requests'}</h3>
+       <h3>👥 Manage Players & Balance</h3>
        <div class="list">
-         ${reqs.map(r => `
+         ${users.map(u => `
            <div class="item" style="margin-top:8px">
-             <b>${esc(r.email)}</b> - <b style="color:var(--gold)">${r.amount} TK</b>
-             <p class="tiny muted" style="margin:4px 0">
-               ${isDep ? `TrxID: <b>${esc(r.trxId)}</b> | Sender: <b>${esc(r.sender)}</b>` : `bKash Receiver: <b>${esc(r.receiver)}</b>`}
-             </p>
-             <span class="badge">${r.status.toUpperCase()}</span>
-             ${r.status === 'pending' ? `
-               <div class="row" style="margin-top:6px">
-                 <button class="btn green mini" onclick="processWalletReq('${r.uid}', '${r.id}', '${r.type}', ${r.amount}, 'approve')">Approve</button>
-                 <button class="btn danger mini" onclick="processWalletReq('${r.uid}', '${r.id}', '${r.type}', ${r.amount}, 'reject')">Reject</button>
-               </div>
-             ` : ''}
+             <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
+             <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0)} BDT</b></span>
+             <div class="row" style="margin-top:6px">
+               <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
+               <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
+             </div>
            </div>
-         `).join('') || '<p class="tiny muted">No Requests</p>'}
+         `).join('')}
        </div>
      </div>
    `;
  } else if(tab === 'settings') {
+   let set = {}, wa = {};
+   try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
+   try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
+   try { var bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
+
    box.innerHTML = `
      <div class="card">
-       <h3>🎥 Deposit Video Guide Link</h3>
-       <input id="admVidUrl" class="input" placeholder="YouTube Video URL">
-       <button class="btn gold" onclick="saveVidUrl()">Save Link</button>
-     </div>
-     <div class="card" style="margin-top:10px">
-       <h3>📢 Edit Popup Notice</h3>
-       <textarea id="admNoticeText" class="input" rows="4" placeholder="নতুন নোটিশ লিখুন..."></textarea>
-       <button class="btn gold" style="margin-top:10px" onclick="saveNoticeText()">💾 Update Notice</button>
+       <h3>🖼️ Manage Banner URLs</h3>
+       <textarea id="admBanners" class="input" rows="3" placeholder="প্রতি লাইনে একটি করে Banner Image URL দিন...">${(bData.list || []).join('\n')}</textarea>
+       <button class="btn gold" onclick="saveBanners()">💾 Save Banners</button>
      </div>
      <div class="card" style="margin-top:10px">
        <h3>📜 Edit Privacy Policy & Rules</h3>
-       <textarea id="admPrivacyText" class="input" rows="4" placeholder="প্রাইভেসি পলিসি লিখুন..."></textarea>
+       <textarea id="admPrivacyText" class="input" rows="4" placeholder="প্রাইভেসি পলিসি লিখুন...">${set.privacyText || ''}</textarea>
        <button class="btn gold" style="margin-top:10px" onclick="savePrivacyText()">💾 Update Policy</button>
+     </div>
+     <div class="card" style="margin-top:10px">
+       <h3>💬 WhatsApp Support & Community Settings</h3>
+       <input id="wa1" class="input" placeholder="WhatsApp Number 1" value="${wa.num1 || ''}">
+       <input id="wa2" class="input" placeholder="WhatsApp Number 2" value="${wa.num2 || ''}">
+       <input id="wa3" class="input" placeholder="WhatsApp Number 3" value="${wa.num3 || ''}">
+       <input id="wa4" class="input" placeholder="WhatsApp Number 4" value="${wa.num4 || ''}">
+       <input id="waComm" class="input" placeholder="WhatsApp Community Group Link" value="${wa.community || ''}">
+       <button class="btn gold" style="margin-top:10px" onclick="saveWhatsAppSettings()">💾 Save WhatsApp Info</button>
      </div>
    `;
  }
 };
 
-window.saveVidUrl = async () => {
-  const url = $('admVidUrl').value.trim();
-  if(!url) return alert('URL দিন');
-  await setDoc(doc(db, 'settings', 'config'), { videoUrl: url }, { merge: true });
-  alert('✅ Video Link Saved!');
+window.admUpdateBalance = async (targetUid, action) => {
+  const amtStr = prompt(action === 'add' ? 'কত টাকা যোগ করতে চান?' : 'কত টাকা বিয়োগ করতে চান?');
+  const amt = Number(amtStr);
+  if(!amt || amt <= 0) return alert('সঠিক পরিমাণ দিন');
+  
+  try {
+    const uRef = doc(db, 'users', targetUid);
+    const change = action === 'add' ? amt : -amt;
+    await updateDoc(uRef, { credits: increment(change) });
+    alert('✅ ব্যালেন্স আপডেট করা হয়েছে!');
+    adminTab('players');
+  } catch(e){ alert('Error: ' + e.message); }
 };
 
-window.closeNoticeModal = () => {
-  document.getElementById('noticeModal').classList.remove('on');
+window.admDirectJoin = async () => {
+  const tourId = $('admJoinTourId').value;
+  const email = $('admUserEmail').value.trim();
+  const ign = $('admUserIGN').value.trim();
+  const uid = $('admUserUID').value.trim();
+
+  if(!tourId || !email || !ign || !uid) return alert('সমস্ত তথ্য সঠিক ভাবে দিন');
+
+  try {
+    const uSnap = await getDocs(collection(db, 'users'));
+    const targetUserDoc = uSnap.docs.find(d => d.data().email === email);
+    if(!targetUserDoc) return alert('এই ইমেইলের কোনো ইউজার খুঁজে পাওয়া যায়নি!');
+    
+    const targetUid = targetUserDoc.id;
+    const tref = doc(db, 'tournaments', tourId);
+    const ts = await getDoc(tref);
+    if(!ts.exists()) return alert('টুর্নামেন্ট পাওয়া যায়নি');
+
+    const joinRef = doc(db, 'users', targetUid, 'joinedMatches', tourId);
+    const playerRef = doc(db, 'tournaments', tourId, 'players', targetUid);
+
+    await setDoc(joinRef, { tournamentId: tourId, title: ts.data().title || '', ign, ffUid: uid, joinedAt: serverTimestamp() });
+    await setDoc(playerRef, { uid: targetUid, email, ign, ffUid: uid, joinedAt: serverTimestamp() });
+    await updateDoc(tref, { currentJoins: increment(1) });
+
+    alert('✅ ম্যানুয়ালি প্লেয়ার সফলভাবে টুর্নামেন্টে যুক্ত করা হয়েছে!');
+    $('admUserEmail').value = ''; $('admUserIGN').value = ''; $('admUserUID').value = '';
+  } catch(e){ alert('Error: ' + e.message); }
 };
 
-async function checkAndShowNotice() {
-  try {
-    const s = await getDoc(doc(db, 'settings', 'config'));
-    if (s.exists() && s.data().noticeText) {
-      document.getElementById('noticeTextContent').innerHTML = s.data().noticeText.replace(/\n/g, '<br>');
-      document.getElementById('noticeModal').classList.add('on');
-    }
-  } catch(e) { console.error(e); }
-}
-
-window.saveNoticeText = async () => {
-  const text = document.getElementById('admNoticeText').value.trim();
-  if(!text) return alert('দয়া করে কোনো নোটিশ লিখুন');
-  try {
-    await setDoc(doc(db, 'settings', 'config'), { noticeText: text }, { merge: true });
-    alert('✅ Notice Updated Successfully!');
-  } catch(e) { console.error(e); }
+window.saveBanners = async () => {
+  const text = $('admBanners').value.trim();
+  const list = text.split('\n').map(x => x.trim()).filter(Boolean);
+  await setDoc(doc(db, 'settings', 'banners'), { list }, { merge: true });
+  alert('✅ Banners Saved!');
 };
 
 window.savePrivacyText = async () => {
-  const text = document.getElementById('admPrivacyText').value.trim();
-  if(!text) return alert('পলিসি লিখুন');
-  try {
-    await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
-    alert('✅ Privacy Policy Updated Successfully!');
-  } catch(e) { console.error(e); }
+  const text = $('admPrivacyText').value.trim();
+  await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
+  alert('✅ Privacy Policy Updated!');
+};
+
+window.saveWhatsAppSettings = async () => {
+  const data = {
+    num1: $('wa1').value.trim(), num2: $('wa2').value.trim(),
+    num3: $('wa3').value.trim(), num4: $('wa4').value.trim(),
+    community: $('waComm').value.trim()
+  };
+  await setDoc(doc(db, 'settings', 'whatsapp'), data, { merge: true });
+  alert('✅ WhatsApp Settings Saved!');
 };
 
 window.showPrivacyPolicy = async () => {
   try {
     const s = await getDoc(doc(db, 'settings', 'privacy'));
-    const text = s.exists() ? s.data().privacyText : 'No policy updated yet.';
-    alert('R2.0 Esports Privacy Policy & Rules:\n\n' + text);
-  } catch(e) { alert('Error loading policy'); }
+    $('privacyPolicyContent').textContent = (s.exists() && s.data().privacyText) ? s.data().privacyText : 'কোনো প্রাইভেসি পলিসি যুক্ত করা হয়নি।';
+    $('privacyModal').classList.add('on');
+  } catch(e){ alert('Failed to load privacy policy'); }
 };
 
-window.processWalletReq = async (uid, reqId, type, amount, action) => {
+window.closePrivacyModal = () => $('privacyModal').classList.remove('on');
+
+window.openWhatsAppModal = async () => {
   try {
-    const rRef = doc(db, 'walletRequests', uid, 'items', reqId);
-    const uRef = doc(db, 'users', uid);
-
-    if (action === 'approve') {
-      if (type === 'deposit') {
-        await updateDoc(uRef, { credits: increment(amount) });
-      }
-      await updateDoc(rRef, { status: 'approved' });
-    } else if (action === 'reject') {
-      if (type === 'withdraw') {
-        await updateDoc(uRef, { credits: increment(amount) });
-      }
-      await updateDoc(rRef, { status: 'rejected' });
+    const s = await getDoc(doc(db, 'settings', 'whatsapp'));
+    const data = s.exists() ? s.data() : {};
+    let html = '';
+    const nums = [data.num1, data.num2, data.num3, data.num4].filter(Boolean);
+    
+    if(nums.length === 0){
+      html = '<p class="tiny muted">কোনো নম্বর পাওয়া যায়নি</p>';
+    } else {
+      html = nums.map((n, i) => `
+        <div class="wa-item">
+          <span>📞 Support ${i+1}: <b>${esc(n)}</b></span>
+          <a href="https://wa.me/${esc(n)}" target="_blank" class="btn green mini" style="width:auto;text-decoration:none">Chat</a>
+        </div>
+      `).join('');
     }
-
-    alert('✅ Processed: ' + action);
-    adminTab(type === 'deposit' ? 'dep_requests' : 'wit_requests');
-  } catch(e){ alert('Error: ' + e.message); }
+    
+    $('waList').innerHTML = html;
+    if(data.community){
+      $('waCommunityWrap').innerHTML = `<a href="${esc(data.community)}" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">🌐 Join WhatsApp Community</a>`;
+    } else {
+      $('waCommunityWrap').innerHTML = '';
+    }
+    $('whatsappModal').classList.add('on');
+  } catch(e){ alert('Failed to load support numbers'); }
 };
 
-window.addTournament = async () => {
-  const data = {
-    title: $('tTitle').value, mode: $('tMode').value, dateTime: $('tDate').value + ' ' + $('tTime').value,
-    map: $('tMap').value, prizePool: Number($('tPrize').value || 0), perKill: Number($('tKill').value || 0),
-    entryFee: Number($('tFee').value || 0), maxSlots: Number($('tSlots').value || 48), currentJoins: 0,
-    rules: $('tRules').value || '', roomPublished: false, roomId: '', roomPassword: '', createdAt: serverTimestamp()
-  };
-  await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
-};
-
-window.editTournament = async id => {
-  const s = await getDoc(doc(db, 'tournaments', id)); const t = s.data(); pendingEditId = id;
-  $('eTitle').value = t.title || ''; $('eMode').value = t.mode || ''; $('eDate').value = t.dateTime || '';
-  $('eMap').value = t.map || ''; $('ePrize').value = t.prizePool || 0; $('eKill').value = t.perKill || 0;
-  $('eFee').value = t.entryFee || 0; $('eSlots').value = t.maxSlots || 48; 
-  $('eRules').value = t.rules || '';
-  $('editModal').classList.add('on');
-};
-
-window.closeEditModal = () => { $('editModal').classList.remove('on'); pendingEditId = null; };
-
-window.saveEditTournament = async () => {
-  if(!pendingEditId) return;
-  await updateDoc(doc(db, 'tournaments', pendingEditId), {
-    title: $('eTitle').value, mode: $('eMode').value, dateTime: $('eDate').value, map: $('eMap').value,
-    prizePool: Number($('ePrize').value || 0), perKill: Number($('eKill').value || 0),
-    entryFee: Number($('eFee').value || 0), maxSlots: Number($('eSlots').value || 48),
-    rules: $('eRules').value
-  });
-  closeEditModal(); alert('Updated'); adminTab('tours');
-};
+window.closeWhatsAppModal = () => $('whatsappModal').classList.remove('on');
 
 window.manageRoom = async id => {
   const s = await getDoc(doc(db, 'tournaments', id)); pendingRoomId = id;
@@ -735,14 +702,23 @@ window.saveRoom = async () => {
   await updateDoc(doc(db, 'tournaments', pendingRoomId), {
     roomId: $('rId').value, roomPassword: $('rPass').value, roomPublished: $('rPublished').checked
   });
-  closeRoomModal(); alert($('rPublished').checked ? 'Published' : 'Saved as Locked'); adminTab('tours');
+  closeRoomModal(); alert('Saved'); adminTab('tours');
+};
+
+window.addTournament = async () => {
+  const data = {
+    title: $('tTitle').value, mode: $('tMode').value, dateTime: $('tDate').value,
+    map: $('tMap').value, prizePool: Number($('tPrize').value || 0), entryFee: Number($('tFee').value || 0),
+    currentJoins: 0, maxSlots: 48, roomPublished: false, roomId: '', roomPassword: '', createdAt: serverTimestamp()
+  };
+  await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
 };
 
 onAuthStateChanged(auth, async u => {
  user = u;
  if(u){
   await setDoc(doc(db, 'users', u.uid), { email: u.email, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-  go('profile'); go('home'); loadHome(); checkAndShowNotice();
+  loadProfile(); go('home'); loadHome();
  } else {
   go('login');
  }
