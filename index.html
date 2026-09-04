@@ -180,6 +180,20 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
 </div></div>
 
+<div id="editTourModal" class="modal"><div class="modalBox">
+<h3>✏️ Edit Tournament</h3>
+<input id="editTMode" class="input" placeholder="Game Mode">
+<input id="editTTitle" class="input" placeholder="Title">
+<input id="editTDate" class="input" placeholder="Date & Time">
+<input id="editTMap" class="input" placeholder="Map">
+<input id="editTPrize" class="input" type="number" placeholder="Prize Pool">
+<input id="editTFee" class="input" type="number" placeholder="Entry Fee">
+<div class="row" style="margin-top:10px">
+  <button class="btn alt" onclick="closeEditTourModal()">Cancel</button>
+  <button class="btn green" onclick="saveEditTournament()">Update</button>
+</div>
+</div></div>
+
 <div id="privacyModal" class="modal"><div class="modalBox">
 <h3>📜 Privacy Policy & Rules</h3>
 <div id="privacyPolicyContent" style="white-space:pre-wrap;font-size:14px;line-height:1.5;margin:12px 0;max-height:60vh;overflow-y:auto" class="muted"></div>
@@ -197,7 +211,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
@@ -214,7 +228,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let user = null, isAdmin = false, pendingJoinId = null, pendingRoomId = null;
+let user = null, isAdmin = false, pendingJoinId = null, pendingRoomId = null, pendingEditTourId = null;
 let bannerInterval = null;
 
 const $ = id => document.getElementById(id);
@@ -523,13 +537,23 @@ window.adminTab = async tab => {
         <option value="">Select Tournament</option>
         ${ts.map(t => `<option value="${t.id}">${esc(t.title)} (${esc(t.mode)})</option>`).join('')}
       </select>
-      <input id="admUserEmail" class="input" placeholder="User Email (যেমন user@gmail.com)">
+      <input id="admUserEmail" class="input" placeholder="User Email">
       <input id="admUserIGN" class="input" placeholder="In Game Name (IGN)">
       <input id="admUserUID" class="input" placeholder="Free Fire UID">
       <button class="btn green" style="margin-top:6px" onclick="admDirectJoin()">Direct Join Player</button>
     </div>
     <div class="card list">
-      ${ts.map(t => `<div class="item"><b>${esc(t.title)}</b><button class="btn gold mini" onclick="manageRoom('${t.id}')">🔑 Room</button></div>`).join('')}
+      <h3>📋 Manage Tournaments</h3>
+      ${ts.map(t => `
+        <div class="item" style="margin-top:8px">
+          <b>${esc(t.title)}</b> (${esc(t.mode)})
+          <div class="row" style="margin-top:6px">
+            <button class="btn gold mini" style="flex:1" onclick="manageRoom('${t.id}')">🔑 Room</button>
+            <button class="btn green mini" style="flex:1" onclick="openEditTourModal('${t.id}')">✏️ Edit</button>
+            <button class="btn danger mini" style="flex:1" onclick="deleteTournament('${t.id}')">🗑️ Delete</button>
+          </div>
+        </div>
+      `).join('')}
     </div>
   `;
  } else if(tab === 'players') {
@@ -553,6 +577,68 @@ window.adminTab = async tab => {
        </div>
      </div>
    `;
+ } else if(tab === 'dep_requests') {
+   box.innerHTML = "Loading Deposit Requests...";
+   try {
+     const snap = await getDocs(collectionGroup(db, 'items'));
+     const reqs = snap.docs
+       .map(d => ({id: d.id, ref: d.ref, ...d.data()}))
+       .filter(r => r.type === 'deposit');
+     
+     box.innerHTML = `
+       <div class="card">
+         <h3>📥 Pending Deposit Requests</h3>
+         <div class="list">
+           ${reqs.map(r => `
+             <div class="item" style="margin-top:8px">
+               <b>Email:</b> ${esc(r.email)}<br>
+               <b>Amount:</b> <span style="color:var(--gold)">${r.amount} BDT</span><br>
+               <b>Sender:</b> ${esc(r.sender)} | <b>TrxID:</b> ${esc(r.trxId)}<br>
+               <b>Status:</b> <span class="badge">${esc(r.status)}</span>
+               ${r.status === 'pending' ? `
+                 <div class="row" style="margin-top:8px">
+                   <button class="btn mini green" onclick="handleDepositReq('${r.uid}', '${r.id}', 'approve', ${r.amount})">✅ Approve</button>
+                   <button class="btn mini danger" onclick="handleDepositReq('${r.uid}', '${r.id}', 'reject', 0)">❌ Reject</button>
+                 </div>
+               ` : ''}
+             </div>
+           `).join('') || '<p class="tiny muted">No deposit requests</p>'}
+         </div>
+       </div>
+     `;
+   } catch(e) { box.innerHTML = "Error loading requests"; }
+
+ } else if(tab === 'wit_requests') {
+   box.innerHTML = "Loading Withdraw Requests...";
+   try {
+     const snap = await getDocs(collectionGroup(db, 'items'));
+     const reqs = snap.docs
+       .map(d => ({id: d.id, ref: d.ref, ...d.data()}))
+       .filter(r => r.type === 'withdraw');
+     
+     box.innerHTML = `
+       <div class="card">
+         <h3>📤 Withdraw Requests</h3>
+         <div class="list">
+           ${reqs.map(r => `
+             <div class="item" style="margin-top:8px">
+               <b>Email:</b> ${esc(r.email)}<br>
+               <b>Amount:</b> <span style="color:var(--gold)">${r.amount} BDT</span><br>
+               <b>bKash Number:</b> ${esc(r.receiver)}<br>
+               <b>Status:</b> <span class="badge">${esc(r.status)}</span>
+               ${r.status === 'pending' ? `
+                 <div class="row" style="margin-top:8px">
+                   <button class="btn mini green" onclick="handleWithdrawReq('${r.uid}', '${r.id}', 'approve', ${r.amount})">✅ Approve</button>
+                   <button class="btn mini danger" onclick="handleWithdrawReq('${r.uid}', '${r.id}', 'reject', ${r.amount})">❌ Reject & Refund</button>
+                 </div>
+               ` : ''}
+             </div>
+           `).join('') || '<p class="tiny muted">No withdraw requests</p>'}
+         </div>
+       </div>
+     `;
+   } catch(e) { box.innerHTML = "Error loading requests"; }
+
  } else if(tab === 'settings') {
    let set = {}, wa = {};
    try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
@@ -581,6 +667,90 @@ window.adminTab = async tab => {
      </div>
    `;
  }
+};
+
+window.handleDepositReq = async (targetUid, reqId, action, amount) => {
+  if(!confirm(`আপনি কি এই রিকোয়েস্টটি ${action} করতে চান?`)) return;
+  try {
+    const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
+    const uRef = doc(db, 'users', targetUid);
+
+    if(action === 'approve') {
+      await updateDoc(uRef, { credits: increment(amount) });
+      await updateDoc(reqRef, { status: 'approved' });
+    } else {
+      await updateDoc(reqRef, { status: 'rejected' });
+    }
+    alert('✅ সফলভাবে প্রসেস করা হয়েছে!');
+    adminTab('dep_requests');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+window.handleWithdrawReq = async (targetUid, reqId, action, amount) => {
+  if(!confirm(`আপনি কি এই রিকোয়েস্টটি ${action} করতে চান?`)) return;
+  try {
+    const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
+    const uRef = doc(db, 'users', targetUid);
+
+    if(action === 'approve') {
+      await updateDoc(reqRef, { status: 'approved' });
+    } else {
+      // Refund money back to user if rejected
+      await updateDoc(uRef, { credits: increment(amount) });
+      await updateDoc(reqRef, { status: 'rejected' });
+    }
+    alert('✅ সফলভাবে প্রসেস করা হয়েছে!');
+    adminTab('wit_requests');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+window.deleteTournament = async id => {
+  if(!confirm('আপনি কি নিশ্চিত যে এই টুর্নামেন্টটি ডিলিট করতে চান?')) return;
+  try {
+    await deleteDoc(doc(db, 'tournaments', id));
+    alert('✅ টুর্নামেন্ট ডিলিট করা হয়েছে!');
+    adminTab('tours');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+window.openEditTourModal = async id => {
+  try {
+    const s = await getDoc(doc(db, 'tournaments', id));
+    if(!s.exists()) return alert('Tournament Not Found');
+    const data = s.data();
+    pendingEditTourId = id;
+
+    $('editTMode').value = data.mode || '';
+    $('editTTitle').value = data.title || '';
+    $('editTDate').value = data.dateTime || '';
+    $('editTMap').value = data.map || '';
+    $('editTPrize').value = data.prizePool || 0;
+    $('editTFee').value = data.entryFee || 0;
+
+    $('editTourModal').classList.add('on');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+window.closeEditTourModal = () => {
+  $('editTourModal').classList.remove('on');
+  pendingEditTourId = null;
+};
+
+window.saveEditTournament = async () => {
+  if(!pendingEditTourId) return;
+  try {
+    await updateDoc(doc(db, 'tournaments', pendingEditTourId), {
+      mode: $('editTMode').value,
+      title: $('editTTitle').value,
+      dateTime: $('editTDate').value,
+      map: $('editTMap').value,
+      prizePool: Number($('editTPrize').value || 0),
+      entryFee: Number($('editTFee').value || 0)
+    });
+    alert('✅ টুর্নামেন্ট আপডেট করা হয়েছে!');
+    closeEditTourModal();
+    adminTab('tours');
+  } catch(e) { alert('Error: ' + e.message); }
 };
 
 window.admUpdateBalance = async (targetUid, action) => {
