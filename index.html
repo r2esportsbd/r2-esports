@@ -628,11 +628,11 @@ window.adminTab = async tab => {
    } catch(e) { box.innerHTML = "Error loading requests"; }
 
  } else if(tab === 'settings') {
-   let set = {}, wa = {}, resData = {};
+   let set = {}, wa = {}, resData = {}, bData = {};
    try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
    try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
    try { resData = (await getDoc(doc(db, 'settings', 'results'))).data() || {}; } catch(e){}
-   try { var bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
+   try { bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
 
    box.innerHTML = `
      <div class="card">
