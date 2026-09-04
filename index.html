@@ -5,14 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>R2.0 ESPORTS</title>
 <style>
-:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d;--bkash:#d12053}
+:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
 *{box-sizing:border-box}body{margin:0;background:#060b14;color:var(--text);font-family:system-ui,Arial,sans-serif}
 button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}
 main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0;position:relative;aspect-ratio:16/9;background:#000;border-radius:18px}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.5s ease-in-out}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}.bkash-box{background:linear-gradient(135deg, #d12053, #8a0e33);padding:15px;border-radius:15px;color:white;margin:10px 0}
-.bkash-badge{background:#fff;color:#d12053;padding:4px 10px;border-radius:8px;font-weight:bold;display:inline-block;margin-bottom:8px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}
 .wa-item{display:flex;justify-content:space-between;align-items:center;background:#091422;padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--line)}
+
+/* Ad Deposit Custom Styles */
+.pkg-card{background:#0d1828;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.pkg-card.highlight{border-color:var(--gold)}
+.pkg-title{font-size:15px;font-weight:bold;color:#fff}
+.pkg-reward{color:var(--cyan);font-weight:bold;font-size:14px}
+.code-display{background:#060b14;border:2px dashed var(--gold);color:var(--gold);font-size:24px;font-weight:bold;letter-spacing:4px;padding:10px;border-radius:10px;text-align:center;margin:10px 0}
 </style>
 </head>
 <body>
@@ -60,6 +66,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
 
+<!-- Profile Section -->
 <section id="profile" class="page">
 <div class="card center">
   <div class="avatar" id="av">R</div>
@@ -73,15 +80,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 </div>
 
 <button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
-
-<div style="margin-top: 15px; text-align: center;">
-  <button onclick="showPrivacyPolicy()" style="background: none; border: none; color: #888; text-decoration: underline; font-size: 13px; cursor: pointer;">
-    Privacy Policy & Rules
-  </button>
-</div>
-<button class="btn alt" style="margin-top:10px" onclick="logoutUser()">Logout</button>
+<button class="btn alt" style="margin-top:10px" onclick="showPrivacyPolicy()">📜 Privacy Policy & Rules</button>
+<button class="btn alt danger" style="margin-top:10px" onclick="logoutUser()">Logout</button>
 </section>
 
+<!-- Wallet Section -->
 <section id="wallet" class="page">
   <h2>💰 My Wallet</h2>
   <div class="card">
@@ -89,64 +92,62 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 
   <div class="wTabs" style="margin-bottom:10px">
-    <button class="btn alt mini" onclick="switchWTab('video')">🎥 Rules & Video</button>
-    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit</button>
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads)</button>
     <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
   </div>
 
-  <div id="wTabVideo" class="card">
-    <h3>📺 কিভাবে ডিপোজিট করবেন?</h3>
-    <p class="tiny muted">ডিপোজিট করার সঠিক নিয়ম জানতে নিচের ভিডিওটি দেখুন:</p>
-    <div id="videoContainer" style="margin-top:10px">
-      <a id="tutorialBtn" href="#" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">▶️ Watch Tutorial Video</a>
-    </div>
-  </div>
+  <!-- Auto Ad Deposit Tab -->
+  <div id="wTabDeposit" class="card">
+    <h3>📥 Auto Deposit via Ads</h3>
+    <p class="tiny muted" style="margin-bottom:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
 
-  <div id="wTabDeposit" class="card hidden">
-    <h3>📥 Deposit (bKash)</h3>
-    <div class="bkash-box">
-      <div class="bkash-badge">bKash Personal</div>
-      <p style="margin:5px 0;font-size:14px">১. *247# ডায়াল করে অথবা bKash অ্যাপে যান।</p>
-      <p style="margin:5px 0;font-size:14px">২. <b>Send Money</b> অপশনটি বেছে নিন।</p>
-      <p style="margin:5px 0;font-size:14px">৩. প্রাপক নম্বর হিসেবে নিচের নম্বরটি ব্যবহার করুন:</p>
-      <div class="row space" style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:8px;margin:8px 0">
-        <b style="font-size:18px;letter-spacing:1px">01892036752</b>
-        <button class="btn mini gold" style="width:auto" onclick="navigator.clipboard.writeText('01892036752');alert('নম্বর কপি করা হয়েছে!')">📋 Copy</button>
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">৫ টি অ্যাড রাখুন</div>
+        <div class="pkg-reward">+ ৳৫.০০ BDT</div>
       </div>
-      <p style="margin:5px 0;font-size:13px">৪. টাকা পাঠানোর পর নিচের বক্সে তথ্যগুলো দিয়ে **SEND** বাটনে চাপ দিন।</p>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(5, 5)">শুরু করুন</button>
     </div>
 
-    <input id="depTrx" class="input" placeholder="ট্রানজেকশন আইডি (TrxID) দিন">
-    <input id="depSender" class="input" type="number" placeholder="Sender Number">
-    <input id="depAmount" class="input" type="number" placeholder="Amount">
-    <button class="btn green" style="margin-top:8px" onclick="submitDeposit()">SEND DEPOSIT REQUEST</button>
+    <div class="pkg-card highlight">
+      <div>
+        <div class="pkg-title">১০ টি অ্যাড রাখুন ⭐</div>
+        <div class="pkg-reward">+ ৳১০.০০ BDT</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(10, 10)">শুরু করুন</button>
+    </div>
+
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">২০ টি অ্যাড রাখুন</div>
+        <div class="pkg-reward">+ ৳২৫.০০ BDT (বোনাস)</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(20, 25)">শুরু করুন</button>
+    </div>
   </div>
 
+  <!-- Withdraw Tab -->
   <div id="wTabWithdraw" class="card hidden">
     <h3>📤 Withdraw (bKash)</h3>
-    <div class="bkash-box" style="background:linear-gradient(135deg,#1e3a8a,#0f172a)">
-      <div class="bkash-badge" style="background:#35d1c5;color:#000">Minimum 100 TK</div>
-      <p style="margin:5px 0;font-size:13px">আপনার বিকাশ নম্বর ও পরিমাণ বসিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন।</p>
-    </div>
-
+    <p class="tiny muted">সর্বনিম্ন উইথড্র ১০০ টাকা। তথ্য দিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন।</p>
     <input id="witNum" class="input" type="number" placeholder="আপনার bKash নম্বর">
     <input id="witAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Min 100 TK)">
     <button class="btn gold" style="margin-top:8px" onclick="submitWithdraw()">SEND WITHDRAW REQUEST</button>
   </div>
 
   <div class="card">
-    <h3>📜 Transaction History</h3>
+    <h3>📜 Withdraw History</h3>
     <div id="requestList"></div>
   </div>
 </section>
 
+<!-- Admin Section -->
 <section id="admin" class="page">
 <h2>⚙ Admin Panel</h2><p id="adminStatus" class="tiny muted"></p>
 <div id="adminContent" class="hidden">
 <div class="adminTabs">
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('players')">👥 Players & Balance</button>
-<button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
 </div>
@@ -165,6 +166,23 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 </div></nav>
 
 <!-- Modals -->
+<div id="adModal" class="modal"><div class="modalBox center">
+<h3>📺 Watching Ads</h3>
+<p class="muted tiny">সবগুলো অ্যাড স্কিপ ছাড়া শেষ করুন</p>
+<p style="font-size:18px;margin:15px 0">প্রোগ্রেস: <b id="adCurrent" style="color:var(--gold)">0</b> / <b id="adTotal">0</b></p>
+
+<button id="adWatchBtn" class="btn green" onclick="triggerNextAd()">Watch Next Ad</button>
+
+<div id="adCodeSection" class="hidden">
+  <p class="tiny green" style="margin-top:10px">🎉 অ্যাড সম্পন্ন হয়েছে! সিক্রেট কোডটি নিশ্চিত করুন:</p>
+  <div id="generatedCode" class="code-display">000000</div>
+  <input id="inputAdCode" class="input" placeholder="Enter 6-digit Code" maxlength="6" style="text-align:center">
+  <button class="btn gold" onclick="verifyAndClaimDeposit()">VERIFY & CLAIM CREDIT</button>
+</div>
+
+<button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
+</div></div>
+
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
 <input id="joinIGN" class="input" placeholder="IGN - R2•SALA">
@@ -178,20 +196,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <input id="rPass" class="input" placeholder="Password">
 <label class="tiny"><input type="checkbox" id="rPublished"> Publish Now</label>
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
-</div></div>
-
-<div id="editTourModal" class="modal"><div class="modalBox">
-<h3>✏️ Edit Tournament</h3>
-<input id="editTMode" class="input" placeholder="Game Mode">
-<input id="editTTitle" class="input" placeholder="Title">
-<input id="editTDate" class="input" placeholder="Date & Time">
-<input id="editTMap" class="input" placeholder="Map">
-<input id="editTPrize" class="input" type="number" placeholder="Prize Pool">
-<input id="editTFee" class="input" type="number" placeholder="Entry Fee">
-<div class="row" style="margin-top:10px">
-  <button class="btn alt" onclick="closeEditTourModal()">Cancel</button>
-  <button class="btn green" onclick="saveEditTournament()">Update</button>
-</div>
 </div></div>
 
 <div id="privacyModal" class="modal"><div class="modalBox">
@@ -228,8 +232,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let user = null, isAdmin = false, pendingJoinId = null, pendingRoomId = null, pendingEditTourId = null;
+let user = null, pendingJoinId = null, pendingRoomId = null;
 let bannerInterval = null;
+let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -393,16 +398,15 @@ async function loadMyMatches(){
 
 async function loadResults(){
   try {
-    const a = (await getDocs(collection(db, 'results'))).docs.map(d => d.data());
-    $('resultsList').innerHTML = a.map(x => `<div class="card"><b>${esc(x.title || '')}</b><p>${esc(x.text || '')}</p></div>`).join('') || 'No results';
-  } catch(e){}
+    const s = await getDoc(doc(db, 'settings', 'results'));
+    const text = (s.exists() && s.data().resultsText) ? s.data().resultsText : 'এখনো কোনো রেজাল্ট প্রকাশিত হয়নি।';
+    $('resultsList').innerHTML = `<div class="card"><p style="white-space:pre-wrap;margin:0">${esc(text)}</p></div>`;
+  } catch(e){ $('resultsList').innerHTML = '<div class="card">No results</div>'; }
 }
 
 window.switchWTab = tab => {
-  $('wTabVideo').classList.add('hidden');
   $('wTabDeposit').classList.add('hidden');
   $('wTabWithdraw').classList.add('hidden');
-  if(tab==='video') $('wTabVideo').classList.remove('hidden');
   if(tab==='deposit') $('wTabDeposit').classList.remove('hidden');
   if(tab==='withdraw') $('wTabWithdraw').classList.remove('hidden');
 };
@@ -411,11 +415,6 @@ async function loadWallet(){
   try {
     const s = await getDoc(doc(db, 'users', user.uid));
     $('walletPoints').textContent = Number(s.data().credits || 0) + ' BDT';
-    
-    const setSnap = await getDoc(doc(db, 'settings', 'config'));
-    if(setSnap.exists() && setSnap.data().videoUrl){
-      $('tutorialBtn').href = setSnap.data().videoUrl;
-    }
 
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
     $('requestList').innerHTML = q.docs.map(d => {
@@ -423,7 +422,7 @@ async function loadWallet(){
       let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
       return `<div class="item" style="margin-top:8px">
         <div class="row space">
-          <b>${data.type==='deposit'?'📥 Deposit':'📤 Withdraw'} (${data.amount} BDT)</b>
+          <b>📤 Withdraw (${data.amount} BDT)</b>
           <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
         </div>
       </div>`;
@@ -431,20 +430,54 @@ async function loadWallet(){
   } catch(e){ console.error(e); }
 }
 
-window.submitDeposit = async () => {
-  const trxId = $('depTrx').value.trim();
-  const sender = $('depSender').value.trim();
-  const amount = Number($('depAmount').value);
-  if(!trxId || !sender || !amount) return alert('সমস্ত তথ্য পূরণ করুন');
+/* Auto Ad Deposit Logic */
+window.startAdPackage = (ads, reward) => {
+  currentPkgTotal = ads;
+  currentPkgReward = reward;
+  currentAdCount = 0;
+  activeGeneratedCode = "";
   
+  $('adTotal').textContent = ads;
+  $('adCurrent').textContent = 0;
+  $('adWatchBtn').classList.remove('hidden');
+  $('adCodeSection').classList.add('hidden');
+  $('adModal').classList.add('on');
+};
+
+window.triggerNextAd = () => {
+  alert('▶️ Ad Playing... (সম্পূর্ণ অ্যাড দেখুন)');
+  currentAdCount++;
+  $('adCurrent').textContent = currentAdCount;
+  
+  if(currentAdCount >= currentPkgTotal) {
+    activeGeneratedCode = Math.floor(100000 + Math.random() * 900000).toString();
+    $('generatedCode').textContent = activeGeneratedCode;
+    $('adWatchBtn').classList.add('hidden');
+    $('adCodeSection').classList.remove('hidden');
+  }
+};
+
+window.verifyAndClaimDeposit = async () => {
+  const input = $('inputAdCode').value.trim();
+  if(!input || input !== activeGeneratedCode) {
+    return alert('❌ সিক্রেট কোড ভুল হয়েছে! সঠিক কোডটি বসান।');
+  }
+
   try {
-    await addDoc(collection(db, 'walletRequests', user.uid, 'items'), {
-      type: 'deposit', trxId, sender, amount, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid
-    });
-    alert('✅ ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে!');
-    $('depTrx').value = ''; $('depSender').value = ''; $('depAmount').value = '';
+    const uRef = doc(db, 'users', user.uid);
+    await updateDoc(uRef, { credits: increment(currentPkgReward) });
+    alert(`🎉 সফল হয়েছে! ৳${currentPkgReward} BDT আপনার ওয়ালেটে জমা করা হয়েছে।`);
+    closeAdModal();
     loadWallet();
-  } catch(e){ err(e); }
+    loadProfile();
+  } catch(e) {
+    alert('Error updating balance: ' + e.message);
+  }
+};
+
+window.closeAdModal = () => {
+  $('adModal').classList.remove('on');
+  $('inputAdCode').value = '';
 };
 
 window.submitWithdraw = async () => {
@@ -531,17 +564,6 @@ window.adminTab = async tab => {
       <input id="tFee" class="input" type="number" placeholder="Entry Fee">
       <button class="btn" onclick="addTournament()">Publish</button>
     </div>
-    <div class="card">
-      <h3>⚡ Manual Player Direct Join (Admin)</h3>
-      <select id="admJoinTourId" class="input">
-        <option value="">Select Tournament</option>
-        ${ts.map(t => `<option value="${t.id}">${esc(t.title)} (${esc(t.mode)})</option>`).join('')}
-      </select>
-      <input id="admUserEmail" class="input" placeholder="User Email">
-      <input id="admUserIGN" class="input" placeholder="In Game Name (IGN)">
-      <input id="admUserUID" class="input" placeholder="Free Fire UID">
-      <button class="btn green" style="margin-top:6px" onclick="admDirectJoin()">Direct Join Player</button>
-    </div>
     <div class="card list">
       <h3>📋 Manage Tournaments</h3>
       ${ts.map(t => `
@@ -549,7 +571,6 @@ window.adminTab = async tab => {
           <b>${esc(t.title)}</b> (${esc(t.mode)})
           <div class="row" style="margin-top:6px">
             <button class="btn gold mini" style="flex:1" onclick="manageRoom('${t.id}')">🔑 Room</button>
-            <button class="btn green mini" style="flex:1" onclick="openEditTourModal('${t.id}')">✏️ Edit</button>
             <button class="btn danger mini" style="flex:1" onclick="deleteTournament('${t.id}')">🗑️ Delete</button>
           </div>
         </div>
@@ -557,7 +578,6 @@ window.adminTab = async tab => {
     </div>
   `;
  } else if(tab === 'players') {
-   box.innerHTML = "Loading players...";
    const snap = await getDocs(collection(db, 'users'));
    const users = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
@@ -577,39 +597,7 @@ window.adminTab = async tab => {
        </div>
      </div>
    `;
- } else if(tab === 'dep_requests') {
-   box.innerHTML = "Loading Deposit Requests...";
-   try {
-     const snap = await getDocs(collectionGroup(db, 'items'));
-     const reqs = snap.docs
-       .map(d => ({id: d.id, ref: d.ref, ...d.data()}))
-       .filter(r => r.type === 'deposit');
-     
-     box.innerHTML = `
-       <div class="card">
-         <h3>📥 Pending Deposit Requests</h3>
-         <div class="list">
-           ${reqs.map(r => `
-             <div class="item" style="margin-top:8px">
-               <b>Email:</b> ${esc(r.email)}<br>
-               <b>Amount:</b> <span style="color:var(--gold)">${r.amount} BDT</span><br>
-               <b>Sender:</b> ${esc(r.sender)} | <b>TrxID:</b> ${esc(r.trxId)}<br>
-               <b>Status:</b> <span class="badge">${esc(r.status)}</span>
-               ${r.status === 'pending' ? `
-                 <div class="row" style="margin-top:8px">
-                   <button class="btn mini green" onclick="handleDepositReq('${r.uid}', '${r.id}', 'approve', ${r.amount})">✅ Approve</button>
-                   <button class="btn mini danger" onclick="handleDepositReq('${r.uid}', '${r.id}', 'reject', 0)">❌ Reject</button>
-                 </div>
-               ` : ''}
-             </div>
-           `).join('') || '<p class="tiny muted">No deposit requests</p>'}
-         </div>
-       </div>
-     `;
-   } catch(e) { box.innerHTML = "Error loading requests"; }
-
  } else if(tab === 'wit_requests') {
-   box.innerHTML = "Loading Withdraw Requests...";
    try {
      const snap = await getDocs(collectionGroup(db, 'items'));
      const reqs = snap.docs
@@ -640,15 +628,16 @@ window.adminTab = async tab => {
    } catch(e) { box.innerHTML = "Error loading requests"; }
 
  } else if(tab === 'settings') {
-   let set = {}, wa = {};
+   let set = {}, wa = {}, resData = {};
    try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
    try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
+   try { resData = (await getDoc(doc(db, 'settings', 'results'))).data() || {}; } catch(e){}
    try { var bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
 
    box.innerHTML = `
      <div class="card">
        <h3>🖼️ Manage Banner URLs</h3>
-       <textarea id="admBanners" class="input" rows="3" placeholder="প্রতি লাইনে একটি করে Banner Image URL দিন...">${(bData.list || []).join('\n')}</textarea>
+       <textarea id="admBanners" class="input" rows="3" placeholder="Image URLs...">${(bData.list || []).join('\n')}</textarea>
        <button class="btn gold" onclick="saveBanners()">💾 Save Banners</button>
      </div>
      <div class="card" style="margin-top:10px">
@@ -657,33 +646,19 @@ window.adminTab = async tab => {
        <button class="btn gold" style="margin-top:10px" onclick="savePrivacyText()">💾 Update Policy</button>
      </div>
      <div class="card" style="margin-top:10px">
-       <h3>💬 WhatsApp Support & Community Settings</h3>
+       <h3>🏆 Edit Tournament Results</h3>
+       <textarea id="admResultsText" class="input" rows="4" placeholder="টুর্নামেন্ট রেজাল্ট বিস্তারিত লিখুন...">${resData.resultsText || ''}</textarea>
+       <button class="btn gold" style="margin-top:10px" onclick="saveResultsText()">💾 Update Results</button>
+     </div>
+     <div class="card" style="margin-top:10px">
+       <h3>💬 WhatsApp Support & Community</h3>
        <input id="wa1" class="input" placeholder="WhatsApp Number 1" value="${wa.num1 || ''}">
        <input id="wa2" class="input" placeholder="WhatsApp Number 2" value="${wa.num2 || ''}">
-       <input id="wa3" class="input" placeholder="WhatsApp Number 3" value="${wa.num3 || ''}">
-       <input id="wa4" class="input" placeholder="WhatsApp Number 4" value="${wa.num4 || ''}">
-       <input id="waComm" class="input" placeholder="WhatsApp Community Group Link" value="${wa.community || ''}">
-       <button class="btn gold" style="margin-top:10px" onclick="saveWhatsAppSettings()">💾 Save WhatsApp Info</button>
+       <input id="waComm" class="input" placeholder="WhatsApp Community Link" value="${wa.community || ''}">
+       <button class="btn gold" style="margin-top:10px" onclick="saveWhatsAppSettings()">💾 Save Info</button>
      </div>
    `;
  }
-};
-
-window.handleDepositReq = async (targetUid, reqId, action, amount) => {
-  if(!confirm(`আপনি কি এই রিকোয়েস্টটি ${action} করতে চান?`)) return;
-  try {
-    const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
-    const uRef = doc(db, 'users', targetUid);
-
-    if(action === 'approve') {
-      await updateDoc(uRef, { credits: increment(amount) });
-      await updateDoc(reqRef, { status: 'approved' });
-    } else {
-      await updateDoc(reqRef, { status: 'rejected' });
-    }
-    alert('✅ সফলভাবে প্রসেস করা হয়েছে!');
-    adminTab('dep_requests');
-  } catch(e) { alert('Error: ' + e.message); }
 };
 
 window.handleWithdrawReq = async (targetUid, reqId, action, amount) => {
@@ -695,7 +670,6 @@ window.handleWithdrawReq = async (targetUid, reqId, action, amount) => {
     if(action === 'approve') {
       await updateDoc(reqRef, { status: 'approved' });
     } else {
-      // Refund money back to user if rejected
       await updateDoc(uRef, { credits: increment(amount) });
       await updateDoc(reqRef, { status: 'rejected' });
     }
@@ -709,46 +683,6 @@ window.deleteTournament = async id => {
   try {
     await deleteDoc(doc(db, 'tournaments', id));
     alert('✅ টুর্নামেন্ট ডিলিট করা হয়েছে!');
-    adminTab('tours');
-  } catch(e) { alert('Error: ' + e.message); }
-};
-
-window.openEditTourModal = async id => {
-  try {
-    const s = await getDoc(doc(db, 'tournaments', id));
-    if(!s.exists()) return alert('Tournament Not Found');
-    const data = s.data();
-    pendingEditTourId = id;
-
-    $('editTMode').value = data.mode || '';
-    $('editTTitle').value = data.title || '';
-    $('editTDate').value = data.dateTime || '';
-    $('editTMap').value = data.map || '';
-    $('editTPrize').value = data.prizePool || 0;
-    $('editTFee').value = data.entryFee || 0;
-
-    $('editTourModal').classList.add('on');
-  } catch(e) { alert('Error: ' + e.message); }
-};
-
-window.closeEditTourModal = () => {
-  $('editTourModal').classList.remove('on');
-  pendingEditTourId = null;
-};
-
-window.saveEditTournament = async () => {
-  if(!pendingEditTourId) return;
-  try {
-    await updateDoc(doc(db, 'tournaments', pendingEditTourId), {
-      mode: $('editTMode').value,
-      title: $('editTTitle').value,
-      dateTime: $('editTDate').value,
-      map: $('editTMap').value,
-      prizePool: Number($('editTPrize').value || 0),
-      entryFee: Number($('editTFee').value || 0)
-    });
-    alert('✅ টুর্নামেন্ট আপডেট করা হয়েছে!');
-    closeEditTourModal();
     adminTab('tours');
   } catch(e) { alert('Error: ' + e.message); }
 };
@@ -767,36 +701,6 @@ window.admUpdateBalance = async (targetUid, action) => {
   } catch(e){ alert('Error: ' + e.message); }
 };
 
-window.admDirectJoin = async () => {
-  const tourId = $('admJoinTourId').value;
-  const email = $('admUserEmail').value.trim();
-  const ign = $('admUserIGN').value.trim();
-  const uid = $('admUserUID').value.trim();
-
-  if(!tourId || !email || !ign || !uid) return alert('সমস্ত তথ্য সঠিক ভাবে দিন');
-
-  try {
-    const uSnap = await getDocs(collection(db, 'users'));
-    const targetUserDoc = uSnap.docs.find(d => d.data().email === email);
-    if(!targetUserDoc) return alert('এই ইমেইলের কোনো ইউজার খুঁজে পাওয়া যায়নি!');
-    
-    const targetUid = targetUserDoc.id;
-    const tref = doc(db, 'tournaments', tourId);
-    const ts = await getDoc(tref);
-    if(!ts.exists()) return alert('টুর্নামেন্ট পাওয়া যায়নি');
-
-    const joinRef = doc(db, 'users', targetUid, 'joinedMatches', tourId);
-    const playerRef = doc(db, 'tournaments', tourId, 'players', targetUid);
-
-    await setDoc(joinRef, { tournamentId: tourId, title: ts.data().title || '', ign, ffUid: uid, joinedAt: serverTimestamp() });
-    await setDoc(playerRef, { uid: targetUid, email, ign, ffUid: uid, joinedAt: serverTimestamp() });
-    await updateDoc(tref, { currentJoins: increment(1) });
-
-    alert('✅ ম্যানুয়ালি প্লেয়ার সফলভাবে টুর্নামেন্টে যুক্ত করা হয়েছে!');
-    $('admUserEmail').value = ''; $('admUserIGN').value = ''; $('admUserUID').value = '';
-  } catch(e){ alert('Error: ' + e.message); }
-};
-
 window.saveBanners = async () => {
   const text = $('admBanners').value.trim();
   const list = text.split('\n').map(x => x.trim()).filter(Boolean);
@@ -810,10 +714,15 @@ window.savePrivacyText = async () => {
   alert('✅ Privacy Policy Updated!');
 };
 
+window.saveResultsText = async () => {
+  const text = $('admResultsText').value.trim();
+  await setDoc(doc(db, 'settings', 'results'), { resultsText: text }, { merge: true });
+  alert('✅ Results Updated!');
+};
+
 window.saveWhatsAppSettings = async () => {
   const data = {
     num1: $('wa1').value.trim(), num2: $('wa2').value.trim(),
-    num3: $('wa3').value.trim(), num4: $('wa4').value.trim(),
     community: $('waComm').value.trim()
   };
   await setDoc(doc(db, 'settings', 'whatsapp'), data, { merge: true });
@@ -835,7 +744,7 @@ window.openWhatsAppModal = async () => {
     const s = await getDoc(doc(db, 'settings', 'whatsapp'));
     const data = s.exists() ? s.data() : {};
     let html = '';
-    const nums = [data.num1, data.num2, data.num3, data.num4].filter(Boolean);
+    const nums = [data.num1, data.num2].filter(Boolean);
     
     if(nums.length === 0){
       html = '<p class="tiny muted">কোনো নম্বর পাওয়া যায়নি</p>';
@@ -850,7 +759,7 @@ window.openWhatsAppModal = async () => {
     
     $('waList').innerHTML = html;
     if(data.community){
-      $('waCommunityWrap').innerHTML = `<a href="${esc(data.community)}" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">🌐 Join WhatsApp Community</a>`;
+      $('waCommunityWrap').innerHTML = `<a href="${esc(data.community)}" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">🌐 Join Community</a>`;
     } else {
       $('waCommunityWrap').innerHTML = '';
     }
