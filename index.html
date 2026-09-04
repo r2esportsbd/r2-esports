@@ -59,6 +59,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="card center"><div class="avatar" id="av">R</div><h2 id="pname">Player</h2><div id="pemail" class="muted"></div><div id="isAdminBadge" class="hidden"><span class="tag" style="background:var(--gold);color:#000;margin-top:8px">👑 ADMIN</span></div></div>
 <div class="card"><div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div><button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button></div>
 <a id="supportBtn" href="https://wa.me/8801892036752" target="_blank" class="btn green" style="margin-top:10px;text-align:center;display:block;text-decoration:none">💬 Contact Support (WhatsApp)</a>
+<div style="margin-top: 15px; text-align: center;">
+  <button onclick="showPrivacyPolicy()" style="background: none; border: none; color: #888; text-decoration: underline; font-size: 13px; cursor: pointer;">
+    Privacy Policy & Rules
+  </button>
+</div>
 <button class="btn alt" style="margin-top:10px" onclick="logoutUser()">Logout</button>
 </section>
 
@@ -121,11 +126,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <h3>📜 Transaction History</h3>
     <div id="requestList"></div>
   </div>
-<div style="margin-top: 15px; text-align: center;">
-  <button onclick="showPrivacyPolicy()" style="background: none; border: none; color: #888; text-decoration: underline; font-size: 13px; cursor: pointer;">
-    Privacy Policy & Rules
-  </button>
-</div>
 </section>
 
 <section id="admin" class="page">
@@ -137,13 +137,8 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
-<div id="admNoticeBox" style="margin-top: 15px;">
-  <h4>Edit Privacy Policy & Rules</h4>
-  <textarea id="admPrivacyText" class="input" placeholder="Type privacy policy here..." style="height:80px;"></textarea>
-  <button class="btn gold" onclick="savePrivacyText()" style="margin-top:5px;">Save Policy</button>
 </div>
-</div>
-</div><div id="adminBox"></div>
+<div id="adminBox"></div>
 </div>
 </section>
 </main>
@@ -180,6 +175,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <textarea id="eRules" class="input" placeholder="Rules"></textarea>
 <div class="row"><button class="btn alt" onclick="closeEditModal()">Cancel</button><button class="btn" onclick="saveEditTournament()">Save</button></div>
 </div></div>
+
 <!-- Popup Notice Modal -->
 <div id="noticeModal" class="modal">
   <div class="modalBox" style="border:1px solid var(--gold);max-height:80vh">
@@ -192,6 +188,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <button class="btn gold" style="margin-top:10px" onclick="closeNoticeModal()">Got it</button>
   </div>
 </div>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
@@ -611,12 +608,16 @@ window.adminTab = async tab => {
        <input id="admVidUrl" class="input" placeholder="YouTube Video URL">
        <button class="btn gold" onclick="saveVidUrl()">Save Link</button>
      </div>
-<!-- Admin Notice Input -->
-<div class="card" style="margin-top:10px">
-  <h3>📢 Edit Popup Notice</h3>
-  <textarea id="admNoticeText" class="input" rows="4" placeholder="নতুন নোটিশ লিখুন..."></textarea>
-  <button class="btn gold" style="margin-top:10px" onclick="saveNoticeText()">💾 Update Notice</button>
-</div>
+     <div class="card" style="margin-top:10px">
+       <h3>📢 Edit Popup Notice</h3>
+       <textarea id="admNoticeText" class="input" rows="4" placeholder="নতুন নোটিশ লিখুন..."></textarea>
+       <button class="btn gold" style="margin-top:10px" onclick="saveNoticeText()">💾 Update Notice</button>
+     </div>
+     <div class="card" style="margin-top:10px">
+       <h3>📜 Edit Privacy Policy & Rules</h3>
+       <textarea id="admPrivacyText" class="input" rows="4" placeholder="প্রাইভেসি পলিসি লিখুন..."></textarea>
+       <button class="btn gold" style="margin-top:10px" onclick="savePrivacyText()">💾 Update Policy</button>
+     </div>
    `;
  }
 };
@@ -627,12 +628,11 @@ window.saveVidUrl = async () => {
   await setDoc(doc(db, 'settings', 'config'), { videoUrl: url }, { merge: true });
   alert('✅ Video Link Saved!');
 };
-// ১. পপআপ নোটিশ বন্ধ করা
+
 window.closeNoticeModal = () => {
   document.getElementById('noticeModal').classList.remove('on');
 };
 
-// ২. হোম পেজে পপআপ দেখানোর লজিক
 async function checkAndShowNotice() {
   try {
     const s = await getDoc(doc(db, 'settings', 'config'));
@@ -642,6 +642,16 @@ async function checkAndShowNotice() {
     }
   } catch(e) { console.error(e); }
 }
+
+window.saveNoticeText = async () => {
+  const text = document.getElementById('admNoticeText').value.trim();
+  if(!text) return alert('দয়া করে কোনো নোটিশ লিখুন');
+  try {
+    await setDoc(doc(db, 'settings', 'config'), { noticeText: text }, { merge: true });
+    alert('✅ Notice Updated Successfully!');
+  } catch(e) { console.error(e); }
+};
+
 window.savePrivacyText = async () => {
   const text = document.getElementById('admPrivacyText').value.trim();
   if(!text) return alert('পলিসি লিখুন');
@@ -658,15 +668,7 @@ window.showPrivacyPolicy = async () => {
     alert('R2.0 Esports Privacy Policy & Rules:\n\n' + text);
   } catch(e) { alert('Error loading policy'); }
 };
-// ৩. এডমিন থেকে নোটিশ সেভ করার লজিক
-window.saveNoticeText = async () => {
-  const text = document.getElementById('admNoticeText').value.trim();
-  if(!text) return alert('দয়া করে কোনো নোটিশ লিখুন');
-  try {
-    await setDoc(doc(db, 'settings', 'config'), { noticeText: text }, { merge: true });
-    alert('✅ Notice Updated Successfully!');
-  } catch(e) { console.error(e); }
-};
+
 window.processWalletReq = async (uid, reqId, type, amount, action) => {
   try {
     const rRef = doc(db, 'walletRequests', uid, 'items', reqId);
@@ -679,7 +681,6 @@ window.processWalletReq = async (uid, reqId, type, amount, action) => {
       await updateDoc(rRef, { status: 'approved' });
     } else if (action === 'reject') {
       if (type === 'withdraw') {
-        // Refund balance on withdraw rejection
         await updateDoc(uRef, { credits: increment(amount) });
       }
       await updateDoc(rRef, { status: 'rejected' });
@@ -689,12 +690,13 @@ window.processWalletReq = async (uid, reqId, type, amount, action) => {
     adminTab(type === 'deposit' ? 'dep_requests' : 'wit_requests');
   } catch(e){ alert('Error: ' + e.message); }
 };
+
 window.addTournament = async () => {
   const data = {
     title: $('tTitle').value, mode: $('tMode').value, dateTime: $('tDate').value + ' ' + $('tTime').value,
     map: $('tMap').value, prizePool: Number($('tPrize').value || 0), perKill: Number($('tKill').value || 0),
     entryFee: Number($('tFee').value || 0), maxSlots: Number($('tSlots').value || 48), currentJoins: 0,
-    roomPublished: false, roomId: '', roomPassword: '', createdAt: serverTimestamp()
+    rules: $('tRules').value || '', roomPublished: false, roomId: '', roomPassword: '', createdAt: serverTimestamp()
   };
   await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
 };
@@ -740,7 +742,7 @@ onAuthStateChanged(auth, async u => {
  user = u;
  if(u){
   await setDoc(doc(db, 'users', u.uid), { email: u.email, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-go('profile'); go('home'); loadHome(); checkAndShowNotice();
+  go('profile'); go('home'); loadHome(); checkAndShowNotice();
  } else {
   go('login');
  }
