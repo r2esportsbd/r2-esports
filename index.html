@@ -99,6 +99,48 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 .match-footer-btns { display: flex; border-top: 1px solid #1c2e4a; }
 .match-footer-btn { flex: 1; padding: 10px; background: transparent; color: #38bdf8; font-size: 12px; font-weight: 700; border-right: 1px solid #1c2e4a; text-align: center; }
 .match-footer-btn:last-child { border-right: none; }
+
+/* --- Countdown Timer Style --- */
+.countdown-bar {
+  background: linear-gradient(90deg, #ff2a55, #e0115f);
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* --- Prize Pool Modal Styling --- */
+.prize-modal-header {
+  background: #ffc94d;
+  color: #000;
+  padding: 12px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 16px;
+  position: relative;
+}
+.prize-modal-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold; font-size: 12px; cursor: pointer;
+}
+.prize-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -159,7 +201,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
 </div>
 
-<!-- NEW BUTTONS ADDED TO PROFILE -->
 <button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
 <button class="btn alt" style="margin-top:10px;background:#1e293b" onclick="openSocialMediaModal()">🌐 Support Social Media</button>
 <button class="btn alt" style="margin-top:10px;background:#1e293b" onclick="openRulesModal()">📖 Game Rules</button>
@@ -280,13 +321,26 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
 </div></div>
 
+<!-- Prize Pool Modal -->
+<div id="prizeModal" class="modal">
+  <div class="modalBox" style="padding:0; overflow:hidden; border-radius:16px;">
+    <div class="prize-modal-header">
+      TOTAL WINPRIZE
+      <div class="prize-modal-close" onclick="closePrizeModal()">✕</div>
+    </div>
+    <div style="padding:15px; text-align:center; font-size:12px; color:#ffc94d; background:#0d1828;">
+      <span id="prizeModalSubTitle">Solo Time | Mobile | Regular</span>
+    </div>
+    <div id="prizeModalContent" style="padding:10px; background:#070e1b;"></div>
+  </div>
+</div>
+
 <div id="privacyModal" class="modal"><div class="modalBox">
 <h3>📜 Privacy Policy</h3>
 <div id="privacyPolicyContent" style="white-space:pre-wrap;font-size:14px;line-height:1.5;margin:12px 0;max-height:60vh;overflow-y:auto" class="muted"></div>
 <button class="btn alt" onclick="closePrivacyModal()">Close</button>
 </div></div>
 
-<!-- NEW MODALS FOR SOCIAL & RULES -->
 <div id="socialModal" class="modal"><div class="modalBox">
 <h3>🌐 Support Social Media</h3>
 <p class="tiny muted">আমাদের সোশ্যাল মিডিয়া চ্যানেলগুলো ফলো করুন:</p>
@@ -329,7 +383,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let user = null, pendingJoinId = null, pendingRoomId = null;
-let bannerInterval = null;
+let bannerInterval = null, countdownInterval = null;
+let activeTournaments = [];
 let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
@@ -389,12 +444,14 @@ async function loadHome(){
  }
 }
 
-/* --- UPDATED MODERN MATCH CARD RENDER --- */
+/* --- UPDATED MODERN MATCH CARD RENDER WITH TIMER & PRIZE MODAL --- */
 function renderTours(tours) {
+  activeTournaments = tours;
   if(!tours.length) {
     $('tlist').innerHTML = '<div class="card">No Tournaments Found</div>';
     return;
   }
+  
   $('tlist').innerHTML = tours.map(t => {
     const totalSlots = Number(t.maxSlots || 48);
     const joined = Number(t.currentJoins || 0);
@@ -451,12 +508,88 @@ function renderTours(tours) {
 
       <div class="match-footer-btns">
         <button class="match-footer-btn" onclick="openDetails('${t.id}')">🔑 Room Details</button>
-        <button class="match-footer-btn" onclick="openDetails('${t.id}')">🏆 Prize Pool</button>
+        <button class="match-footer-btn" onclick="openPrizeModal('${t.id}')">🏆 Prize Pool</button>
+      </div>
+
+      <div class="countdown-bar" id="timer-${t.id}">
+        🕒 STARTS IN Calculatng...
       </div>
     </div>
     `;
   }).join('');
+
+  startLiveCountdowns();
 }
+
+/* Live Countdown System */
+function startLiveCountdowns() {
+  if(countdownInterval) clearInterval(countdownInterval);
+  
+  function updateTimers() {
+    activeTournaments.forEach(t => {
+      const el = $('timer-' + t.id);
+      if(!el) return;
+      
+      const targetTime = new Date(t.dateTime).getTime();
+      const now = new Date().getTime();
+      const diff = targetTime - now;
+
+      if(isNaN(targetTime)) {
+        el.textContent = `⏰ ${t.dateTime || 'Time Not Set'}`;
+        return;
+      }
+
+      if(diff <= 0) {
+        el.textContent = "🔥 MATCH STARTED / CLOSED";
+        el.style.background = "#20314a";
+      } else {
+        const hrs = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        let str = "🕒 STARTS IN ";
+        if(hrs > 0) str += `${hrs}h `;
+        str += `${mins}m:${secs < 10 ? '0' : ''}${secs}s`;
+        el.textContent = str;
+      }
+    });
+  }
+
+  updateTimers();
+  countdownInterval = setInterval(updateTimers, 1000);
+}
+
+/* Prize Pool Modal Controller */
+window.openPrizeModal = id => {
+  const t = activeTournaments.find(x => x.id === id);
+  if(!t) return;
+
+  $('prizeModalSubTitle').textContent = `${t.title || ''} | ${t.mode || 'Solo'}`;
+  
+  let html = '';
+  if(t.prizeBreakdown && t.prizeBreakdown.trim()) {
+    const lines = t.prizeBreakdown.split('\n');
+    html = lines.map(line => {
+      const parts = line.split(':');
+      if(parts.length >= 2) {
+        return `<div class="prize-list-item"><span>${esc(parts[0].trim())}</span><span style="color:#ffc94d">${esc(parts.slice(1).join(':').trim())}</span></div>`;
+      }
+      return `<div class="prize-list-item"><span>${esc(line)}</span></div>`;
+    }).join('');
+  } else {
+    html = `
+      <div class="prize-list-item"><span>👑 Winner</span><span style="color:#ffc94d">${t.prizePool || 0} TK</span></div>
+      <div class="prize-list-item"><span>🔥 Per Kill</span><span style="color:#ffc94d">${t.perKill || 0} TK</span></div>
+    `;
+  }
+  
+  html += `<div class="prize-list-item" style="border-top:1px solid #263852; margin-top:8px;"><span>🏆 Total Prize Pool</span><span style="color:#35d1c5">${t.prizePool || 0} TK</span></div>`;
+
+  $('prizeModalContent').innerHTML = html;
+  $('prizeModal').classList.add('on');
+};
+
+window.closePrizeModal = () => $('prizeModal').classList.remove('on');
 
 window.openMode = async mode => {
   try {
@@ -689,10 +822,12 @@ window.adminTab = async tab => {
       <input id="tMode" class="input" placeholder="Game Mode (e.g. BR SOLO MATCH)">
       <input id="tTitle" class="input" placeholder="Title">
       <input id="tImg" class="input" placeholder="Image URL">
-      <input id="tDate" class="input" placeholder="Date & Time">
+      <label class="tiny muted">Date & Time Pick (যেমন: YYYY-MM-DDTHH:MM)</label>
+      <input id="tDate" class="input" type="datetime-local">
       <input id="tMap" class="input" placeholder="Map">
-      <input id="tPrize" class="input" type="number" placeholder="Win Prize">
-      <input id="tPerKill" class="input" type="number" placeholder="Per Kill Reward">
+      <input id="tPrize" class="input" type="number" placeholder="Total Win Prize (BDT)">
+      <input id="tPerKill" class="input" type="number" placeholder="Per Kill Reward (BDT)">
+      <textarea id="tPrizeBreakdown" class="input" rows="4" placeholder="Prize Pool Breakdown (Format):\nWinner: 50 Taka\n2nd Position: 40 Taka\n3rd Position: 30 Taka\nPer Kill: 5 Taka"></textarea>
       <input id="tFee" class="input" type="number" placeholder="Entry Fee">
       <input id="tSlots" class="input" type="number" placeholder="Total Slots (Default 48)" value="48">
       <button class="btn" onclick="addTournament()">Publish</button>
@@ -1017,14 +1152,23 @@ window.saveRoom = async () => {
 };
 
 window.addTournament = async () => {
+  const rawDate = $('tDate').value; // e.g. "2026-09-04T20:40"
+  let formattedDate = rawDate;
+  
+  if(rawDate) {
+    const d = new Date(rawDate);
+    formattedDate = d.toISOString();
+  }
+
   const data = {
     title: $('tTitle').value,
     mode: $('tMode').value,
     imageUrl: $('tImg').value,
-    dateTime: $('tDate').value,
+    dateTime: formattedDate,
     map: $('tMap').value,
     prizePool: Number($('tPrize').value || 0),
     perKill: Number($('tPerKill').value || 0),
+    prizeBreakdown: $('tPrizeBreakdown').value,
     entryFee: Number($('tFee').value || 0),
     maxSlots: Number($('tSlots').value || 48),
     currentJoins: 0,
