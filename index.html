@@ -391,17 +391,24 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const err = e => { console.error(e); $('authMsg').textContent = e.code || e.message || 'Error occurred'; };
 
-// Helper function to format date/time string to Bangladesh ISO string (+06:00)
+// Enhanced Date Parser to ensure Bangladesh Standard Time (+06:00) handling across browsers
 function getBDTargetTime(dateTimeStr) {
   if (!dateTimeStr) return NaN;
   let str = String(dateTimeStr).trim();
-  // If no timezone offset is explicitly provided, append Bangladesh +06:00
+  
+  // Normalize string for Date constructor
   if (!str.includes('Z') && !str.includes('+') && !str.includes('-')) {
     str += '+06:00';
   } else if (str.endsWith('Z')) {
     str = str.replace('Z', '+06:00');
   }
-  return new Date(str).getTime();
+  
+  const parsed = new Date(str).getTime();
+  if (!isNaN(parsed)) return parsed;
+
+  // Fallback for custom formatted strings
+  const cleaned = str.replace('T', ' ');
+  return new Date(cleaned).getTime();
 }
 
 // Display Bangladesh Readable Time
@@ -1174,7 +1181,7 @@ window.saveRoom = async () => {
 };
 
 window.addTournament = async () => {
-  const rawDate = $('tDate').value; // e.g. "2026-09-07T19:00"
+  const rawDate = $('tDate').value;
   let formattedDate = rawDate;
   
   if(rawDate) {
