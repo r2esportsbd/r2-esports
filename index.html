@@ -5,29 +5,64 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>R2.0 ESPORTS</title>
 <style>
-:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d;--green:#22c55e}
+:root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
 *{box-sizing:border-box}body{margin:0;background:#060b14;color:var(--text);font-family:system-ui,Arial,sans-serif}
 button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:78px}.top{position:sticky;top:0;z-index:20;background:#091321ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}.brand{font-weight:900;font-size:20px}.brand b{color:var(--red)}
-main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0;position:relative;aspect-ratio:16/9;background:#000;border-radius:18px}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.5s ease-in-out}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode,.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.actions{display:flex;gap:8px;padding:8px 0}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
+main{padding:14px}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.hero{overflow:hidden;padding:0;position:relative;aspect-ratio:16/9;background:#000;border-radius:18px}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.5s ease-in-out}.row{display:flex;gap:10px;align-items:center}.space{justify-content:space-between}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.item{background:#0d1828;color:white;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left}.btn{padding:12px 14px;border-radius:12px;background:var(--red);color:white;font-weight:800;width:100%}.btn.alt{background:#20314a}.btn.green{background:var(--cyan);color:#062321}.btn.gold{background:var(--gold);color:#251b00}.btn.google{background:#fff;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}.input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#091422;color:white;margin:6px 0}.muted{color:var(--muted)}h2,h3{margin:5px 0 10px}.tag{display:inline-block;background:#74253b;padding:5px 9px;border-radius:999px;font-size:11px}.tour{padding:0;overflow:hidden}.tour.inside{padding:14px}.actions{display:flex;gap:8px;padding:12px}.actions button{flex:1}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1524f0;backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:30}.nav{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:transparent;color:var(--muted);padding:10px 2px;font-size:11px}.nav button.active{color:var(--gold);font-weight:900}.hidden{display:none!important}.avatar{width:72px;height:72px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#695bff);font-size:30px;font-weight:900}.center{text-align:center}.adminTabs,.wTabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.adminTabs button,.wTabs button{white-space:nowrap;flex:1}.list{max-height:500px;overflow:auto}.tiny{font-size:12px}.danger{background:#6d1f2b}.mini{padding:7px 10px;font-size:12px;margin-top:6px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;place-items:center;z-index:100;padding:14px}.modal.on{display:grid}.modalBox{background:#0f1c33;border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#20314a}
+.wa-item{display:flex;justify-content:space-between;align-items:center;background:#091422;padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--line)}
 
-/* Advanced Match Card Design */
-.match-card{background:#0d1829;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:15px;position:relative;overflow:hidden}
-.match-header{display:flex;gap:10px;align-items:flex-start}
-.match-thumb{width:65px;height:65px;border-radius:10px;object-fit:cover;border:1px solid var(--line)}
-.match-id-badge{position:absolute;top:10px;right:10px;background:#4d7c0f;color:#fff;font-size:11px;font-weight:bold;padding:3px 8px;border-radius:4px}
-.match-stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin:12px 0;background:#08101c;padding:8px;border-radius:10px;border:1px solid #1a2a40}
-.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase}
-.stat-val{font-size:13px;font-weight:bold;color:#fff;margin-top:2px}
-.match-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
-.progress-bg{background:#1e293b;height:8px;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.progress-fill{background:linear-gradient(90deg, #f97316, var(--red));height:100%;transition:width 0.3s}
-.timer-bar{background:#e11d48;color:white;font-size:12px;font-weight:bold;text-align:center;padding:6px;border-radius:8px;margin-bottom:8px}
-.btn-join{background:var(--cyan);color:#000;font-weight:bold;border-radius:8px;padding:8px 16px}
-.btn-full{background:#e11d48;color:#fff;font-weight:bold;border-radius:8px;padding:8px 16px;cursor:not-allowed}
-.prize-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
-.social-link-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:#0d1828;border:1px solid var(--line);padding:10px;border-radius:12px;color:#fff;text-decoration:none;font-weight:bold;margin-bottom:8px}
+/* Ad Deposit Custom Styles */
+.pkg-card{background:#0d1828;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.pkg-card.highlight{border-color:var(--gold)}
+.pkg-title{font-size:15px;font-weight:bold;color:#fff}
+.pkg-reward{color:var(--cyan);font-weight:bold;font-size:14px}
+.code-display{background:#060b14;border:2px dashed var(--gold);color:var(--gold);font-size:24px;font-weight:bold;letter-spacing:4px;padding:10px;border-radius:10px;text-align:center;margin:10px 0}
+
+/* Premium Game Mode Card Styling */
+.mode-card {
+  position: relative;
+  background: linear-gradient(135deg, #0e1c2e 0%, #07111e 100%);
+  border: 1px solid #1a314d;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.mode-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cyan);
+}
+.mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: linear-gradient(to bottom, var(--cyan), var(--red));
+}
+.mode-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.mode-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.mode-subtitle {
+  font-size: 10px;
+  color: var(--cyan);
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -60,23 +95,17 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <div style="text-align:center;margin:14px 0;color:var(--muted)">─── অথবা ───</div>
 
     <button id="googleBtn" class="btn google" onclick="googleLogin()">🔵 Continue with Google</button>
+    <p id="authMsg" class="tiny muted" style="text-align:center;margin-top:12px;color:#ff3b55"></p>
   </div>
 </section>
 
 <section id="home" class="page">
   <div id="bannerWrap"></div>
-  <h2>🎮 Game Modes</h2>
+  <h2 style="margin-top:15px">🎮 Select Game Mode</h2>
   <div id="modes" class="grid"></div>
 </section>
 
-<section id="tournaments" class="page">
-  <div class="row space" style="margin-bottom:10px">
-    <h2 id="modeTitle">Tournaments</h2>
-    <button class="btn alt mini" style="width:auto" onclick="go('home')">← Back</button>
-  </div>
-  <div id="tlist"></div>
-</section>
-
+<section id="tournaments" class="page"><h2 id="modeTitle">Tournaments</h2><div id="tlist"></div></section>
 <section id="details" class="page"><button class="btn alt" onclick="go('tournaments')">← Back</button><div id="detailBox"></div></section>
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
@@ -90,17 +119,12 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
 </div>
 <div class="card">
-  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 BDT</b></div>
+  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div>
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
 </div>
 
-<!-- Social Links Section in Profile -->
-<div class="card">
-  <h3>🌐 Follow Us</h3>
-  <div id="userSocialLinks"></div>
-</div>
-
 <button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
+<button class="btn alt" style="margin-top:10px" onclick="showPrivacyPolicy()">📜 Privacy Policy & Rules</button>
 <button class="btn alt danger" style="margin-top:10px" onclick="logoutUser()">Logout</button>
 </section>
 
@@ -111,8 +135,45 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <div class="row space"><span>Available Balance</span><b id="walletPoints" style="color:var(--gold);font-size:22px">0 BDT</b></div>
   </div>
 
-  <div id="wTabWithdraw" class="card">
+  <div class="wTabs" style="margin-bottom:10px">
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads)</button>
+    <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
+  </div>
+
+  <!-- Auto Ad Deposit Tab -->
+  <div id="wTabDeposit" class="card">
+    <h3>📥 Auto Deposit via Ads</h3>
+    <p class="tiny muted" style="margin-bottom:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
+
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">৫ টি অ্যাড রাখুন</div>
+        <div class="pkg-reward">+ ৳৫.০০ BDT</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(5, 5)">শুরু করুন</button>
+    </div>
+
+    <div class="pkg-card highlight">
+      <div>
+        <div class="pkg-title">১০ টি অ্যাড রাখুন ⭐</div>
+        <div class="pkg-reward">+ ৳১০.০০ BDT</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(10, 10)">শুরু করুন</button>
+    </div>
+
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">২০ টি অ্যাড রাখুন</div>
+        <div class="pkg-reward">+ ৳২৫.০০ BDT (বোনাস)</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(20, 25)">শুরু করুন</button>
+    </div>
+  </div>
+
+  <!-- Withdraw Tab -->
+  <div id="wTabWithdraw" class="card hidden">
     <h3>📤 Withdraw (bKash)</h3>
+    <p class="tiny muted">সর্বনিম্ন উইথড্র ১০০ টাকা। তথ্য দিয়ে সেন্ড রিকোয়েস্টে ক্লিক করুন।</p>
     <input id="witNum" class="input" type="number" placeholder="আপনার bKash নম্বর">
     <input id="witAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Min 100 TK)">
     <button class="btn gold" style="margin-top:8px" onclick="submitWithdraw()">SEND WITHDRAW REQUEST</button>
@@ -129,10 +190,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <h2>⚙ Admin Panel</h2><p id="adminStatus" class="tiny muted"></p>
 <div id="adminContent" class="hidden">
 <div class="adminTabs">
-<button class="btn alt mini" onclick="adminTab('tours')">🏆 Matches</button>
+<button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('modes')">🎮 Game Modes</button>
-<button class="btn alt mini" onclick="adminTab('players')">👥 Players</button>
-<button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings & Social</button>
+<button class="btn alt mini" onclick="adminTab('players')">👥 Players & Balance</button>
+<button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
+<button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
 </div>
 <div id="adminBox"></div>
 </div>
@@ -148,23 +210,29 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button id="nAdmin" onclick="openAdmin()">⚙<br>Admin</button>
 </div></nav>
 
-<!-- MODALS -->
-<div id="joinModal" class="modal"><div class="modalBox">
-<h3>🎮 Join Match</h3>
-<div id="joinMatchInfo" class="card" style="background:#08101c;margin:10px 0"></div>
-<p class="tiny gold" style="margin-bottom:10px">*অবশ্যই আপনার গেমের সঠিক নাম দিন।*</p>
-<div id="playerInputs"></div>
-<div class="row" style="margin-top:15px">
-  <button class="btn alt" onclick="closeJoinModal()">Cancel</button>
-  <button class="btn gold" onclick="confirmJoin()">Join Now!</button>
+<!-- Modals -->
+<div id="adModal" class="modal"><div class="modalBox center">
+<h3>📺 Watching Ads</h3>
+<p class="muted tiny">সবগুলো অ্যাড স্কিপ ছাড়া শেষ করুন</p>
+<p style="font-size:18px;margin:15px 0">প্রোগ্রেস: <b id="adCurrent" style="color:var(--gold)">0</b> / <b id="adTotal">0</b></p>
+
+<button id="adWatchBtn" class="btn green" onclick="triggerNextAd()">Watch Next Ad</button>
+
+<div id="adCodeSection" class="hidden">
+  <p class="tiny green" style="margin-top:10px">🎉 অ্যাড সম্পন্ন হয়েছে! সিক্রেট কোডটি নিশ্চিত করুন:</p>
+  <div id="generatedCode" class="code-display">000000</div>
+  <input id="inputAdCode" class="input" placeholder="Enter 6-digit Code" maxlength="6" style="text-align:center">
+  <button class="btn gold" onclick="verifyAndClaimDeposit()">VERIFY & CLAIM CREDIT</button>
 </div>
+
+<button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
 </div></div>
 
-<div id="prizeModal" class="modal"><div class="modalBox center">
-<h3 style="color:var(--gold)">🏆 TOTAL WINPRIZE</h3>
-<p id="prizeModalTitle" class="tiny muted" style="margin-bottom:15px"></p>
-<div id="prizeBreakdownList"></div>
-<button class="btn alt" style="margin-top:15px" onclick="closePrizeModal()">Close</button>
+<div id="joinModal" class="modal"><div class="modalBox">
+<h3>🎮 Join Tournament</h3>
+<input id="joinIGN" class="input" placeholder="IGN - R2•SALA">
+<input id="joinUID" class="input" placeholder="Free Fire UID">
+<div class="row"><button class="btn alt" onclick="closeJoinModal()">Cancel</button><button class="btn green" onclick="confirmJoin()">Confirm Join</button></div>
 </div></div>
 
 <div id="roomModal" class="modal"><div class="modalBox">
@@ -175,10 +243,24 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
 </div></div>
 
+<div id="privacyModal" class="modal"><div class="modalBox">
+<h3>📜 Privacy Policy & Rules</h3>
+<div id="privacyPolicyContent" style="white-space:pre-wrap;font-size:14px;line-height:1.5;margin:12px 0;max-height:60vh;overflow-y:auto" class="muted"></div>
+<button class="btn alt" onclick="closePrivacyModal()">Close</button>
+</div></div>
+
+<div id="whatsappModal" class="modal"><div class="modalBox">
+<h3>💬 Support & Community</h3>
+<p class="tiny muted">সরাসরি কথা বলতে বা সহায়তার জন্য আমাদের টিমের সাথে যোগাযোগ করুন:</p>
+<div id="waList" style="margin:12px 0"></div>
+<div id="waCommunityWrap" style="margin-top:10px"></div>
+<button class="btn alt" style="margin-top:10px" onclick="closeWhatsAppModal()">Close</button>
+</div></div>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
@@ -186,7 +268,8 @@ const firebaseConfig = {
   projectId: "r20-esports",
   storageBucket: "r20-esports.firebasestorage.app",
   messagingSenderId: "1093098377356",
-  appId: "1:1093098377356:web:ca32c25bf149e317bceba9"
+  appId: "1:1093098377356:web:ca32c25bf149e317bceba9",
+  measurementId: "G-28FJ7LF6TL"
 };
 
 const ADMIN_EMAILS = ["salasalauddin139@gmail.com"];
@@ -194,10 +277,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let user = null, currentTour = null, timerInterval = null;
+let user = null, pendingJoinId = null, pendingRoomId = null;
+let bannerInterval = null;
+let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const err = e => { console.error(e); $('authMsg').textContent = e.code || e.message || 'Error occurred'; };
+
+window.togglePassword = () => {
+  const p = $('password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+};
 
 window.go = id => {
  if(!user && id !== 'login'){ go('login'); return; }
@@ -207,113 +298,65 @@ window.go = id => {
  const map = { home: 'nHome', matches: 'nMatches', results: 'nResults', profile: 'nProfile', admin: 'nAdmin' };
  if(map[id]) $(map[id]).classList.add('active');
  if(id === 'wallet') loadWallet();
- if(id === 'profile') loadSocialLinks();
 };
 
 async function loadHome(){
- let modes = [];
+ let modes = ['BR DUO MATCH', 'BR SOLO MATCH', 'ETB BR PRO LEAGUE', 'SOLO SURVIVAL', 'LONE WOLF', 'CLASH SQUAD'];
  try {
    const snap = await getDocs(collection(db, 'gameModes'));
-   modes = snap.docs.map(d => ({id: d.id, ...d.data()}));
+   const fetched = snap.docs.map(d => d.data().name).filter(Boolean);
+   if(fetched.length > 0) modes = fetched;
  } catch(e){}
 
- if(!modes.length) {
-   modes = [{name: 'BR DUO MATCH'}, {name: 'BR SOLO MATCH'}];
- }
-
  $('modes').innerHTML = modes.map(m => `
-   <button class="mode" onclick='openMode(${JSON.stringify(m.name)})'>
-     🎮 ${esc(m.name)}
-   </button>
+   <div class="mode-card" onclick='openMode(${JSON.stringify(m)})'>
+     <div class="mode-icon">🔥</div>
+     <div>
+       <div class="mode-title">${esc(m)}</div>
+       <div class="mode-subtitle">JOIN TOURNAMENT →</div>
+     </div>
+   </div>
  `).join('');
+ 
+ let banners = ["https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg"];
+ try {
+   const s = await getDoc(doc(db, 'settings', 'banners'));
+   if(s.exists() && s.data().list && s.data().list.length > 0){
+     banners = s.data().list;
+   }
+ } catch(e){}
+
+ if(bannerInterval) clearInterval(bannerInterval);
+ let idx = 0;
+ $('bannerWrap').innerHTML = `<div class="card hero"><img id="bannerImg" src="${esc(banners[0])}"></div>`;
+ if(banners.length > 1){
+   bannerInterval = setInterval(() => {
+     idx = (idx + 1) % banners.length;
+     const img = $('bannerImg');
+     if(img) img.src = banners[idx];
+   }, 4000);
+ }
 }
 
-// Render Advanced Match Cards with Automatic Calendar Countdown
 function renderTours(tours) {
-  if(timerInterval) clearInterval(timerInterval);
-  
   if(!tours.length) {
-    $('tlist').innerHTML = '<div class="card center">No Matches Available</div>';
+    $('tlist').innerHTML = '<div class="card">No Tournaments Found</div>';
     return;
   }
-
-  $('tlist').innerHTML = tours.map(t => {
-    const totalSlots = Number(t.maxSlots || 48);
-    const joined = Number(t.currentJoins || 0);
-    const spotsLeft = totalSlots - joined;
-    const fillPercent = Math.min((joined / totalSlots) * 100, 100);
-    const isFull = spotsLeft <= 0;
-    const matchType = t.teamType || 'Solo';
-    const matchImg = t.thumb || 'https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg';
-
-    // Format readable Date & Time from calendar ISO
-    let formattedDate = t.dateTime;
-    if(t.dateTimeIso) {
-      const dt = new Date(t.dateTimeIso);
-      formattedDate = dt.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
-    }
-
-    return `
-      <div class="match-card">
-        <span class="match-id-badge">#${esc(t.matchId || t.id.slice(0,5))}</span>
-        
-        <div class="match-header">
-          <img class="match-thumb" src="${esc(matchImg)}">
-          <div>
-            <div style="font-weight:bold;font-size:14px;padding-right:50px;line-height:1.3">${esc(t.title)}</div>
-            <div class="tiny muted" style="margin-top:4px">📅 ${esc(formattedDate || 'Upcoming')}</div>
-          </div>
-        </div>
-
-        <div class="match-stats">
-          <div><div class="stat-lbl">WIN PRIZE</div><div class="stat-val" style="color:var(--cyan)">${Number(t.prizePool || 0)} TK</div></div>
-          <div><div class="stat-lbl">PER KILL</div><div class="stat-val">${Number(t.perKill || 0)} TK</div></div>
-          <div><div class="stat-lbl">ENTRY FEE</div><div class="stat-val" style="color:var(--gold)">${Number(t.entryFee || 0)} TK</div></div>
-        </div>
-
-        <div class="match-meta">
-          <span>Type: <b>${esc(matchType)}</b></span>
-          <span>Map: <b>${esc(t.map || 'Bermuda')}</b></span>
-        </div>
-
-        <div class="progress-bg"><div class="progress-fill" style="width:${fillPercent}%"></div></div>
-        
-        <div class="row space" style="margin-bottom:8px">
-          <span class="tiny muted">Only ${spotsLeft} spots left</span>
-          <span class="tiny bold">${joined}/${totalSlots}</span>
-        </div>
-
-        <div class="timer-bar" id="timer-${t.id}">⏰ STARTS IN: Calculating...</div>
-
-        <div class="row space">
-          <button class="btn alt mini" onclick='openRoomDetails("${t.id}")'>🔑 Room Details</button>
-          <button class="btn alt mini" onclick='showPrizePool(${JSON.stringify(t)})'>🏆 Prize Pool</button>
-          ${isFull 
-            ? `<button class="btn-full">Match Full</button>` 
-            : `<button class="btn-join" onclick='initJoinModal(${JSON.stringify(t)})'>Join</button>`
-          }
-        </div>
+  $('tlist').innerHTML = tours.map(t => `
+    <div class="card tour inside">
+      <h3>${esc(t.title || 'Tournament')}</h3>
+      <p class="tiny muted">${esc(t.dateTime || '')} | Map: ${esc(t.map || 'N/A')}</p>
+      <div class="row space" style="margin-top:10px">
+        <span>Prize: <b>${Number(t.prizePool || 0)} TK</b></span>
+        <span>Fee: <b>${Number(t.entryFee || 0)} TK</b></span>
       </div>
-    `;
-  }).join('');
-
-  // Start Real-Time Countdown Timers
-  timerInterval = setInterval(() => {
-    tours.forEach(t => {
-      const el = $(`timer-${t.id}`);
-      if(!el) return;
-      if(!t.dateTimeIso) { el.textContent = `⏰ STARTS SOON`; return; }
-      
-      const diff = new Date(t.dateTimeIso).getTime() - new Date().getTime();
-      if(diff <= 0) {
-        el.textContent = `🔴 MATCH STARTED`;
-      } else {
-        const m = Math.floor(diff / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        el.textContent = `⏰ STARTS IN ${m}m:${s < 10 ? '0':''}${s}s`;
-      }
-    });
-  }, 1000);
+      <div class="actions">
+        <button class="btn" onclick="joinTour('${t.id}')">Join</button>
+        <button class="btn alt" onclick="openDetails('${t.id}')">Details</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 window.openMode = async mode => {
@@ -325,133 +368,277 @@ window.openMode = async mode => {
       .map(d => ({id: d.id, ...d.data()}))
       .filter(t => String(t.mode || '').trim().toLowerCase() === String(mode || '').trim().toLowerCase());
     renderTours(tours);
-  } catch(e) { $('tlist').innerHTML = '<div class="card center">❌ Load Failed</div>'; }
+  } catch(e) {
+    $('tlist').innerHTML = '<div class="card">❌ Tournament Load Failed</div>';
+  }
 };
 
-// Social Links Fetching in Profile
-async function loadSocialLinks() {
-  try {
-    const docSnap = await getDoc(doc(db, 'settings', 'socialLinks'));
-    if(docSnap.exists() && docSnap.data().links) {
-      const links = docSnap.data().links;
-      $('userSocialLinks').innerHTML = links.map(l => `
-        <a class="social-link-btn" href="${esc(l.url)}" target="_blank">
-          ${esc(l.icon || '🔗')} ${esc(l.title)}
-        </a>
-      `).join('') || '<p class="tiny muted">No social links configured</p>';
-    } else {
-      $('userSocialLinks').innerHTML = '<p class="tiny muted">No social links configured</p>';
-    }
-  } catch(e) { console.error(e); }
-}
-
-window.showPrizePool = t => {
-  $('prizeModalTitle').textContent = t.title;
-  $('prizeBreakdownList').innerHTML = `
-    <div class="prize-row"><span>🥇 Winner</span><b>${Number(t.prizePool || 0)} Taka</b></div>
-    <div class="prize-row"><span>🔥 Per Kill</span><b>${Number(t.perKill || 0)} Taka</b></div>
-  `;
-  $('prizeModal').classList.add('on');
+window.openDetails = async id => {
+ go('details'); $('detailBox').innerHTML = 'Loading...';
+ try {
+  const s = await getDoc(doc(db, 'tournaments', id)); const t = { id: s.id, ...s.data() };
+  let roomHtml = '';
+  if(user){
+    const j = await getDoc(doc(db, 'users', user.uid, 'joinedMatches', id));
+    if(!j.exists()) roomHtml = '<p class="muted">❌ Join করেননি</p>';
+    else if(!t.roomPublished) roomHtml = '<p class="muted">🔒 ROOM LOCKED - Publish হয়নি</p>';
+    else roomHtml = `<p>ID: <b>${esc(t.roomId || '')}</b></p><p>Pass: <b>${esc(t.roomPassword || '')}</b></p>`;
+  }
+  $('detailBox').innerHTML = `<div class="card"><h2>${esc(t.title || '')}</h2><p class="muted">${esc(t.dateTime || '')}</p></div><div class="card"><h3>🔑 Room</h3>${roomHtml}</div>`;
+ } catch(e){ $('detailBox').innerHTML = 'Failed'; }
 };
-window.closePrizeModal = () => $('prizeModal').classList.remove('on');
 
-window.initJoinModal = t => {
-  currentTour = t;
-  const teamType = t.teamType || 'Solo';
-  $('joinMatchInfo').innerHTML = `<div style="font-weight:bold">${esc(t.title)}</div>`;
-  let inputsHtml = `<input id="p1Name" class="input" placeholder="Player 1 In-Game Name">`;
-  if(teamType === 'Duo') inputsHtml += `<input id="p2Name" class="input" placeholder="Player 2 In-Game Name" style="margin-top:8px">`;
-  $('playerInputs').innerHTML = inputsHtml;
-  $('joinModal').classList.add('on');
-};
-window.closeJoinModal = () => { $('joinModal').classList.remove('on'); currentTour = null; };
+window.joinTour = id => { pendingJoinId = id; $('joinModal').classList.add('on'); };
+window.closeJoinModal = () => { $('joinModal').classList.remove('on'); pendingJoinId = null; };
 
 window.confirmJoin = async () => {
-  if(!currentTour) return;
-  const p1 = $('p1Name') ? $('p1Name').value.trim() : '';
-  const p2 = $('p2Name') ? $('p2Name').value.trim() : '';
-  const teamType = currentTour.teamType || 'Solo';
+ const ign = $('joinIGN').value.trim(), uid = $('joinUID').value.trim();
+ if(!ign || !uid){ alert('IGN & UID দিন'); return; }
+ try {
+  const ref = doc(db, 'users', user.uid);
+  const joinRef = doc(db, 'users', user.uid, 'joinedMatches', pendingJoinId);
+  const tref = doc(db, 'tournaments', pendingJoinId);
+  const playerRef = doc(db, 'tournaments', pendingJoinId, 'players', user.uid);
 
-  if(!p1 || (teamType === 'Duo' && !p2)) return alert('সকল প্লেয়ারের নাম পূরণ করুন');
+  await runTransaction(db, async tx => {
+   const us = await tx.get(ref), ts = await tx.get(tref), js = await tx.get(joinRef);
+   if(js.exists()) throw Error('Already Joined');
+   const fee = Number(ts.data().entryFee || 0), bal = Number(us.data().credits || 0);
+   if(bal < fee) throw Error('Balance কম');
+   if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Full');
+   
+   tx.set(ref, { credits: bal - fee }, { merge: true });
+   tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign, ffUid: uid, joinedAt: serverTimestamp() });
+   tx.set(playerRef, { uid: user.uid, email: user.email, ign, ffUid: uid, joinedAt: serverTimestamp() });
+   tx.update(tref, { currentJoins: increment(1) });
+  });
+  closeJoinModal(); alert('Joined Successfully'); loadProfile();
+ } catch(e){ err(e); }
+};
+
+async function loadProfile(){
+ if(!user) return;
+ try {
+  const s = await getDoc(doc(db, 'users', user.uid));
+  const d = s.data() || {};
+  $('pname').textContent = d.name || user.email.split('@')[0];
+  $('pemail').textContent = user.email;
+  $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
+  $('points').textContent = Number(d.credits || 0) + ' Credits';
+  
+  if(ADMIN_EMAILS.includes(user.email)){
+    $('roleBadge').innerHTML = '<span class="tag" style="background:var(--gold);color:#000">👑 ADMIN</span>';
+  } else {
+    $('roleBadge').innerHTML = '<span class="tag" style="background:var(--line);color:#fff">Player</span>';
+  }
+ } catch(e){}
+}
+
+async function loadMyMatches(){
+ if(!user) return;
+ try {
+  const j = await getDocs(collection(db, 'users', user.uid, 'joinedMatches'));
+  let html = '';
+  for(const docSnap of j.docs){
+   const x = docSnap.data(); let t = {}; 
+   try { const ts = await getDoc(doc(db, 'tournaments', x.tournamentId)); if(ts.exists()) t = ts.data(); } catch(e){}
+   let roomBox = !t.roomPublished 
+     ? `<div style="padding:8px;background:#1f2937;border-radius:8px;margin-top:8px;text-align:center">🔒 ROOM LOCKED</div>`
+     : `<div style="padding:8px;background:#052e16;border:1px solid #22c55e;border-radius:8px;margin-top:8px">ID: <b>${esc(t.roomId || '')}</b> | Pass: <b>${esc(t.roomPassword || '')}</b></div>`;
+   html += `<div class="card"><b>${esc(x.title || 'Tournament')}</b><div class="tiny">IGN: ${esc(x.ign || '')} | UID: ${esc(x.ffUid || '')}</div>${roomBox}</div>`;
+  }
+  $('myMatchesList').innerHTML = html || '<div class="card">No matches</div>';
+ } catch(e){ $('myMatchesList').innerHTML = 'Failed'; }
+}
+
+async function loadResults(){
+  try {
+    const s = await getDoc(doc(db, 'settings', 'results'));
+    const text = (s.exists() && s.data().resultsText) ? s.data().resultsText : 'এখনো কোনো রেজাল্ট প্রকাশিত হয়নি।';
+    $('resultsList').innerHTML = `<div class="card"><p style="white-space:pre-wrap;margin:0">${esc(text)}</p></div>`;
+  } catch(e){ $('resultsList').innerHTML = '<div class="card">No results</div>'; }
+}
+
+window.switchWTab = tab => {
+  $('wTabDeposit').classList.add('hidden');
+  $('wTabWithdraw').classList.add('hidden');
+  if(tab==='deposit') $('wTabDeposit').classList.remove('hidden');
+  if(tab==='withdraw') $('wTabWithdraw').classList.remove('hidden');
+};
+
+async function loadWallet(){
+  try {
+    const s = await getDoc(doc(db, 'users', user.uid));
+    $('walletPoints').textContent = Number(s.data().credits || 0) + ' BDT';
+
+    const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
+    $('requestList').innerHTML = q.docs.map(d => {
+      const data = d.data();
+      let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
+      return `<div class="item" style="margin-top:8px">
+        <div class="row space">
+          <b>📤 Withdraw (${data.amount} BDT)</b>
+          <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
+        </div>
+      </div>`;
+    }).join('') || '<p class="tiny muted">No history</p>';
+  } catch(e){ console.error(e); }
+}
+
+/* Auto Ad Deposit Logic */
+window.startAdPackage = (ads, reward) => {
+  currentPkgTotal = ads;
+  currentPkgReward = reward;
+  currentAdCount = 0;
+  activeGeneratedCode = "";
+  
+  $('adTotal').textContent = ads;
+  $('adCurrent').textContent = 0;
+  $('adWatchBtn').classList.remove('hidden');
+  $('adCodeSection').classList.add('hidden');
+  $('adModal').classList.add('on');
+};
+
+window.triggerNextAd = () => {
+  alert('▶️ Ad Playing... (সম্পূর্ণ অ্যাড দেখুন)');
+  currentAdCount++;
+  $('adCurrent').textContent = currentAdCount;
+  
+  if(currentAdCount >= currentPkgTotal) {
+    activeGeneratedCode = Math.floor(100000 + Math.random() * 900000).toString();
+    $('generatedCode').textContent = activeGeneratedCode;
+    $('adWatchBtn').classList.add('hidden');
+    $('adCodeSection').classList.remove('hidden');
+  }
+};
+
+window.verifyAndClaimDeposit = async () => {
+  const input = $('inputAdCode').value.trim();
+  if(!input || input !== activeGeneratedCode) {
+    return alert('❌ সিক্রেট কোড ভুল হয়েছে! সঠিক কোডটি বসান।');
+  }
 
   try {
     const uRef = doc(db, 'users', user.uid);
-    const joinRef = doc(db, 'users', user.uid, 'joinedMatches', currentTour.id);
-    const tRef = doc(db, 'tournaments', currentTour.id);
-
-    await runTransaction(db, async tx => {
-      const uSnap = await tx.get(uRef);
-      const tSnap = await tx.get(tRef);
-      const jSnap = await tx.get(joinRef);
-
-      if(jSnap.exists()) throw new Error('আপনি ইতিমধ্যেই জয়েন করেছেন!');
-      const fee = Number(tSnap.data().entryFee || 0);
-      const bal = Number(uSnap.data().credits || 0);
-
-      if(bal < fee) throw new Error('পর্যাপ্ত ব্যালেন্স নেই!');
-      if(Number(tSnap.data().currentJoins || 0) >= Number(tSnap.data().maxSlots || 48)) throw new Error('ম্যাচ ফুল!');
-
-      tx.update(uRef, { credits: bal - fee });
-      tx.set(joinRef, { tournamentId: currentTour.id, title: tSnap.data().title, player1: p1, player2: p2 || '', joinedAt: serverTimestamp() });
-      tx.update(tRef, { currentJoins: increment(1) });
-    });
-
-    alert('🎉 জয়েন সফল হয়েছে!');
-    closeJoinModal();
-  } catch(e) { alert(e.message); }
+    await updateDoc(uRef, { credits: increment(currentPkgReward) });
+    alert(`🎉 সফল হয়েছে! ৳${currentPkgReward} BDT আপনার ওয়ালেটে জমা করা হয়েছে।`);
+    closeAdModal();
+    loadWallet();
+    loadProfile();
+  } catch(e) {
+    alert('Error updating balance: ' + e.message);
+  }
 };
 
+window.closeAdModal = () => {
+  $('adModal').classList.remove('on');
+  $('inputAdCode').value = '';
+};
+
+window.submitWithdraw = async () => {
+  const receiver = $('witNum').value.trim();
+  const amount = Number($('witAmount').value);
+  if(!receiver || !amount) return alert('সমস্ত তথ্য দিন');
+  if(amount < 100) return alert('⚠️ সর্বনিম্ন উইথড্র ১০০ টাকা');
+
+  try {
+    const uRef = doc(db, 'users', user.uid);
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const currentBal = Number(uSnap.data().credits || 0);
+      if(currentBal < amount) throw new Error('⚠️ পর্যাপ্ত ব্যালেন্স নেই!');
+      
+      tx.update(uRef, { credits: currentBal - amount });
+      const reqRef = doc(collection(db, 'walletRequests', user.uid, 'items'));
+      tx.set(reqRef, { type: 'withdraw', receiver, amount, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid });
+    });
+
+    alert('✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!');
+    $('witNum').value = ''; $('witAmount').value = '';
+    loadWallet();
+  } catch(e){ alert(e.message || 'Error occurred'); }
+};
+
+window.loginUser = async () => {
+  try {
+    const email = $('email').value.trim();
+    const password = $('password').value;
+    if(!email || !password) return alert('Email এবং Password দিন');
+    $('authMsg').textContent = "Logging in...";
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch(e) { err(e); }
+};
+
+window.registerUser = async () => {
+  try {
+    const email = $('email').value.trim();
+    const pass = $('password').value;
+    const name = $('username').value.trim();
+    if(!email || !pass) return alert('Email & Password দিন');
+    const c = await createUserWithEmailAndPassword(auth, email, pass);
+    await setDoc(doc(db, 'users', c.user.uid), { email, name: name || email.split('@')[0], credits: 0, createdAt: serverTimestamp() }, { merge: true });
+  } catch(e) { err(e); }
+};
+
+window.googleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const res = await signInWithPopup(auth, provider);
+    await setDoc(doc(db, 'users', res.user.uid), { email: res.user.email, name: res.user.displayName || res.user.email.split('@')[0], credits: 0, updatedAt: serverTimestamp() }, { merge: true });
+  } catch(e) { err(e); }
+};
+
+window.logoutUser = async () => { await signOut(auth); };
+
+async function checkAdmin(){
+  if(!user) return false; 
+  return ADMIN_EMAILS.includes(user.email);
+}
+
 window.openAdmin = async () => {
-  if(!user || !ADMIN_EMAILS.includes(user.email)){ alert('⚠️ Access Denied'); return; }
+  const ok = await checkAdmin();
+  if(!ok){ alert('⚠️ Access Denied'); return; }
   go('admin');
   $('adminStatus').textContent = 'Admin: ' + user.email;
   $('adminContent').classList.remove('hidden');
   adminTab('tours');
 };
 
-// Admin Section Operations
 window.adminTab = async tab => {
  const box = $('adminBox');
- 
  if(tab === 'tours'){
   const ts = (await getDocs(collection(db, 'tournaments'))).docs.map(d => ({id: d.id, ...d.data()}));
   box.innerHTML = `
     <div class="card">
-      <h3>🏆 Create Match</h3>
-      <input id="tMode" class="input" placeholder="Game Mode (e.g. BR SOLO MATCH)">
-      <input id="tMatchId" class="input" placeholder="Match ID (e.g. 80742)">
+      <h3>🏆 Create Tournament</h3>
+      <input id="tMode" class="input" placeholder="Game Mode">
       <input id="tTitle" class="input" placeholder="Title">
-      <label class="tiny muted">📅 Select Match Date & Time (Calendar):</label>
-      <input id="tDateIso" class="input" type="datetime-local">
-      <select id="tTeamType" class="input"><option value="Solo">Solo</option><option value="Duo">Duo</option></select>
-      <input id="tMap" class="input" placeholder="Map (Bermuda)">
-      <input id="tPrize" class="input" type="number" placeholder="Total Win Prize (TK)">
-      <input id="tPerKill" class="input" type="number" placeholder="Per Kill Prize (TK)">
-      <input id="tFee" class="input" type="number" placeholder="Entry Fee (TK)">
-      <input id="tThumb" class="input" placeholder="Thumbnail Image URL">
-      <button class="btn gold" style="margin-top:10px" onclick="addTournament()">Publish Match</button>
+      <input id="tDate" class="input" placeholder="Date & Time">
+      <input id="tMap" class="input" placeholder="Map">
+      <input id="tPrize" class="input" type="number" placeholder="Prize Pool">
+      <input id="tFee" class="input" type="number" placeholder="Entry Fee">
+      <button class="btn" onclick="addTournament()">Publish</button>
     </div>
     <div class="card list">
-      <h3>📋 Manage Matches</h3>
+      <h3>📋 Manage Tournaments</h3>
       ${ts.map(t => `
         <div class="item" style="margin-top:8px">
-          <b>${esc(t.title)}</b> (#${esc(t.matchId || t.id.slice(0,4))})
+          <b>${esc(t.title)}</b> (${esc(t.mode)})
           <div class="row" style="margin-top:6px">
-            <button class="btn gold mini" style="flex:1" onclick="manageRoom('${t.id}')">🔑 Room Setup</button>
+            <button class="btn gold mini" style="flex:1" onclick="manageRoom('${t.id}')">🔑 Room</button>
             <button class="btn danger mini" style="flex:1" onclick="deleteTournament('${t.id}')">🗑️ Delete</button>
           </div>
         </div>
       `).join('')}
     </div>
   `;
- } 
- else if(tab === 'modes') {
+ } else if(tab === 'modes') {
    const snap = await getDocs(collection(db, 'gameModes'));
    const modes = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
      <div class="card">
        <h3>🎮 Add Game Mode</h3>
-       <input id="newModeName" class="input" placeholder="Game Mode Name (e.g. LONE WOLF)">
+       <input id="newModeName" class="input" placeholder="Game Mode Name">
        <button class="btn gold" style="margin-top:8px" onclick="addGameMode()">+ Add Mode</button>
      </div>
      <div class="card list">
@@ -467,37 +654,90 @@ window.adminTab = async tab => {
        `).join('')}
      </div>
    `;
- }
- else if(tab === 'settings') {
-   let links = [];
+ } else if(tab === 'players') {
+   const snap = await getDocs(collection(db, 'users'));
+   const users = snap.docs.map(d => ({id: d.id, ...d.data()}));
+   box.innerHTML = `
+     <div class="card">
+       <h3>👥 Manage Players & Balance</h3>
+       <div class="list">
+         ${users.map(u => `
+           <div class="item" style="margin-top:8px">
+             <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
+             <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0)} BDT</b></span>
+             <div class="row" style="margin-top:6px">
+               <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
+               <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
+             </div>
+           </div>
+         `).join('')}
+       </div>
+     </div>
+   `;
+ } else if(tab === 'wit_requests') {
    try {
-     const docSnap = await getDoc(doc(db, 'settings', 'socialLinks'));
-     if(docSnap.exists()) links = docSnap.data().links || [];
-   } catch(e){}
+     const snap = await getDocs(collectionGroup(db, 'items'));
+     const reqs = snap.docs
+       .map(d => ({id: d.id, ref: d.ref, ...d.data()}))
+       .filter(r => r.type === 'withdraw');
+     
+     box.innerHTML = `
+       <div class="card">
+         <h3>📤 Withdraw Requests</h3>
+         <div class="list">
+           ${reqs.map(r => `
+             <div class="item" style="margin-top:8px">
+               <b>Email:</b> ${esc(r.email)}<br>
+               <b>Amount:</b> <span style="color:var(--gold)">${r.amount} BDT</span><br>
+               <b>bKash Number:</b> ${esc(r.receiver)}<br>
+               <b>Status:</b> <span class="badge">${esc(r.status)}</span>
+               ${r.status === 'pending' ? `
+                 <div class="row" style="margin-top:8px">
+                   <button class="btn mini green" onclick="handleWithdrawReq('${r.uid}', '${r.id}', 'approve', ${r.amount})">✅ Approve</button>
+                   <button class="btn mini danger" onclick="handleWithdrawReq('${r.uid}', '${r.id}', 'reject', ${r.amount})">❌ Reject & Refund</button>
+                 </div>
+               ` : ''}
+             </div>
+           `).join('') || '<p class="tiny muted">No withdraw requests</p>'}
+         </div>
+       </div>
+     `;
+   } catch(e) { box.innerHTML = "Error loading requests"; }
+
+ } else if(tab === 'settings') {
+   let set = {}, wa = {}, resData = {}, bData = {};
+   try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
+   try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
+   try { resData = (await getDoc(doc(db, 'settings', 'results'))).data() || {}; } catch(e){}
+   try { bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
 
    box.innerHTML = `
      <div class="card">
-       <h3>🌐 Edit Social Links (Follow Us)</h3>
-       <input id="sTitle" class="input" placeholder="Title (e.g. YouTube Channel)">
-       <input id="sIcon" class="input" placeholder="Icon Emoji (e.g. ▶️ or 📘)">
-       <input id="sUrl" class="input" placeholder="URL Link (https://...)">
-       <button class="btn gold" style="margin-top:8px" onclick="addSocialLink()">+ Add Link</button>
+       <h3>🖼️ Manage Banner URLs</h3>
+       <textarea id="admBanners" class="input" rows="3" placeholder="Image URLs...">${(bData.list || []).join('\n')}</textarea>
+       <button class="btn gold" onclick="saveBanners()">💾 Save Banners</button>
      </div>
-     <div class="card list">
-       <h3>📋 Active Social Links</h3>
-       ${links.map((l, index) => `
-         <div class="item" style="margin-top:8px">
-           <b>${esc(l.icon || '🔗')} ${esc(l.title)}</b>
-           <div class="tiny muted">${esc(l.url)}</div>
-           <button class="btn danger mini" style="margin-top:6px" onclick="deleteSocialLink(${index})">🗑️ Delete</button>
-         </div>
-       `).join('')}
+     <div class="card" style="margin-top:10px">
+       <h3>📜 Edit Privacy Policy & Rules</h3>
+       <textarea id="admPrivacyText" class="input" rows="4" placeholder="প্রাইভেসি পলিসি লিখুন...">${set.privacyText || ''}</textarea>
+       <button class="btn gold" style="margin-top:10px" onclick="savePrivacyText()">💾 Update Policy</button>
+     </div>
+     <div class="card" style="margin-top:10px">
+       <h3>🏆 Edit Tournament Results</h3>
+       <textarea id="admResultsText" class="input" rows="4" placeholder="টুর্নামেন্ট রেজাল্ট বিস্তারিত লিখুন...">${resData.resultsText || ''}</textarea>
+       <button class="btn gold" style="margin-top:10px" onclick="saveResultsText()">💾 Update Results</button>
+     </div>
+     <div class="card" style="margin-top:10px">
+       <h3>💬 WhatsApp Support & Community</h3>
+       <input id="wa1" class="input" placeholder="WhatsApp Number 1" value="${wa.num1 || ''}">
+       <input id="wa2" class="input" placeholder="WhatsApp Number 2" value="${wa.num2 || ''}">
+       <input id="waComm" class="input" placeholder="WhatsApp Community Link" value="${wa.community || ''}">
+       <button class="btn gold" style="margin-top:10px" onclick="saveWhatsAppSettings()">💾 Save Info</button>
      </div>
    `;
  }
 };
 
-// Game Mode Management
 window.addGameMode = async () => {
   const name = $('newModeName').value.trim();
   if(!name) return alert('গেম মোডের নাম দিন');
@@ -522,69 +762,143 @@ window.deleteGameMode = async id => {
   }
 };
 
-// Social Link Management
-window.addSocialLink = async () => {
-  const title = $('sTitle').value.trim();
-  const icon = $('sIcon').value.trim() || '🔗';
-  const url = $('sUrl').value.trim();
-  if(!title || !url) return alert('Title এবং URL লিংক নিশ্চিত করুন');
+window.handleWithdrawReq = async (targetUid, reqId, action, amount) => {
+  if(!confirm(`আপনি কি এই রিকোয়েস্টটি ${action} করতে চান?`)) return;
+  try {
+    const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
+    const uRef = doc(db, 'users', targetUid);
 
-  let links = [];
-  const sRef = doc(db, 'settings', 'socialLinks');
-  const docSnap = await getDoc(sRef);
-  if(docSnap.exists()) links = docSnap.data().links || [];
-
-  links.push({ title, icon, url });
-  await setDoc(sRef, { links }, { merge: true });
-  alert('✅ Social Link Added');
-  adminTab('settings');
+    if(action === 'approve') {
+      await updateDoc(reqRef, { status: 'approved' });
+    } else {
+      await updateDoc(uRef, { credits: increment(amount) });
+      await updateDoc(reqRef, { status: 'rejected' });
+    }
+    alert('✅ সফলভাবে প্রসেস করা হয়েছে!');
+    adminTab('wit_requests');
+  } catch(e) { alert('Error: ' + e.message); }
 };
 
-window.deleteSocialLink = async index => {
-  const sRef = doc(db, 'settings', 'socialLinks');
-  const docSnap = await getDoc(sRef);
-  if(docSnap.exists()) {
-    let links = docSnap.data().links || [];
-    links.splice(index, 1);
-    await setDoc(sRef, { links }, { merge: true });
-    adminTab('settings');
-  }
+window.deleteTournament = async id => {
+  if(!confirm('আপনি কি নিশ্চিত যে এই টুর্নামেন্টটি ডিলিট করতে চান?')) return;
+  try {
+    await deleteDoc(doc(db, 'tournaments', id));
+    alert('✅ টুর্নামেন্ট ডিলিট করা হয়েছে!');
+    adminTab('tours');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+window.admUpdateBalance = async (targetUid, action) => {
+  const amtStr = prompt(action === 'add' ? 'কত টাকা যোগ করতে চান?' : 'কত টাকা বিয়োগ করতে চান?');
+  const amt = Number(amtStr);
+  if(!amt || amt <= 0) return alert('সঠিক পরিমাণ দিন');
+  
+  try {
+    const uRef = doc(db, 'users', targetUid);
+    const change = action === 'add' ? amt : -amt;
+    await updateDoc(uRef, { credits: increment(change) });
+    alert('✅ ব্যালেন্স আপডেট করা হয়েছে!');
+    adminTab('players');
+  } catch(e){ alert('Error: ' + e.message); }
+};
+
+window.saveBanners = async () => {
+  const text = $('admBanners').value.trim();
+  const list = text.split('\n').map(x => x.trim()).filter(Boolean);
+  await setDoc(doc(db, 'settings', 'banners'), { list }, { merge: true });
+  alert('✅ Banners Saved!');
+};
+
+window.savePrivacyText = async () => {
+  const text = $('admPrivacyText').value.trim();
+  await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
+  alert('✅ Privacy Policy Updated!');
+};
+
+window.saveResultsText = async () => {
+  const text = $('admResultsText').value.trim();
+  await setDoc(doc(db, 'settings', 'results'), { resultsText: text }, { merge: true });
+  alert('✅ Results Updated!');
+};
+
+window.saveWhatsAppSettings = async () => {
+  const data = {
+    num1: $('wa1').value.trim(), num2: $('wa2').value.trim(),
+    community: $('waComm').value.trim()
+  };
+  await setDoc(doc(db, 'settings', 'whatsapp'), data, { merge: true });
+  alert('✅ WhatsApp Settings Saved!');
+};
+
+window.showPrivacyPolicy = async () => {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'privacy'));
+    $('privacyPolicyContent').textContent = (s.exists() && s.data().privacyText) ? s.data().privacyText : 'কোনো প্রাইভেসি পলিসি যুক্ত করা হয়নি।';
+    $('privacyModal').classList.add('on');
+  } catch(e){ alert('Failed to load privacy policy'); }
+};
+
+window.closePrivacyModal = () => $('privacyModal').classList.remove('on');
+
+window.openWhatsAppModal = async () => {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'whatsapp'));
+    const data = s.exists() ? s.data() : {};
+    let html = '';
+    const nums = [data.num1, data.num2].filter(Boolean);
+    
+    if(nums.length === 0){
+      html = '<p class="tiny muted">কোনো নম্বর পাওয়া যায়নি</p>';
+    } else {
+      html = nums.map((n, i) => `
+        <div class="wa-item">
+          <span>📞 Support ${i+1}: <b>${esc(n)}</b></span>
+          <a href="https://wa.me/${esc(n)}" target="_blank" class="btn green mini" style="width:auto;text-decoration:none">Chat</a>
+        </div>
+      `).join('');
+    }
+    
+    $('waList').innerHTML = html;
+    if(data.community){
+      $('waCommunityWrap').innerHTML = `<a href="${esc(data.community)}" target="_blank" class="btn gold" style="text-align:center;display:block;text-decoration:none">🌐 Join Community</a>`;
+    } else {
+      $('waCommunityWrap').innerHTML = '';
+    }
+    $('whatsappModal').classList.add('on');
+  } catch(e){ alert('Failed to load support numbers'); }
+};
+
+window.closeWhatsAppModal = () => $('whatsappModal').classList.remove('on');
+
+window.manageRoom = async id => {
+  const s = await getDoc(doc(db, 'tournaments', id)); pendingRoomId = id;
+  $('rId').value = s.data().roomId || ''; $('rPass').value = s.data().roomPassword || '';
+  $('rPublished').checked = !!s.data().roomPublished; $('roomModal').classList.add('on');
+};
+
+window.closeRoomModal = () => { $('roomModal').classList.remove('on'); pendingRoomId = null; };
+
+window.saveRoom = async () => {
+  await updateDoc(doc(db, 'tournaments', pendingRoomId), {
+    roomId: $('rId').value, roomPassword: $('rPass').value, roomPublished: $('rPublished').checked
+  });
+  closeRoomModal(); alert('Saved'); adminTab('tours');
 };
 
 window.addTournament = async () => {
   const data = {
-    mode: $('tMode').value.trim(),
-    matchId: $('tMatchId').value.trim(),
-    title: $('tTitle').value.trim(),
-    dateTimeIso: $('tDateIso').value,
-    teamType: $('tTeamType').value,
-    map: $('tMap').value.trim() || 'Bermuda',
-    prizePool: Number($('tPrize').value || 0),
-    perKill: Number($('tPerKill').value || 0),
-    entryFee: Number($('tFee').value || 0),
-    thumb: $('tThumb').value.trim(),
-    currentJoins: 0,
-    maxSlots: 48,
-    roomPublished: false, roomId: '', roomPassword: '',
-    createdAt: serverTimestamp()
+    title: $('tTitle').value, mode: $('tMode').value, dateTime: $('tDate').value,
+    map: $('tMap').value, prizePool: Number($('tPrize').value || 0), entryFee: Number($('tFee').value || 0),
+    currentJoins: 0, maxSlots: 48, roomPublished: false, roomId: '', roomPassword: '', createdAt: serverTimestamp()
   };
-  await addDoc(collection(db, 'tournaments'), data); 
-  alert('✅ Match Published'); 
-  adminTab('tours');
-};
-
-window.deleteTournament = async id => {
-  if(confirm('Are you sure?')) {
-    await deleteDoc(doc(db, 'tournaments', id));
-    adminTab('tours');
-  }
+  await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
 };
 
 onAuthStateChanged(auth, async u => {
  user = u;
  if(u){
   await setDoc(doc(db, 'users', u.uid), { email: u.email, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
-  go('home'); loadHome();
+  loadProfile(); go('home'); loadHome();
  } else {
   go('login');
  }
