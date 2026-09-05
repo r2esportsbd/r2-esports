@@ -3,7 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Google Search Console Verification -->
+<meta name="google-site-verification" content="PeopgbDOjY4LKbeEKYXLk2VS4Zb8uHdfiC1apocTATY" />
+
+<!-- Primary SEO Meta Tags -->
 <title>R2.0 ESPORTS</title>
+<meta name="title" content="R2.0 ESPORTS - Ultimate Gaming & eSports Tournament Platform">
+<meta name="description" content="Play eSports tournaments on R2.0 ESPORTS. Join daily matches, prove your skill, and track your wallet safely.">
+<meta name="keywords" content="R2.0 ESPORTS, R2 Esports, Free Fire Tournament, eSports Bangladesh, Online Gaming Platform">
+<meta name="robots" content="index, follow">
+<meta name="author" content="R2.0 ESPORTS">
+
+<!-- Open Graph / Social Media Sharing -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://r2esportsbd.github.io/r2-esports/">
+<meta property="og:title" content="R2.0 ESPORTS - Ultimate Gaming Platform">
+<meta property="og:description" content="Join daily FIFA & eSports tournaments on R2.0 ESPORTS and prove your gaming skills.">
+<meta property="og:image" content="https://d3tx3wg2jy0sui.cloudfront.net/ccbadef162f5463e94eb43972b406189.jpg">
+
 <style>
 :root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
 *{box-sizing:border-box}body{margin:0;background:#060b14;color:var(--text);font-family:system-ui,Arial,sans-serif}
@@ -391,12 +409,10 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const err = e => { console.error(e); $('authMsg').textContent = e.code || e.message || 'Error occurred'; };
 
-// Enhanced Date Parser to ensure Bangladesh Standard Time (+06:00) handling across browsers
 function getBDTargetTime(dateTimeStr) {
   if (!dateTimeStr) return NaN;
   let str = String(dateTimeStr).trim();
   
-  // Normalize string for Date constructor
   if (!str.includes('Z') && !str.includes('+') && !str.includes('-')) {
     str += '+06:00';
   } else if (str.endsWith('Z')) {
@@ -406,12 +422,10 @@ function getBDTargetTime(dateTimeStr) {
   const parsed = new Date(str).getTime();
   if (!isNaN(parsed)) return parsed;
 
-  // Fallback for custom formatted strings
   const cleaned = str.replace('T', ' ');
   return new Date(cleaned).getTime();
 }
 
-// Display Bangladesh Readable Time
 function formatBDDisplayTime(dateTimeStr) {
   const timeMs = getBDTargetTime(dateTimeStr);
   if (isNaN(timeMs)) return dateTimeStr || 'Time Not Set';
@@ -472,7 +486,6 @@ async function loadHome(){
  }
 }
 
-/* --- UPDATED MODERN MATCH CARD RENDER WITH TIMER & PRIZE MODAL --- */
 function renderTours(tours) {
   activeTournaments = tours;
   if(!tours.length) {
@@ -550,7 +563,6 @@ function renderTours(tours) {
   startLiveCountdowns();
 }
 
-/* Live Countdown System (Bangladesh Timezone Synchronized) */
 function startLiveCountdowns() {
   if(countdownInterval) clearInterval(countdownInterval);
   
@@ -588,7 +600,6 @@ function startLiveCountdowns() {
   countdownInterval = setInterval(updateTimers, 1000);
 }
 
-/* Prize Pool Modal Controller */
 window.openPrizeModal = id => {
   const t = activeTournaments.find(x => x.id === id);
   if(!t) return;
@@ -1064,7 +1075,6 @@ window.saveBanners = async () => {
   alert('✅ Banners Saved!');
 };
 
-/* ADMIN FUNCTIONS FOR SOCIAL & RULES */
 window.saveSocialLinks = async () => {
   const data = {
     yt: $('admYT').value.trim(),
@@ -1102,7 +1112,6 @@ window.saveWhatsAppSettings = async () => {
   alert('✅ WhatsApp Settings Saved!');
 };
 
-/* USER FUNCTIONS FOR SOCIAL & RULES */
 window.openSocialMediaModal = async () => {
   try {
     const s = await getDoc(doc(db, 'settings', 'social'));
@@ -1185,7 +1194,6 @@ window.addTournament = async () => {
   let formattedDate = rawDate;
   
   if(rawDate) {
-    // Append Bangladesh offset (+06:00) explicitly when creating tournament
     formattedDate = rawDate.includes('+') ? rawDate : `${rawDate}:00+06:00`;
   }
 
