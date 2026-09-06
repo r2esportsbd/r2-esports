@@ -336,12 +336,12 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
 </div></div>
 
-<!-- Updated Join Modal -->
+<!-- Updated Join Modal with Dynamic Dynamic Inputs based on SOLO/DUO/SQUAD -->
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
-<p class="tiny muted">সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:</p>
-<input id="joinIGN" class="input" placeholder="In Game Name (IGN)">
-<input id="joinRealEmail" class="input" type="email" placeholder="Real Gmail (Login Email)">
+<p class="tiny muted" id="joinModalSubtitle">সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:</p>
+<div id="joinDynamicInputs"></div>
+<input id="joinRealEmail" class="input" type="email" placeholder="Real Gmail (Login Email)" readonly style="opacity:0.8; background:#050c18;">
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeJoinModal()">Cancel</button><button class="btn green" onclick="confirmJoin()">Confirm Join</button></div>
 </div></div>
 
@@ -657,7 +657,7 @@ window.openMode = async mode => {
   }
 };
 
-/* --- Updated Details Page with Rules & Registered Participants --- */
+/* --- Details Page with Rules & Registered Participants --- */
 window.openDetails = async id => {
  go('details'); $('detailBox').innerHTML = 'Loading...';
  try {
@@ -712,12 +712,55 @@ window.openDetails = async id => {
  } catch(e){ $('detailBox').innerHTML = 'Failed to load details'; }
 };
 
-window.joinTour = id => { pendingJoinId = id; $('joinModal').classList.add('on'); };
+/* Dynamic Form Creation for SOLO / DUO / SQUAD / TRIO */
+window.joinTour = async id => { 
+  pendingJoinId = id; 
+  try {
+    const tSnap = await getDoc(doc(db, 'tournaments', id));
+    if(!tSnap.exists()) return alert('Tournament not found!');
+    
+    const tData = tSnap.data();
+    const type = (tData.matchType || 'SOLO').toUpperCase();
+    
+    let container = $('joinDynamicInputs');
+    container.innerHTML = '';
+    
+    let count = 1;
+    if(type === 'DUO') count = 2;
+    else if(type === 'SQUAD') count = 4;
+    else if(type === 'TRIO') count = 3;
+
+    $('joinModalSubtitle').textContent = `[${type} MATCH] সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:`;
+
+    for(let i = 1; i <= count; i++) {
+      let label = (type === 'SOLO') ? 'In Game Name (IGN)' : `Player ${i} In Game Name (IGN)`;
+      container.innerHTML += `<input id="joinIGN_${i}" class="input join-ign-field" placeholder="${label}">`;
+    }
+
+    $('joinRealEmail').value = user ? user.email : '';
+    $('joinModal').classList.add('on');
+  } catch(e) {
+    alert('Error loading join details');
+  }
+};
+
 window.closeJoinModal = () => { $('joinModal').classList.remove('on'); pendingJoinId = null; };
 
 window.confirmJoin = async () => {
- const ign = $('joinIGN').value.trim(), realEmail = $('joinRealEmail').value.trim();
- if(!ign || !realEmail){ alert('IGN এবং Real Gmail দিন'); return; }
+ const ignInputs = document.querySelectorAll('.join-ign-field');
+ let ignList = [];
+ for(let input of ignInputs) {
+   let val = input.value.trim();
+   if(!val) {
+     alert('সমস্ত প্লেয়ারের ইন-গেম নেম (IGN) প্রদান করুন!');
+     return;
+   }
+   ignList.push(val);
+ }
+ const finalIgn = ignList.join(' / ');
+ const realEmail = $('joinRealEmail').value.trim();
+
+ if(!realEmail){ alert('Login Email পাওয়া যায়নি!'); return; }
  try {
   const ref = doc(db, 'users', user.uid);
   const joinRef = doc(db, 'users', user.uid, 'joinedMatches', pendingJoinId);
@@ -732,8 +775,8 @@ window.confirmJoin = async () => {
    if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Match Full');
    
    tx.set(ref, { credits: bal - fee }, { merge: true });
-   tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign, realEmail, joinedAt: serverTimestamp() });
-   tx.set(playerRef, { uid: user.uid, email: user.email, ign, realEmail, joinedAt: serverTimestamp() });
+   tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
+   tx.set(playerRef, { uid: user.uid, email: user.email, ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
    tx.update(tref, { currentJoins: increment(1) });
   });
   closeJoinModal(); alert('🎉 Successfully Joined!'); loadProfile();
@@ -904,7 +947,7 @@ window.openAdmin = async () => {
   adminTab('tours');
 };
 
-/* --- Updated Admin Tab Functionality --- */
+/* --- Admin Tab Functionality --- */
 window.adminTab = async tab => {
  const box = $('adminBox');
  if(tab === 'tours'){
@@ -1066,7 +1109,7 @@ window.adminTab = async tab => {
  }
 };
 
-/* --- Player Live Search Filtering --- */
+/* Player Live Search Filtering */
 window.filterPlayers = () => {
   const query = ($('playerSearch')?.value || '').toLowerCase().trim();
   const filtered = allPlayersData.filter(u => 
