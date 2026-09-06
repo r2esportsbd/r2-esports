@@ -63,7 +63,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 .mode-title { font-size: 14px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
 .mode-subtitle { font-size: 10px; color: var(--cyan); font-weight: 600; }
 
-/* --- Advanced Premium Esports Match Card --- */
 .match-card {
   background: #0b1526;
   border: 1px solid #1c2e4a;
@@ -124,7 +123,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 .match-footer-btn { flex: 1; padding: 10px; background: transparent; color: #38bdf8; font-size: 12px; font-weight: 700; border-right: 1px solid #1c2e4a; text-align: center; }
 .match-footer-btn:last-child { border-right: none; }
 
-/* --- Countdown Timer Style --- */
 .countdown-bar {
   background: linear-gradient(90deg, #ff2a55, #e0115f);
   color: #fff;
@@ -135,7 +133,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   letter-spacing: 0.5px;
 }
 
-/* --- Prize Pool Modal Styling --- */
 .prize-modal-header {
   background: #ffc94d;
   color: #000;
@@ -232,7 +229,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
 </div>
 <div class="card">
-  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0 Credits</b></div>
+  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0.00 BDT</b></div>
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
 </div>
 
@@ -247,7 +244,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <section id="wallet" class="page">
   <h2>💰 My Wallet</h2>
   <div class="card">
-    <div class="row space"><span>Available Balance</span><b id="walletPoints" style="color:var(--gold);font-size:22px">0 BDT</b></div>
+    <div class="row space"><span>Available Balance</span><b id="walletPoints" style="color:var(--gold);font-size:22px">0.00 BDT</b></div>
   </div>
 
   <div class="wTabs" style="margin-bottom:10px">
@@ -259,29 +256,8 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <h3>📥 Auto Deposit via Ads</h3>
     <p class="tiny muted" style="margin-bottom:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
 
-    <div class="pkg-card">
-      <div>
-        <div class="pkg-title">৫ টি অ্যাড রাখুন</div>
-        <div class="pkg-reward">+ ৳৫.০০ BDT</div>
-      </div>
-      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(5, 5)">শুরু করুন</button>
-    </div>
-
-    <div class="pkg-card highlight">
-      <div>
-        <div class="pkg-title">১০ টি অ্যাড রাখুন ⭐</div>
-        <div class="pkg-reward">+ ৳১০.০০ BDT</div>
-      </div>
-      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(10, 10)">শুরু করুন</button>
-    </div>
-
-    <div class="pkg-card">
-      <div>
-        <div class="pkg-title">২০ টি অ্যাড রাখুন</div>
-        <div class="pkg-reward">+ ৳২৫.০০ BDT (বোনাস)</div>
-      </div>
-      <button class="btn gold mini" style="width:auto" onclick="startAdPackage(20, 25)">শুরু করুন</button>
-    </div>
+    <!-- Dynamic Ad Packages List -->
+    <div id="adPackagesList">Loading Packages...</div>
   </div>
 
   <div id="wTabWithdraw" class="card hidden">
@@ -305,6 +281,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="adminTabs">
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('modes')">🎮 Game Modes</button>
+<button class="btn alt mini" onclick="adminTab('ad_packages')">📺 Ad Packages</button>
 <button class="btn alt mini" onclick="adminTab('players')">👥 Players & Balance</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
@@ -326,10 +303,11 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <!-- Modals -->
 <div id="adModal" class="modal"><div class="modalBox center">
 <h3>📺 Watching Ads</h3>
-<p class="muted tiny">সবগুলো অ্যাড স্কিপ ছাড়া শেষ করুন</p>
+<p class="muted tiny">সবগুলো অ্যাড সম্পূর্ণ দেখুন</p>
 <p style="font-size:18px;margin:15px 0">প্রোগ্রেস: <b id="adCurrent" style="color:var(--gold)">0</b> / <b id="adTotal">0</b></p>
 
-<button id="adWatchBtn" class="btn green" onclick="triggerNextAd()">Watch Next Ad</button>
+<!-- Ad watch button with gold style -->
+<button id="adWatchBtn" class="btn gold" onclick="triggerNextAd()">অ্যাডে দেখুন</button>
 
 <div id="adCodeSection" class="hidden">
   <p class="tiny green" style="margin-top:10px">🎉 অ্যাড সম্পন্ন হয়েছে! সিক্রেট কোডটি নিশ্চিত করুন:</p>
@@ -341,7 +319,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
 </div></div>
 
-<!-- Updated Join Modal with Dynamic Dynamic Inputs based on SOLO/DUO/SQUAD -->
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
 <p class="tiny muted" id="joinModalSubtitle">সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:</p>
@@ -358,7 +335,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeRoomModal()">Cancel</button><button class="btn gold" onclick="saveRoom()">Save</button></div>
 </div></div>
 
-<!-- Prize Pool Modal -->
 <div id="prizeModal" class="modal">
   <div class="modalBox" style="padding:0; overflow:hidden; border-radius:16px;">
     <div class="prize-modal-header">
@@ -422,7 +398,7 @@ const db = getFirestore(app);
 let user = null, pendingJoinId = null, pendingRoomId = null;
 let bannerInterval = null, countdownInterval = null;
 let activeTournaments = [];
-let allPlayersData = []; // Global list for Admin search
+let allPlayersData = [];
 let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
@@ -662,7 +638,6 @@ window.openMode = async mode => {
   }
 };
 
-/* --- Details Page with Rules & Registered Participants --- */
 window.openDetails = async id => {
  go('details'); $('detailBox').innerHTML = 'Loading...';
  try {
@@ -677,7 +652,6 @@ window.openDetails = async id => {
     else roomHtml = `<p>Room ID: <b style="color:var(--gold)">${esc(t.roomId || '')}</b></p><p>Password: <b style="color:var(--gold)">${esc(t.roomPassword || '')}</b></p>`;
   }
 
-  // Load participants
   const pSnap = await getDocs(collection(db, 'tournaments', id, 'players'));
   const participants = pSnap.docs.map(d => d.data());
 
@@ -717,7 +691,6 @@ window.openDetails = async id => {
  } catch(e){ $('detailBox').innerHTML = 'Failed to load details'; }
 };
 
-/* Dynamic Form Creation for SOLO / DUO / SQUAD / TRIO */
 window.joinTour = async id => { 
   pendingJoinId = id; 
   try {
@@ -779,7 +752,7 @@ window.confirmJoin = async () => {
    if(bal < fee) throw Error('পর্যাপ্ত ব্যালেন্স নেই!');
    if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Match Full');
    
-   tx.set(ref, { credits: bal - fee }, { merge: true });
+   tx.set(ref, { credits: Number((bal - fee).toFixed(2)) }, { merge: true });
    tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
    tx.set(playerRef, { uid: user.uid, email: user.email, ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
    tx.update(tref, { currentJoins: increment(1) });
@@ -796,7 +769,7 @@ async function loadProfile(){
   $('pname').textContent = d.name || user.email.split('@')[0];
   $('pemail').textContent = user.email;
   $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
-  $('points').textContent = Number(d.credits || 0) + ' Credits';
+  $('points').textContent = Number(d.credits || 0).toFixed(2) + ' BDT';
   
   if(ADMIN_EMAILS.includes(user.email)){
     $('roleBadge').innerHTML = '<span class="tag" style="background:var(--gold);color:#000">👑 ADMIN</span>';
@@ -841,7 +814,10 @@ window.switchWTab = tab => {
 async function loadWallet(){
   try {
     const s = await getDoc(doc(db, 'users', user.uid));
-    $('walletPoints').textContent = Number(s.data().credits || 0) + ' BDT';
+    $('walletPoints').textContent = Number(s.data().credits || 0).toFixed(2) + ' BDT';
+
+    // Load Dynamic Ad Packages from Firestore
+    await loadAdPackagesUser();
 
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
     $('requestList').innerHTML = q.docs.map(d => {
@@ -849,7 +825,7 @@ async function loadWallet(){
       let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
       return `<div class="item" style="margin-top:8px">
         <div class="row space">
-          <b>📤 Withdraw (${data.amount} BDT)</b>
+          <b>📤 Withdraw (${Number(data.amount).toFixed(2)} BDT)</b>
           <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
         </div>
       </div>`;
@@ -857,20 +833,67 @@ async function loadWallet(){
   } catch(e){ console.error(e); }
 }
 
+// Function to render user ad packages dynamically from Firestore
+async function loadAdPackagesUser() {
+  const container = $('adPackagesList');
+  if(!container) return;
+  
+  try {
+    const snap = await getDocs(collection(db, 'adPackages'));
+    let packages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    
+    // Sort packages by ad count
+    packages.sort((a, b) => Number(a.ads) - Number(b.ads));
+
+    if(packages.length === 0) {
+      // Default fallback packages if database is empty
+      packages = [
+        { ads: 3, reward: 0.50, title: '৩ টি অ্যাড দেখুন', isHighlight: false },
+        { ads: 5, reward: 1.00, title: '৫ টি অ্যাড দেখুন ⭐', isHighlight: true },
+        { ads: 10, reward: 2.50, title: '১০ টি অ্যাড দেখুন (বোনাস)', isHighlight: false }
+      ];
+    }
+
+    container.innerHTML = packages.map(p => `
+      <div class="pkg-card ${p.isHighlight ? 'highlight' : ''}">
+        <div>
+          <div class="pkg-title">${esc(p.title || (p.ads + ' টি অ্যাড রাখুন'))}</div>
+          <div class="pkg-reward">+ ৳${Number(p.reward).toFixed(2)} BDT</div>
+        </div>
+        <button class="btn gold mini" style="width:auto" onclick="startAdPackage(${p.ads}, ${p.reward})">শুরু করুন</button>
+      </div>
+    `).join('');
+  } catch(e) {
+    container.innerHTML = '<p class="tiny muted">প্যাকেজ লোড হতে ব্যর্থ হয়েছে</p>';
+  }
+}
+
 window.startAdPackage = (ads, reward) => {
-  currentPkgTotal = ads; currentPkgReward = reward; currentAdCount = 0; activeGeneratedCode = "";
-  $('adTotal').textContent = ads; $('adCurrent').textContent = 0;
-  $('adWatchBtn').classList.remove('hidden'); $('adCodeSection').classList.add('hidden');
+  currentPkgTotal = Number(ads); 
+  currentPkgReward = Number(reward); 
+  currentAdCount = 0; 
+  activeGeneratedCode = "";
+  
+  $('adTotal').textContent = ads; 
+  $('adCurrent').textContent = 0;
+  $('adWatchBtn').classList.remove('hidden'); 
+  $('adCodeSection').classList.add('hidden');
   $('adModal').classList.add('on');
 };
 
+// Monetag Direct Link Integration
 window.triggerNextAd = () => {
-  alert('▶️ Ad Playing... (সম্পূর্ণ অ্যাড দেখুন)');
-  currentAdCount++; $('adCurrent').textContent = currentAdCount;
+  // Opens the requested Monetag Direct Link
+  window.open('https://omg10.com/4/11738539', '_blank');
+  
+  currentAdCount++; 
+  $('adCurrent').textContent = currentAdCount;
+  
   if(currentAdCount >= currentPkgTotal) {
     activeGeneratedCode = Math.floor(100000 + Math.random() * 900000).toString();
     $('generatedCode').textContent = activeGeneratedCode;
-    $('adWatchBtn').classList.add('hidden'); $('adCodeSection').classList.remove('hidden');
+    $('adWatchBtn').classList.add('hidden'); 
+    $('adCodeSection').classList.remove('hidden');
   }
 };
 
@@ -880,16 +903,25 @@ window.verifyAndClaimDeposit = async () => {
 
   try {
     const uRef = doc(db, 'users', user.uid);
-    await updateDoc(uRef, { credits: increment(currentPkgReward) });
-    alert(`🎉 সফল হয়েছে! ৳${currentPkgReward} BDT আপনার ওয়ালেটে জমা করা হয়েছে।`);
-    closeAdModal(); loadWallet(); loadProfile();
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const currentCredits = Number(uSnap.data().credits || 0);
+      const newBalance = Number((currentCredits + currentPkgReward).toFixed(2));
+      tx.update(uRef, { credits: newBalance });
+    });
+
+    alert(`🎉 সফল হয়েছে! ৳${currentPkgReward.toFixed(2)} BDT আপনার ওয়ালেটে জমা করা হয়েছে।`);
+    closeAdModal(); 
+    loadWallet(); 
+    loadProfile();
   } catch(e) { alert('Error updating balance: ' + e.message); }
 };
 
 window.closeAdModal = () => { $('adModal').classList.remove('on'); $('inputAdCode').value = ''; };
 
 window.submitWithdraw = async () => {
-  const receiver = $('witNum').value.trim(); const amount = Number($('witAmount').value);
+  const receiver = $('witNum').value.trim(); 
+  const amount = Number($('witAmount').value);
   if(!receiver || !amount) return alert('সমস্ত তথ্য দিন');
   if(amount < 100) return alert('⚠️ সর্বনিম্ন উইথড্র ১০০ টাকা');
 
@@ -900,7 +932,8 @@ window.submitWithdraw = async () => {
       const currentBal = Number(uSnap.data().credits || 0);
       if(currentBal < amount) throw new Error('⚠️ পর্যাপ্ত ব্যালেন্স নেই!');
       
-      tx.update(uRef, { credits: currentBal - amount });
+      const newBal = Number((currentBal - amount).toFixed(2));
+      tx.update(uRef, { credits: newBal });
       const reqRef = doc(collection(db, 'walletRequests', user.uid, 'items'));
       tx.set(reqRef, { type: 'withdraw', receiver, amount, status: 'pending', createdAt: serverTimestamp(), email: user.email, uid: user.uid });
     });
@@ -1020,6 +1053,31 @@ window.adminTab = async tab => {
        `).join('')}
      </div>
    `;
+ } else if(tab === 'ad_packages') {
+   // Admin Manage Deposit Ad Packages
+   const snap = await getDocs(collection(db, 'adPackages'));
+   const pkgs = snap.docs.map(d => ({id: d.id, ...d.data()}));
+   box.innerHTML = `
+     <div class="card">
+       <h3>📺 Add Ad Deposit Package</h3>
+       <input id="pkgTitle" class="input" placeholder="Package Title (e.g. ৩ টি অ্যাড দেখুন)">
+       <input id="pkgAds" class="input" type="number" placeholder="Number of Ads (e.g. 3)">
+       <input id="pkgReward" class="input" type="number" step="0.01" placeholder="Reward Amount in BDT (e.g. 0.50)">
+       <label class="tiny muted"><input type="checkbox" id="pkgHighlight"> Highlight Box (⭐ Popular Choice)</label>
+       <button class="btn gold" style="margin-top:8px" onclick="addAdPackage()">+ Add Package</button>
+     </div>
+     <div class="card list">
+       <h3>📋 Manage Ad Packages</h3>
+       ${pkgs.map(p => `
+         <div class="item" style="margin-top:8px">
+           <b>${esc(p.title || (p.ads + ' Ads'))}</b> - <span style="color:var(--cyan)">৳${Number(p.reward).toFixed(2)} BDT</span> (${p.ads} Ads)
+           <div class="row" style="margin-top:6px">
+             <button class="btn danger mini" style="flex:1" onclick="deleteAdPackage('${p.id}')">🗑️ Delete</button>
+           </div>
+         </div>
+       `).join('') || '<p class="tiny muted">No packages found. Add one above.</p>'}
+     </div>
+   `;
  } else if(tab === 'players') {
    const snap = await getDocs(collection(db, 'users'));
    allPlayersData = snap.docs.map(d => ({id: d.id, ...d.data()}));
@@ -1030,7 +1088,7 @@ window.adminTab = async tab => {
        <div class="list" id="playerListRender"></div>
      </div>
    `;
-   filterPlayers(); // Render initial list
+   filterPlayers();
  } else if(tab === 'wit_requests') {
    try {
      const snap = await getDocs(collectionGroup(db, 'items'));
@@ -1045,7 +1103,7 @@ window.adminTab = async tab => {
            ${reqs.map(r => `
              <div class="item" style="margin-top:8px">
                <b>Email:</b> ${esc(r.email)}<br>
-               <b>Amount:</b> <span style="color:var(--gold)">${r.amount} BDT</span><br>
+               <b>Amount:</b> <span style="color:var(--gold)">${Number(r.amount).toFixed(2)} BDT</span><br>
                <b>bKash Number:</b> ${esc(r.receiver)}<br>
                <b>Status:</b> <span class="badge">${esc(r.status)}</span>
                ${r.status === 'pending' ? `
@@ -1114,7 +1172,6 @@ window.adminTab = async tab => {
  }
 };
 
-/* Player Live Search Filtering */
 window.filterPlayers = () => {
   const query = ($('playerSearch')?.value || '').toLowerCase().trim();
   const filtered = allPlayersData.filter(u => 
@@ -1133,13 +1190,40 @@ window.filterPlayers = () => {
   container.innerHTML = filtered.map(u => `
     <div class="item" style="margin-top:8px">
       <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
-      <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0)} BDT</b></span>
+      <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0).toFixed(2)} BDT</b></span>
       <div class="row" style="margin-top:6px">
         <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
         <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
       </div>
     </div>
   `).join('');
+};
+
+window.addAdPackage = async () => {
+  const title = $('pkgTitle').value.trim();
+  const ads = Number($('pkgAds').value);
+  const reward = Number($('pkgReward').value);
+  const isHighlight = $('pkgHighlight').checked;
+
+  if(!ads || ads <= 0 || isNaN(reward) || reward <= 0) return alert('সঠিক অ্যাডের সংখ্যা ও রিওয়ার্ড দিন');
+
+  await addDoc(collection(db, 'adPackages'), {
+    title: title || `${ads} টি অ্যাড দেখুন`,
+    ads,
+    reward,
+    isHighlight,
+    createdAt: serverTimestamp()
+  });
+
+  alert('✅ Ad Package Added Successfully');
+  adminTab('ad_packages');
+};
+
+window.deleteAdPackage = async id => {
+  if(confirm('সত্যিই কি প্যাকেজটি মুছে ফেলতে চান?')) {
+    await deleteDoc(doc(db, 'adPackages', id));
+    adminTab('ad_packages');
+  }
 };
 
 window.addGameMode = async () => {
@@ -1195,9 +1279,15 @@ window.admUpdateBalance = async (targetUid, action) => {
   try {
     const uRef = doc(db, 'users', targetUid);
     const change = action === 'add' ? amt : -amt;
-    await updateDoc(uRef, { credits: increment(change) });
+    
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const curBal = Number(uSnap.data().credits || 0);
+      const newBal = Number((curBal + change).toFixed(2));
+      tx.update(uRef, { credits: newBal });
+    });
+
     alert('✅ ব্যালেন্স আপডেট করা হয়েছে!'); 
-    // Reload player data in array
     const s = await getDoc(uRef);
     const idx = allPlayersData.findIndex(p => p.id === targetUid);
     if(idx !== -1) allPlayersData[idx] = { id: s.id, ...s.data() };
