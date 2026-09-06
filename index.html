@@ -67,6 +67,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   overflow: hidden;
   position: relative;
   box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  cursor: pointer;
 }
 .match-header {
   display: flex;
@@ -158,6 +159,17 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   border-bottom: 1px solid rgba(255,255,255,0.05);
   font-size: 14px;
   font-weight: 600;
+}
+.participant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #091422;
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -324,11 +336,13 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
 </div></div>
 
+<!-- Updated Join Modal -->
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
-<input id="joinIGN" class="input" placeholder="IGN - R2•SALA">
-<input id="joinUID" class="input" placeholder="Free Fire UID">
-<div class="row"><button class="btn alt" onclick="closeJoinModal()">Cancel</button><button class="btn green" onclick="confirmJoin()">Confirm Join</button></div>
+<p class="tiny muted">সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:</p>
+<input id="joinIGN" class="input" placeholder="In Game Name (IGN)">
+<input id="joinRealEmail" class="input" type="email" placeholder="Real Gmail (Login Email)">
+<div class="row" style="margin-top:10px"><button class="btn alt" onclick="closeJoinModal()">Cancel</button><button class="btn green" onclick="confirmJoin()">Confirm Join</button></div>
 </div></div>
 
 <div id="roomModal" class="modal"><div class="modalBox">
@@ -403,6 +417,7 @@ const db = getFirestore(app);
 let user = null, pendingJoinId = null, pendingRoomId = null;
 let bannerInterval = null, countdownInterval = null;
 let activeTournaments = [];
+let allPlayersData = []; // Global list for Admin search
 let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
@@ -412,16 +427,13 @@ const err = e => { console.error(e); $('authMsg').textContent = e.code || e.mess
 function getBDTargetTime(dateTimeStr) {
   if (!dateTimeStr) return NaN;
   let str = String(dateTimeStr).trim();
-  
   if (!str.includes('Z') && !str.includes('+') && !str.includes('-')) {
     str += '+06:00';
   } else if (str.endsWith('Z')) {
     str = str.replace('Z', '+06:00');
   }
-  
   const parsed = new Date(str).getTime();
   if (!isNaN(parsed)) return parsed;
-
   const cleaned = str.replace('T', ' ');
   return new Date(cleaned).getTime();
 }
@@ -504,7 +516,7 @@ function renderTours(tours) {
     const readableTime = formatBDDisplayTime(t.dateTime);
 
     return `
-    <div class="match-card">
+    <div class="match-card" onclick="openDetails('${t.id}')">
       <div class="match-match-id">${matchIdCode}</div>
       <div class="match-header">
         <img class="match-img" src="${esc(matchImg)}">
@@ -530,7 +542,7 @@ function renderTours(tours) {
       </div>
 
       <div class="match-substats">
-        <span>Type: <b>${esc(t.mode || 'Solo')}</b></span>
+        <span>Type: <b>${esc(t.matchType || 'SOLO')}</b></span>
         <span>Map: <b>${esc(t.map || 'Bermuda')}</b></span>
         <span>Device: <b>MOBILE</b></span>
       </div>
@@ -543,14 +555,14 @@ function renderTours(tours) {
           <span class="spots-text">Only <b>${leftSlots}</b> spots left</span>
           <span class="spots-count">${joined}/${totalSlots}</span>
           ${isFull 
-            ? `<button class="btn-full" disabled>Match Full</button>` 
-            : `<button class="btn-join" onclick="joinTour('${t.id}')">Join</button>`}
+            ? `<button class="btn-full" disabled onclick="event.stopPropagation()">Match Full</button>` 
+            : `<button class="btn-join" onclick="event.stopPropagation(); joinTour('${t.id}')">Join</button>`}
         </div>
       </div>
 
       <div class="match-footer-btns">
-        <button class="match-footer-btn" onclick="openDetails('${t.id}')">🔑 Room Details</button>
-        <button class="match-footer-btn" onclick="openPrizeModal('${t.id}')">🏆 Prize Pool</button>
+        <button class="match-footer-btn" onclick="event.stopPropagation(); openDetails('${t.id}')">🔑 Room Details</button>
+        <button class="match-footer-btn" onclick="event.stopPropagation(); openPrizeModal('${t.id}')">🏆 Prize Pool</button>
       </div>
 
       <div class="countdown-bar" id="timer-${t.id}">
@@ -604,7 +616,7 @@ window.openPrizeModal = id => {
   const t = activeTournaments.find(x => x.id === id);
   if(!t) return;
 
-  $('prizeModalSubTitle').textContent = `${t.title || ''} | ${t.mode || 'Solo'}`;
+  $('prizeModalSubTitle').textContent = `${t.title || ''} | ${t.matchType || 'SOLO'}`;
   
   let html = '';
   if(t.prizeBreakdown && t.prizeBreakdown.trim()) {
@@ -645,27 +657,67 @@ window.openMode = async mode => {
   }
 };
 
+/* --- Updated Details Page with Rules & Registered Participants --- */
 window.openDetails = async id => {
  go('details'); $('detailBox').innerHTML = 'Loading...';
  try {
-  const s = await getDoc(doc(db, 'tournaments', id)); const t = { id: s.id, ...s.data() };
+  const s = await getDoc(doc(db, 'tournaments', id)); 
+  const t = { id: s.id, ...s.data() };
+  
   let roomHtml = '';
   if(user){
     const j = await getDoc(doc(db, 'users', user.uid, 'joinedMatches', id));
-    if(!j.exists()) roomHtml = '<p class="muted">❌ Join করেননি</p>';
-    else if(!t.roomPublished) roomHtml = '<p class="muted">🔒 ROOM LOCKED - Publish হয়নি</p>';
-    else roomHtml = `<p>ID: <b>${esc(t.roomId || '')}</b></p><p>Pass: <b>${esc(t.roomPassword || '')}</b></p>`;
+    if(!j.exists()) roomHtml = '<p class="muted">❌ আপনি এই টুর্নামেন্টে জয়েন করেননি</p>';
+    else if(!t.roomPublished) roomHtml = '<p class="muted">🔒 ROOM LOCKED - পাবলিশ হয়নি</p>';
+    else roomHtml = `<p>Room ID: <b style="color:var(--gold)">${esc(t.roomId || '')}</b></p><p>Password: <b style="color:var(--gold)">${esc(t.roomPassword || '')}</b></p>`;
   }
-  $('detailBox').innerHTML = `<div class="card"><h2>${esc(t.title || '')}</h2><p class="muted">${esc(formatBDDisplayTime(t.dateTime))}</p></div><div class="card"><h3>🔑 Room Details</h3>${roomHtml}</div>`;
- } catch(e){ $('detailBox').innerHTML = 'Failed'; }
+
+  // Load participants
+  const pSnap = await getDocs(collection(db, 'tournaments', id, 'players'));
+  const participants = pSnap.docs.map(d => d.data());
+
+  let partHtml = '';
+  if(participants.length === 0){
+    partHtml = '<p class="tiny muted">এখনো কোনো প্লেয়ার জয়েন করেনি</p>';
+  } else {
+    partHtml = participants.map((p, idx) => `
+      <div class="participant-item">
+        <span><b>${idx + 1}.</b> ${esc(p.ign || 'Player')}</span>
+        <span class="muted tiny">${esc(p.realEmail || p.email || '')}</span>
+      </div>
+    `).join('');
+  }
+
+  $('detailBox').innerHTML = `
+    <div class="card">
+      <h2>${esc(t.title || '')}</h2>
+      <p class="tiny muted">⏰ ${esc(formatBDDisplayTime(t.dateTime))} | Mode: <b>${esc(t.matchType || 'SOLO')}</b></p>
+    </div>
+
+    <div class="card">
+      <h3>📜 Tournament Rules</h3>
+      <p style="white-space:pre-wrap;font-size:13px;line-height:1.5" class="muted">${esc(t.rules || '১. কোনো হ্যাক বা প্যানেল ব্যবহার নিষিদ্ধ।\n২. সঠিক ইন-গেম নেম দিয়ে জয়েন করুন।\n৩. কাস্টম রুম টাইমমতো শুরু হবে।')}</p>
+    </div>
+
+    <div class="card">
+      <h3>🔑 Room Details</h3>
+      ${roomHtml}
+    </div>
+
+    <div class="card">
+      <h3>👥 Registered Participants (${participants.length})</h3>
+      <div style="margin-top:10px">${partHtml}</div>
+    </div>
+  `;
+ } catch(e){ $('detailBox').innerHTML = 'Failed to load details'; }
 };
 
 window.joinTour = id => { pendingJoinId = id; $('joinModal').classList.add('on'); };
 window.closeJoinModal = () => { $('joinModal').classList.remove('on'); pendingJoinId = null; };
 
 window.confirmJoin = async () => {
- const ign = $('joinIGN').value.trim(), uid = $('joinUID').value.trim();
- if(!ign || !uid){ alert('IGN & UID দিন'); return; }
+ const ign = $('joinIGN').value.trim(), realEmail = $('joinRealEmail').value.trim();
+ if(!ign || !realEmail){ alert('IGN এবং Real Gmail দিন'); return; }
  try {
   const ref = doc(db, 'users', user.uid);
   const joinRef = doc(db, 'users', user.uid, 'joinedMatches', pendingJoinId);
@@ -676,15 +728,15 @@ window.confirmJoin = async () => {
    const us = await tx.get(ref), ts = await tx.get(tref), js = await tx.get(joinRef);
    if(js.exists()) throw Error('Already Joined');
    const fee = Number(ts.data().entryFee || 0), bal = Number(us.data().credits || 0);
-   if(bal < fee) throw Error('Balance কম');
-   if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Full');
+   if(bal < fee) throw Error('পর্যাপ্ত ব্যালেন্স নেই!');
+   if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Match Full');
    
    tx.set(ref, { credits: bal - fee }, { merge: true });
-   tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign, ffUid: uid, joinedAt: serverTimestamp() });
-   tx.set(playerRef, { uid: user.uid, email: user.email, ign, ffUid: uid, joinedAt: serverTimestamp() });
+   tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign, realEmail, joinedAt: serverTimestamp() });
+   tx.set(playerRef, { uid: user.uid, email: user.email, ign, realEmail, joinedAt: serverTimestamp() });
    tx.update(tref, { currentJoins: increment(1) });
   });
-  closeJoinModal(); alert('Joined Successfully'); loadProfile();
+  closeJoinModal(); alert('🎉 Successfully Joined!'); loadProfile();
  } catch(e){ err(e); }
 };
 
@@ -717,7 +769,7 @@ async function loadMyMatches(){
    let roomBox = !t.roomPublished 
      ? `<div style="padding:8px;background:#1f2937;border-radius:8px;margin-top:8px;text-align:center">🔒 ROOM LOCKED</div>`
      : `<div style="padding:8px;background:#052e16;border:1px solid #22c55e;border-radius:8px;margin-top:8px">ID: <b>${esc(t.roomId || '')}</b> | Pass: <b>${esc(t.roomPassword || '')}</b></div>`;
-   html += `<div class="card"><b>${esc(x.title || 'Tournament')}</b><div class="tiny">IGN: ${esc(x.ign || '')} | UID: ${esc(x.ffUid || '')}</div>${roomBox}</div>`;
+   html += `<div class="card"><b>${esc(x.title || 'Tournament')}</b><div class="tiny">IGN: ${esc(x.ign || '')} | Email: ${esc(x.realEmail || '')}</div>${roomBox}</div>`;
   }
   $('myMatchesList').innerHTML = html || '<div class="card">No matches</div>';
  } catch(e){ $('myMatchesList').innerHTML = 'Failed'; }
@@ -852,6 +904,7 @@ window.openAdmin = async () => {
   adminTab('tours');
 };
 
+/* --- Updated Admin Tab Functionality --- */
 window.adminTab = async tab => {
  const box = $('adminBox');
  if(tab === 'tours'){
@@ -859,24 +912,36 @@ window.adminTab = async tab => {
   box.innerHTML = `
     <div class="card">
       <h3>🏆 Create Tournament</h3>
-      <input id="tMode" class="input" placeholder="Game Mode (e.g. BR SOLO MATCH)">
+      <input id="tMode" class="input" placeholder="Game Category (e.g. BR SOLO MATCH)">
+      
+      <label class="tiny muted">Tournament Type Select:</label>
+      <select id="tMatchType" class="input">
+        <option value="SOLO">SOLO</option>
+        <option value="DUO">DUO</option>
+        <option value="SQUAD">SQUAD</option>
+        <option value="TRIO">TRIO</option>
+      </select>
+
       <input id="tTitle" class="input" placeholder="Title">
       <input id="tImg" class="input" placeholder="Image URL">
       <label class="tiny muted">Date & Time Pick (যেমন: YYYY-MM-DDTHH:MM)</label>
       <input id="tDate" class="input" type="datetime-local">
-      <input id="tMap" class="input" placeholder="Map">
+      <input id="tMap" class="input" placeholder="Map (e.g. Bermuda)">
+      
+      <textarea id="tRules" class="input" rows="3" placeholder="টুর্নামেন্টের নিয়মাবলী (Rules) লিখুন..."></textarea>
+      
       <input id="tPrize" class="input" type="number" placeholder="Total Win Prize (BDT)">
       <input id="tPerKill" class="input" type="number" placeholder="Per Kill Reward (BDT)">
-      <textarea id="tPrizeBreakdown" class="input" rows="4" placeholder="Prize Pool Breakdown (Format):\nWinner: 50 Taka\n2nd Position: 40 Taka\n3rd Position: 30 Taka\nPer Kill: 5 Taka"></textarea>
-      <input id="tFee" class="input" type="number" placeholder="Entry Fee">
+      <textarea id="tPrizeBreakdown" class="input" rows="3" placeholder="Prize Pool Breakdown (Format):\nWinner: 50 Taka\n2nd Position: 40 Taka"></textarea>
+      <input id="tFee" class="input" type="number" placeholder="Entry Fee (BDT)">
       <input id="tSlots" class="input" type="number" placeholder="Total Slots (Default 48)" value="48">
-      <button class="btn" onclick="addTournament()">Publish</button>
+      <button class="btn" onclick="addTournament()">Publish Tournament</button>
     </div>
     <div class="card list">
       <h3>📋 Manage Tournaments</h3>
       ${ts.map(t => `
         <div class="item" style="margin-top:8px">
-          <b>${esc(t.title)}</b> (${esc(t.mode)})
+          <b>${esc(t.title)}</b> (${esc(t.mode || '')} - ${esc(t.matchType || 'SOLO')})
           <div class="row" style="margin-top:6px">
             <button class="btn gold mini" style="flex:1" onclick="manageRoom('${t.id}')">🔑 Room</button>
             <button class="btn danger mini" style="flex:1" onclick="deleteTournament('${t.id}')">🗑️ Delete</button>
@@ -909,24 +974,15 @@ window.adminTab = async tab => {
    `;
  } else if(tab === 'players') {
    const snap = await getDocs(collection(db, 'users'));
-   const users = snap.docs.map(d => ({id: d.id, ...d.data()}));
+   allPlayersData = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
      <div class="card">
        <h3>👥 Manage Players & Balance</h3>
-       <div class="list">
-         ${users.map(u => `
-           <div class="item" style="margin-top:8px">
-             <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
-             <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0)} BDT</b></span>
-             <div class="row" style="margin-top:6px">
-               <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
-               <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
-             </div>
-           </div>
-         `).join('')}
-       </div>
+       <input id="playerSearch" class="input" placeholder="🔍 Search Gmail or Name..." oninput="filterPlayers()">
+       <div class="list" id="playerListRender"></div>
      </div>
    `;
+   filterPlayers(); // Render initial list
  } else if(tab === 'wit_requests') {
    try {
      const snap = await getDocs(collectionGroup(db, 'items'));
@@ -1010,6 +1066,34 @@ window.adminTab = async tab => {
  }
 };
 
+/* --- Player Live Search Filtering --- */
+window.filterPlayers = () => {
+  const query = ($('playerSearch')?.value || '').toLowerCase().trim();
+  const filtered = allPlayersData.filter(u => 
+    (u.name || '').toLowerCase().includes(query) || 
+    (u.email || '').toLowerCase().includes(query)
+  );
+
+  const container = $('playerListRender');
+  if(!container) return;
+
+  if(filtered.length === 0) {
+    container.innerHTML = '<p class="tiny muted" style="padding:10px">কোনো প্লেয়ার পাওয়া যায়নি</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(u => `
+    <div class="item" style="margin-top:8px">
+      <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
+      <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0)} BDT</b></span>
+      <div class="row" style="margin-top:6px">
+        <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
+        <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
+      </div>
+    </div>
+  `).join('');
+};
+
 window.addGameMode = async () => {
   const name = $('newModeName').value.trim();
   if(!name) return alert('গেম মোডের নাম দিন');
@@ -1064,7 +1148,12 @@ window.admUpdateBalance = async (targetUid, action) => {
     const uRef = doc(db, 'users', targetUid);
     const change = action === 'add' ? amt : -amt;
     await updateDoc(uRef, { credits: increment(change) });
-    alert('✅ ব্যালেন্স আপডেট করা হয়েছে!'); adminTab('players');
+    alert('✅ ব্যালেন্স আপডেট করা হয়েছে!'); 
+    // Reload player data in array
+    const s = await getDoc(uRef);
+    const idx = allPlayersData.findIndex(p => p.id === targetUid);
+    if(idx !== -1) allPlayersData[idx] = { id: s.id, ...s.data() };
+    filterPlayers();
   } catch(e){ alert('Error: ' + e.message); }
 };
 
@@ -1200,9 +1289,11 @@ window.addTournament = async () => {
   const data = {
     title: $('tTitle').value,
     mode: $('tMode').value,
+    matchType: $('tMatchType').value || 'SOLO',
     imageUrl: $('tImg').value,
     dateTime: formattedDate,
     map: $('tMap').value,
+    rules: $('tRules').value,
     prizePool: Number($('tPrize').value || 0),
     perKill: Number($('tPerKill').value || 0),
     prizeBreakdown: $('tPrizeBreakdown').value,
@@ -1214,7 +1305,7 @@ window.addTournament = async () => {
     roomPassword: '',
     createdAt: serverTimestamp()
   };
-  await addDoc(collection(db, 'tournaments'), data); alert('Published'); adminTab('tours');
+  await addDoc(collection(db, 'tournaments'), data); alert('Tournament Published Successfully!'); adminTab('tours');
 };
 
 onAuthStateChanged(auth, async u => {
