@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://r2esportsbd.github.io/r2-esports/">
 <meta property="og:title" content="R2.0 ESPORTS - Ultimate Gaming Platform">
 <meta property="og:description" content="Join daily FIFA & eSports tournaments on R2.0 ESPORTS and prove your gaming skills.">
-<meta property="og:image" content="https://d3tx3wg2jy0sui.cloudfront.net/ccbadef162f5463e94eb43972b406189.jpg">
+<meta property="og:image" content="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg">
 
 <style>
 :root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
@@ -178,7 +178,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <body>
 <div class="app">
 <header class="top">
-<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/ccbadef162f5463e94eb43972b406189.jpg">
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg">
 <div><div class="brand">R2.0 <b>ESPORTS</b></div></div>
 </header>
 
@@ -228,9 +228,19 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <div id="pemail" class="muted"></div>
   <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
 </div>
+
 <div class="card">
   <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0.00 BDT</b></div>
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
+</div>
+
+<!-- Have a Promo Section -->
+<div class="card">
+  <h3>🎁 Have a Promo Code?</h3>
+  <div class="row" style="margin-top:6px">
+    <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
+    <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Apply</button>
+  </div>
 </div>
 
 <button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
@@ -282,7 +292,8 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('modes')">🎮 Game Modes</button>
 <button class="btn alt mini" onclick="adminTab('ad_packages')">📺 Ad Packages</button>
-<button class="btn alt mini" onclick="adminTab('players')">👥 Players & Balance</button>
+<button class="btn alt mini" onclick="adminTab('promos')">🎁 Promo Codes</button>
+<button class="btn alt mini" onclick="adminTab('players')">👥 Deposit & Withdraw (Players)</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
 </div>
@@ -779,6 +790,44 @@ async function loadProfile(){
  } catch(e){}
 }
 
+window.applyPromoCode = async () => {
+  if(!user) return alert('দয়া করে লগইন করুন');
+  const code = $('promoCodeInput').value.trim().toUpperCase();
+  if(!code) return alert('প্রোমো কোড টাইপ করুন');
+
+  try {
+    const promoRef = doc(db, 'promoCodes', code);
+    const promoSnap = await getDoc(promoRef);
+
+    if(!promoSnap.exists()) return alert('❌ অবৈধ অথবা মেয়ার্দউত্তীর্ণ প্রোমো কোড!');
+    
+    const pData = promoSnap.data();
+    if(pData.usedBy && pData.usedBy.includes(user.uid)) {
+      return alert('⚠️ আপনি ইতিমধ্যে এই প্রোমো কোডটি ব্যবহার করেছেন!');
+    }
+
+    const reward = Number(pData.reward || 0);
+    const uRef = doc(db, 'users', user.uid);
+
+    await runTransaction(db, async tx => {
+      const uSnap = await tx.get(uRef);
+      const curBal = Number(uSnap.data().credits || 0);
+      
+      let usedByList = pData.usedBy || [];
+      usedByList.push(user.uid);
+
+      tx.update(uRef, { credits: Number((curBal + reward).toFixed(2)) });
+      tx.update(promoRef, { usedBy: usedByList });
+    });
+
+    alert(`🎉 সফল হয়েছে! ৳${reward.toFixed(2)} BDT বোনাস আপনার ওয়ালেটে যোগ করা হয়েছে।`);
+    $('promoCodeInput').value = '';
+    loadProfile();
+  } catch(e) {
+    alert('Error applying promo code: ' + e.message);
+  }
+};
+
 async function loadMyMatches(){
  if(!user) return;
  try {
@@ -833,7 +882,6 @@ async function loadWallet(){
   } catch(e){ console.error(e); }
 }
 
-// Function to render user ad packages dynamically from Firestore
 async function loadAdPackagesUser() {
   const container = $('adPackagesList');
   if(!container) return;
@@ -842,11 +890,9 @@ async function loadAdPackagesUser() {
     const snap = await getDocs(collection(db, 'adPackages'));
     let packages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     
-    // Sort packages by ad count
     packages.sort((a, b) => Number(a.ads) - Number(b.ads));
 
     if(packages.length === 0) {
-      // Default fallback packages if database is empty
       packages = [
         { ads: 3, reward: 0.50, title: '৩ টি অ্যাড দেখুন', isHighlight: false },
         { ads: 5, reward: 1.00, title: '৫ টি অ্যাড দেখুন ⭐', isHighlight: true },
@@ -881,9 +927,7 @@ window.startAdPackage = (ads, reward) => {
   $('adModal').classList.add('on');
 };
 
-// Monetag Direct Link Integration
 window.triggerNextAd = () => {
-  // Opens the requested Monetag Direct Link
   window.open('https://omg10.com/4/11738539', '_blank');
   
   currentAdCount++; 
@@ -1054,7 +1098,6 @@ window.adminTab = async tab => {
      </div>
    `;
  } else if(tab === 'ad_packages') {
-   // Admin Manage Deposit Ad Packages
    const snap = await getDocs(collection(db, 'adPackages'));
    const pkgs = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
@@ -1078,12 +1121,33 @@ window.adminTab = async tab => {
        `).join('') || '<p class="tiny muted">No packages found. Add one above.</p>'}
      </div>
    `;
+ } else if(tab === 'promos') {
+   const snap = await getDocs(collection(db, 'promoCodes'));
+   const promos = snap.docs.map(d => ({id: d.id, ...d.data()}));
+   box.innerHTML = `
+     <div class="card">
+       <h3>🎁 Add Promo Code</h3>
+       <input id="newPromoCode" class="input" placeholder="Code (e.g. BONUS50)" style="text-transform:uppercase">
+       <input id="newPromoReward" class="input" type="number" placeholder="Reward Amount (BDT)">
+       <button class="btn gold" style="margin-top:8px" onclick="addPromoCode()">+ Create Code</button>
+     </div>
+     <div class="card list">
+       <h3>📋 Active Promo Codes</h3>
+       ${promos.map(p => `
+         <div class="item" style="margin-top:8px">
+           <b>Code:</b> <span style="color:var(--gold)">${esc(p.id)}</span> | <b>Reward:</b> ${Number(p.reward).toFixed(2)} BDT
+           <div style="margin-top:4px" class="tiny muted">Used by ${p.usedBy ? p.usedBy.length : 0} user(s)</div>
+           <button class="btn danger mini" style="margin-top:6px" onclick="deletePromoCode('${p.id}')">🗑️ Delete Code</button>
+         </div>
+       `).join('') || '<p class="tiny muted">No promo codes active</p>'}
+     </div>
+   `;
  } else if(tab === 'players') {
    const snap = await getDocs(collection(db, 'users'));
    allPlayersData = snap.docs.map(d => ({id: d.id, ...d.data()}));
    box.innerHTML = `
      <div class="card">
-       <h3>👥 Manage Players & Balance</h3>
+       <h3>👥 Manage Players, Deposit & Withdraw Balance</h3>
        <input id="playerSearch" class="input" placeholder="🔍 Search Gmail or Name..." oninput="filterPlayers()">
        <div class="list" id="playerListRender"></div>
      </div>
@@ -1192,11 +1256,34 @@ window.filterPlayers = () => {
       <b>${esc(u.name || 'User')}</b> (${esc(u.email)})
       <br><span class="tiny muted">Balance: <b style="color:var(--gold)">${Number(u.credits || 0).toFixed(2)} BDT</b></span>
       <div class="row" style="margin-top:6px">
-        <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">+ Add Money</button>
-        <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">- Deduct Money</button>
+        <button class="btn mini green" onclick="admUpdateBalance('${u.id}', 'add')">📥 Deposit / Add Money</button>
+        <button class="btn mini danger" onclick="admUpdateBalance('${u.id}', 'deduct')">📤 Withdraw / Deduct Money</button>
       </div>
     </div>
   `).join('');
+};
+
+window.addPromoCode = async () => {
+  const code = $('newPromoCode').value.trim().toUpperCase();
+  const reward = Number($('newPromoReward').value);
+
+  if(!code || !reward || reward <= 0) return alert('সঠিক কোড ও রিওয়ার্ড পরিমাণ দিন');
+
+  await setDoc(doc(db, 'promoCodes', code), {
+    reward,
+    usedBy: [],
+    createdAt: serverTimestamp()
+  });
+
+  alert('✅ Promo Code Created Successfully!');
+  adminTab('promos');
+};
+
+window.deletePromoCode = async code => {
+  if(confirm(`সত্যিই কি '${code}' প্রোমো কোডটি ডিলিট করতে চান?`)) {
+    await deleteDoc(doc(db, 'promoCodes', code));
+    adminTab('promos');
+  }
 };
 
 window.addAdPackage = async () => {
@@ -1272,7 +1359,7 @@ window.deleteTournament = async id => {
 };
 
 window.admUpdateBalance = async (targetUid, action) => {
-  const amtStr = prompt(action === 'add' ? 'কত টাকা যোগ করতে চান?' : 'কত টাকা বিয়োগ করতে চান?');
+  const amtStr = prompt(action === 'add' ? 'কত টাকা Deposit / Add করতে চান?' : 'কত টাকা Withdraw / Deduct করতে চান?');
   const amt = Number(amtStr);
   if(!amt || amt <= 0) return alert('সঠিক পরিমাণ দিন');
   
@@ -1284,6 +1371,7 @@ window.admUpdateBalance = async (targetUid, action) => {
       const uSnap = await tx.get(uRef);
       const curBal = Number(uSnap.data().credits || 0);
       const newBal = Number((curBal + change).toFixed(2));
+      if(newBal < 0) throw new Error('ব্যালেন্স ০-এর নিচে নামানো সম্ভব নয়');
       tx.update(uRef, { credits: newBal });
     });
 
