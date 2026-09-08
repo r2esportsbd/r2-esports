@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://r2esportsbd.github.io/r2-esports/">
 <meta property="og:title" content="R2.0 ESPORTS - Ultimate Gaming Platform">
 <meta property="og:description" content="Join daily FIFA & eSports tournaments on R2.0 ESPORTS and prove your gaming skills.">
-<meta property="og:image" content="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg">
+<meta property="og:image" content="https://d3tx3wg2jy0sui.cloudfront.net/e624c009dcff4184a53e6a7961e7b36b.jpg">
 
 <style>
 :root{--bg:#07101d;--card:#101b2d;--line:#263852;--text:#eef4ff;--muted:#aebbd0;--red:#ff3b55;--cyan:#35d1c5;--gold:#ffc94d}
@@ -173,12 +173,33 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   margin-bottom: 6px;
   font-size: 13px;
 }
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #091422;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.menu-btn:hover { background: #101e33; }
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
-<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg">
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/e624c009dcff4184a53e6a7961e7b36b.jpg">
 <div><div class="brand">R2.0 <b>ESPORTS</b></div></div>
 </header>
 
@@ -220,34 +241,44 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
 
-<!-- Profile Section -->
+<!-- Upgraded Profile Section -->
 <section id="profile" class="page">
-<div class="card center">
-  <div class="avatar" id="av">R</div>
-  <h2 id="pname">Player</h2>
-  <div id="pemail" class="muted"></div>
-  <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
-</div>
-
-<div class="card">
-  <div class="row space"><b>Credit Balance</b><b id="points" style="color:var(--gold);font-size:20px">0.00 BDT</b></div>
-  <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
-</div>
-
-<!-- Have a Promo Section -->
-<div class="card">
-  <h3>🎁 Have a Promo Code?</h3>
-  <div class="row" style="margin-top:6px">
-    <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
-    <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Apply</button>
+  <div class="card center">
+    <div class="avatar" id="av">R</div>
+    <h2 id="pname" style="margin-top:8px;margin-bottom:2px">Player</h2>
+    <div id="pemail" class="muted tiny"></div>
+    <div id="roleBadge" style="margin-top:8px"><span class="tag" style="background:var(--line);color:#fff">Player</span></div>
   </div>
-</div>
 
-<button class="btn green" style="margin-top:10px" onclick="openWhatsAppModal()">💬 Contact Support (WhatsApp)</button>
-<button class="btn alt" style="margin-top:10px;background:#1e293b" onclick="openSocialMediaModal()">🌐 Support Social Media</button>
-<button class="btn alt" style="margin-top:10px;background:#1e293b" onclick="openRulesModal()">📖 Game Rules</button>
-<button class="btn alt" style="margin-top:10px" onclick="showPrivacyPolicy()">📜 Privacy Policy</button>
-<button class="btn alt danger" style="margin-top:10px" onclick="logoutUser()">Logout</button>
+  <div class="card">
+    <div class="row space">
+      <div>
+        <div class="tiny muted">Available Balance</div>
+        <b id="points" style="color:var(--gold);font-size:20px">0.00 BDT</b>
+      </div>
+      <button class="btn gold mini" style="width:auto;padding:10px 16px" onclick="go('wallet')">💰 Wallet</button>
+    </div>
+  </div>
+
+  <div class="menu-list">
+    <button class="menu-btn" onclick="openWhatsAppModal()">
+      <span>💬 Contact Support (WhatsApp)</span>
+      <span>›</span>
+    </button>
+    <button class="menu-btn" onclick="openSocialMediaModal()">
+      <span>🌐 Support Social Media</span>
+      <span>›</span>
+    </button>
+    <button class="menu-btn" onclick="openRulesModal()">
+      <span>📖 Game Rules</span>
+      <span>›</span>
+    </button>
+    <button class="menu-btn" onclick="showPrivacyPolicy()">
+      <span>📜 Privacy Policy</span>
+      <span>›</span>
+    </button>
+    <button class="btn danger" style="margin-top:10px;border-radius:12px" onclick="logoutUser()">🚪 Logout</button>
+  </div>
 </section>
 
 <!-- Wallet Section -->
@@ -258,11 +289,20 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 
   <div class="wTabs" style="margin-bottom:10px">
-    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads)</button>
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads & Promo)</button>
     <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
   </div>
 
   <div id="wTabDeposit" class="card">
+    <!-- Have a Promo Section in Deposit Section -->
+    <div style="border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 15px;">
+      <h3>🎁 Have a Promo Code?</h3>
+      <div class="row" style="margin-top:6px">
+        <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
+        <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Apply</button>
+      </div>
+    </div>
+
     <h3>📥 Auto Deposit via Ads</h3>
     <p class="tiny muted" style="margin-bottom:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
 
@@ -470,7 +510,7 @@ async function loadHome(){
    </div>
  `).join('');
  
- let banners = ["https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg"];
+ let banners = ["https://d3tx3wg2jy0sui.cloudfront.net/e624c009dcff4184a53e6a7961e7b36b.jpg"];
  try {
    const s = await getDoc(doc(db, 'settings', 'banners'));
    if(s.exists() && s.data().list && s.data().list.length > 0){
@@ -503,7 +543,7 @@ function renderTours(tours) {
     const leftSlots = Math.max(0, totalSlots - joined);
     const progressPercent = Math.min(100, (joined / totalSlots) * 100);
     const isFull = joined >= totalSlots;
-    const matchImg = t.imageUrl || 'https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg';
+    const matchImg = t.imageUrl || 'https://d3tx3wg2jy0sui.cloudfront.net/e624c009dcff4184a53e6a7961e7b36b.jpg';
     const matchIdCode = '#' + (t.id.substring(0, 5).toUpperCase());
     const readableTime = formatBDDisplayTime(t.dateTime);
 
@@ -823,6 +863,7 @@ window.applyPromoCode = async () => {
     alert(`🎉 সফল হয়েছে! ৳${reward.toFixed(2)} BDT বোনাস আপনার ওয়ালেটে যোগ করা হয়েছে।`);
     $('promoCodeInput').value = '';
     loadProfile();
+    loadWallet();
   } catch(e) {
     alert('Error applying promo code: ' + e.message);
   }
@@ -865,7 +906,6 @@ async function loadWallet(){
     const s = await getDoc(doc(db, 'users', user.uid));
     $('walletPoints').textContent = Number(s.data().credits || 0).toFixed(2) + ' BDT';
 
-    // Load Dynamic Ad Packages from Firestore
     await loadAdPackagesUser();
 
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
