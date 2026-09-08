@@ -8,7 +8,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Primary SEO Meta Tags -->
 <title>R2.0 ESPORTS</title>
 <meta name="title" content="R2.0 ESPORTS - Ultimate Gaming & eSports Tournament Platform">
 <meta name="description" content="Play eSports tournaments on R2.0 ESPORTS. Join daily matches, prove your skill, and track your wallet safely.">
@@ -185,6 +184,9 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
       <button type="button" onclick="togglePassword()" style="position:absolute;right:8px;top:8px;background:#20314a;color:white;border-radius:8px;padding:7px 10px">👁️</button>
     </div>
 
+    <!-- Referral Code Input for Registration -->
+    <input id="refCodeInput" class="input" placeholder="🎁 Referral Code (Optional)" style="margin-top:8px">
+
     <button id="loginBtn" class="btn" onclick="loginUser()">🔐 Login</button>
     <button id="registerBtn" class="btn alt" style="margin-top:8px" onclick="registerUser()">🆕 Create Account</button>
 
@@ -220,12 +222,13 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
 </div>
 
-<!-- Have a Promo Section -->
+<!-- Referral Section in Profile -->
 <div class="card">
-  <h3>🎁 Have a Promo Code?</h3>
+  <h3>🔗 Referral & Earn (৳5 BDT)</h3>
+  <p class="tiny muted">আপনার রেফার কোড বন্ধুদের শেয়ার করুন। সে একাউন্ট খুললে পাবেন ৳৫ ফ্রী ব্যালেন্স!</p>
   <div class="row" style="margin-top:6px">
-    <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
-    <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Apply</button>
+    <input id="myRefCode" class="input" readonly style="margin:0; text-align:center; font-weight:bold; color:var(--gold);">
+    <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="copyRefCode()">📋 Copy</button>
   </div>
 </div>
 
@@ -244,14 +247,40 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 
   <div class="wTabs" style="margin-bottom:10px">
-    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads)</button>
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads & Promo)</button>
     <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
   </div>
 
   <div id="wTabDeposit" class="card">
-    <h3>📥 Auto Deposit via Ads</h3>
-    <p class="tiny muted" style="margin-bottom:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
+    <h3>📥 Deposit Options & Bonus</h3>
+    
+    <!-- Tasks & Promos -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Subscribe Now</div>
+        <div class="pkg-reward">+ ৳2.00 BDT</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startSubscribeTask()">শুরু</button>
+    </div>
 
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Get promo code video</div>
+        <div class="pkg-reward">+ ৳5.00 BDT</div>
+      </div>
+      <button class="btn gold mini" style="width:auto" onclick="startPromoVideoTask()">শুরু</button>
+    </div>
+
+    <!-- Have Promo Code Box inside Deposit Section -->
+    <div class="card" style="background:#070e1b; margin:10px 0; border:1px solid var(--line)">
+      <h3 style="font-size:14px">🎁 Apply Promo Code</h3>
+      <div class="row" style="margin-top:6px">
+        <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
+        <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Submit</button>
+      </div>
+    </div>
+
+    <p class="tiny muted" style="margin-bottom:10px; margin-top:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
     <div id="adPackagesList">Loading Packages...</div>
   </div>
 
@@ -373,7 +402,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup, query, where } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
@@ -386,6 +415,8 @@ const firebaseConfig = {
 };
 
 const ADMIN_EMAILS = ["salasalauddin139@gmail.com"];
+const DEFAULT_BANNER = "https://d3tx3wg2jy0sui.cloudfront.net/b1c90cf7d28748919c612eeaacee90ec.jpg";
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -458,7 +489,7 @@ async function loadHome(){
    `).join('');
  }
  
- let banners = ["https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg"];
+ let banners = [DEFAULT_BANNER];
  try {
    const s = await getDoc(doc(db, 'settings', 'banners'));
    if(s.exists() && s.data().list && s.data().list.length > 0){
@@ -497,7 +528,7 @@ function renderTours(tours) {
     const leftSlots = Math.max(0, totalSlots - joined);
     const progressPercent = Math.min(100, (joined / totalSlots) * 100);
     const isFull = joined >= totalSlots;
-    const matchImg = t.imageUrl || 'https://d3tx3wg2jy0sui.cloudfront.net/2e1e93c0031f441882abf6ba4168ed72.jpg';
+    const matchImg = t.imageUrl && t.imageUrl.trim() !== '' ? t.imageUrl : DEFAULT_BANNER;
     const matchIdCode = '#' + (t.id.substring(0, 5).toUpperCase());
     const readableTime = formatBDDisplayTime(t.dateTime);
 
@@ -505,7 +536,7 @@ function renderTours(tours) {
     <div class="match-card" onclick="openDetails('${t.id}')">
       <div class="match-match-id">${matchIdCode}</div>
       <div class="match-header">
-        <img class="match-img" src="${esc(matchImg)}">
+        <img class="match-img" src="${esc(matchImg)}" onerror="this.src='${DEFAULT_BANNER}'">
         <div class="match-info">
           <div class="match-title-text">${esc(t.title || 'Tournament')}</div>
           <div class="match-time">⏰ ${esc(readableTime)}</div>
@@ -757,12 +788,23 @@ window.confirmJoin = async () => {
    if(bal < fee) throw Error('পর্যাপ্ত ব্যালেন্স নেই!');
    if(Number(ts.data().currentJoins || 0) >= Number(ts.data().maxSlots || 48)) throw Error('Match Full');
    
-   tx.set(ref, { credits: Number((bal - fee).toFixed(2)) }, { merge: true });
+   // Daily Tournament Play Bonus Check (৳1 Bonus)
+   const todayStr = new Date().toISOString().split('T')[0];
+   let newBal = bal - fee;
+   let bonusMsg = '';
+   if(us.data().lastDailyBonus !== todayStr){
+      newBal += 1.00;
+      bonusMsg = '\n🎉 ডেইলি টুর্নামেন্ট প্লে বোনাস ৳১ জমা করা হয়েছে!';
+   }
+
+   tx.set(ref, { credits: Number(newBal.toFixed(2)), lastDailyBonus: todayStr }, { merge: true });
    tx.set(joinRef, { tournamentId: pendingJoinId, title: ts.data().title || '', ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
    tx.set(playerRef, { uid: user.uid, email: user.email, ign: finalIgn, realEmail, joinedAt: serverTimestamp() });
    tx.update(tref, { currentJoins: increment(1) });
+
+   alert(`🎉 Successfully Joined!${bonusMsg}`);
   });
-  closeJoinModal(); alert('🎉 Successfully Joined!'); loadProfile();
+  closeJoinModal(); loadProfile();
  } catch(e){ err(e); }
 };
 
@@ -775,6 +817,7 @@ async function loadProfile(){
   if($('pemail')) $('pemail').textContent = user.email;
   if($('av')) $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
   if($('points')) $('points').textContent = Number(d.credits || 0).toFixed(2) + ' BDT';
+  if($('myRefCode')) $('myRefCode').value = d.refCode || user.uid.substring(0,6).toUpperCase();
   
   if($('roleBadge')){
     if(ADMIN_EMAILS.includes(user.email)){
@@ -785,6 +828,13 @@ async function loadProfile(){
   }
  } catch(e){}
 }
+
+window.copyRefCode = () => {
+  const code = $('myRefCode').value;
+  if(!code) return;
+  navigator.clipboard.writeText(code);
+  alert('📋 রেফারেল কোড কপি করা হয়েছে: ' + code);
+};
 
 window.applyPromoCode = async () => {
   if(!user) return alert('দয়া করে লগইন করুন');
@@ -803,7 +853,7 @@ window.applyPromoCode = async () => {
       return alert('⚠️ আপনি ইতিমধ্যে এই প্রোমো কোডটি ব্যবহার করেছেন!');
     }
 
-    const reward = Number(pData.reward || 0);
+    const reward = Number(pData.reward || 5.00);
     const uRef = doc(db, 'users', user.uid);
 
     await runTransaction(db, async tx => {
@@ -823,6 +873,22 @@ window.applyPromoCode = async () => {
   } catch(e) {
     alert('Error applying promo code: ' + e.message);
   }
+};
+
+window.startSubscribeTask = async () => {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'social'));
+    const ytUrl = (s.exists() && s.data().yt) ? s.data().yt : 'https://youtube.com';
+    window.open(ytUrl, '_blank');
+  } catch(e){}
+};
+
+window.startPromoVideoTask = async () => {
+  try {
+    const s = await getDoc(doc(db, 'settings', 'social'));
+    const promoUrl = (s.exists() && s.data().promoVideo) ? s.data().promoVideo : 'https://youtube.com';
+    window.open(promoUrl, '_blank');
+  } catch(e){}
 };
 
 async function loadMyMatches(){
@@ -995,9 +1061,30 @@ window.loginUser = async () => {
 window.registerUser = async () => {
   try {
     const email = $('email').value.trim(), pass = $('password').value, name = $('username').value.trim();
+    const refCodeEntered = $('refCodeInput').value.trim().toUpperCase();
+
     if(!email || !pass) return alert('Email & Password দিন');
     const c = await createUserWithEmailAndPassword(auth, email, pass);
-    await setDoc(doc(db, 'users', c.user.uid), { email, name: name || email.split('@')[0], credits: 0, createdAt: serverTimestamp() }, { merge: true });
+    const myCode = c.user.uid.substring(0,6).toUpperCase();
+
+    await setDoc(doc(db, 'users', c.user.uid), { 
+      email, 
+      name: name || email.split('@')[0], 
+      credits: 0, 
+      refCode: myCode,
+      createdAt: serverTimestamp() 
+    }, { merge: true });
+
+    // Handle Referral Bonus (৳5 for Referrer)
+    if(refCodeEntered) {
+      const qSnap = await getDocs(query(collection(db, 'users'), where('refCode', '==', refCodeEntered)));
+      if(!qSnap.empty) {
+        const referrerDoc = qSnap.docs[0];
+        await updateDoc(doc(db, 'users', referrerDoc.id), {
+          credits: increment(5.00)
+        });
+      }
+    }
   } catch(e) { err(e); }
 };
 
@@ -1005,7 +1092,14 @@ window.googleLogin = async () => {
   try {
     const provider = new GoogleAuthProvider();
     const res = await signInWithPopup(auth, provider);
-    await setDoc(doc(db, 'users', res.user.uid), { email: res.user.email, name: res.user.displayName || res.user.email.split('@')[0], credits: 0, updatedAt: serverTimestamp() }, { merge: true });
+    const myCode = res.user.uid.substring(0,6).toUpperCase();
+    await setDoc(doc(db, 'users', res.user.uid), { 
+      email: res.user.email, 
+      name: res.user.displayName || res.user.email.split('@')[0], 
+      credits: 0, 
+      refCode: myCode,
+      updatedAt: serverTimestamp() 
+    }, { merge: true });
   } catch(e) { err(e); }
 };
 
@@ -1126,7 +1220,7 @@ window.adminTab = async tab => {
      <div class="card">
        <h3>🎁 Add Promo Code</h3>
        <input id="newPromoCode" class="input" placeholder="Code (e.g. BONUS50)" style="text-transform:uppercase">
-       <input id="newPromoReward" class="input" type="number" placeholder="Reward Amount (BDT)">
+       <input id="newPromoReward" class="input" type="number" placeholder="Reward Amount (BDT)" value="5">
        <button class="btn gold" style="margin-top:8px" onclick="addPromoCode()">+ Create Code</button>
      </div>
      <div class="card list">
@@ -1182,13 +1276,12 @@ window.adminTab = async tab => {
    } catch(e) { box.innerHTML = "Error loading requests"; }
 
  } else if(tab === 'settings') {
-   let set = {}, wa = {}, resData = {}, bData = {}, socData = {}, rulesData = {};
+   let set = {}, wa = {}, resData = {}, bData = {}, socData = {};
    try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
    try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
    try { resData = (await getDoc(doc(db, 'settings', 'results'))).data() || {}; } catch(e){}
    try { bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
    try { socData = (await getDoc(doc(db, 'settings', 'social'))).data() || {}; } catch(e){}
-   try { rulesData = (await getDoc(doc(db, 'settings', 'rules'))).data() || {}; } catch(e){}
 
    box.innerHTML = `
      <div class="card">
@@ -1198,29 +1291,12 @@ window.adminTab = async tab => {
      </div>
 
      <div class="card" style="margin-top:10px">
-       <h3>🌐 Support Social Media Links</h3>
-       <input id="admYT" class="input" placeholder="YouTube Link" value="${socData.yt || ''}">
+       <h3>🌐 Support Social & Promo Links</h3>
+       <input id="admYT" class="input" placeholder="YouTube Subscribe Link" value="${socData.yt || ''}">
+       <input id="admPromoVid" class="input" placeholder="Promo Code Video Link" value="${socData.promoVideo || ''}">
        <input id="admFB" class="input" placeholder="Facebook Page/Group Link" value="${socData.fb || ''}">
        <input id="admTG" class="input" placeholder="Telegram Channel Link" value="${socData.tg || ''}">
        <button class="btn gold" style="margin-top:8px" onclick="saveSocialLinks()">💾 Save Links</button>
-     </div>
-
-     <div class="card" style="margin-top:10px">
-       <h3>📖 Edit Game Rules</h3>
-       <textarea id="admGameRules" class="input" rows="4" placeholder="গেমের নিয়মাবলী লিখুন...">${rulesData.rulesText || ''}</textarea>
-       <button class="btn gold" style="margin-top:8px" onclick="saveGameRules()">💾 Update Rules</button>
-     </div>
-
-     <div class="card" style="margin-top:10px">
-       <h3>📜 Edit Privacy Policy</h3>
-       <textarea id="admPrivacyText" class="input" rows="4" placeholder="প্রাইভেসি পলিসি লিখুন...">${set.privacyText || ''}</textarea>
-       <button class="btn gold" style="margin-top:10px" onclick="savePrivacyText()">💾 Update Policy</button>
-     </div>
-
-     <div class="card" style="margin-top:10px">
-       <h3>🏆 Edit Tournament Results</h3>
-       <textarea id="admResultsText" class="input" rows="4" placeholder="টুর্নামেন্ট রেজাল্ট বিস্তারিত লিখুন...">${resData.resultsText || ''}</textarea>
-       <button class="btn gold" style="margin-top:10px" onclick="saveResultsText()">💾 Update Results</button>
      </div>
 
      <div class="card" style="margin-top:10px">
@@ -1235,10 +1311,10 @@ window.adminTab = async tab => {
 };
 
 window.filterPlayers = () => {
-  const query = ($('playerSearch')?.value || '').toLowerCase().trim();
+  const queryStr = ($('playerSearch')?.value || '').toLowerCase().trim();
   const filtered = allPlayersData.filter(u => 
-    (u.name || '').toLowerCase().includes(query) || 
-    (u.email || '').toLowerCase().includes(query)
+    (u.name || '').toLowerCase().includes(queryStr) || 
+    (u.email || '').toLowerCase().includes(queryStr)
   );
 
   const container = $('playerListRender');
@@ -1263,7 +1339,7 @@ window.filterPlayers = () => {
 
 window.addPromoCode = async () => {
   const code = $('newPromoCode').value.trim().toUpperCase();
-  const reward = Number($('newPromoReward').value);
+  const reward = Number($('newPromoReward').value || 5);
 
   if(!code || !reward || reward <= 0) return alert('সঠিক কোড ও রিওয়ার্ড পরিমাণ দিন');
 
@@ -1386,34 +1462,18 @@ window.saveBanners = async () => {
   const list = text.split('\n').map(x => x.trim()).filter(Boolean);
   await setDoc(doc(db, 'settings', 'banners'), { list }, { merge: true });
   alert('✅ Banners Saved!');
+  loadHome();
 };
 
 window.saveSocialLinks = async () => {
   const data = {
     yt: $('admYT').value.trim(),
+    promoVideo: $('admPromoVid').value.trim(),
     fb: $('admFB').value.trim(),
     tg: $('admTG').value.trim()
   };
   await setDoc(doc(db, 'settings', 'social'), data, { merge: true });
-  alert('✅ Social Media Links Saved!');
-};
-
-window.saveGameRules = async () => {
-  const rulesText = $('admGameRules').value.trim();
-  await setDoc(doc(db, 'settings', 'rules'), { rulesText }, { merge: true });
-  alert('✅ Game Rules Updated!');
-};
-
-window.savePrivacyText = async () => {
-  const text = $('admPrivacyText').value.trim();
-  await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
-  alert('✅ Privacy Policy Updated!');
-};
-
-window.saveResultsText = async () => {
-  const text = $('admResultsText').value.trim();
-  await setDoc(doc(db, 'settings', 'results'), { resultsText: text }, { merge: true });
-  alert('✅ Results Updated!');
+  alert('✅ Social & Promo Video Links Saved!');
 };
 
 window.saveWhatsAppSettings = async () => {
