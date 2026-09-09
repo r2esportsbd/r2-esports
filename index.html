@@ -158,12 +158,32 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   margin-bottom: 6px;
   font-size: 13px;
 }
+
+.bkash-box {
+  background: #e2136e;
+  color: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.bkash-num {
+  font-size: 20px;
+  font-weight: 900;
+  background: #fff;
+  color: #e2136e;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 6px 0;
+  letter-spacing: 1px;
+}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
-<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg">
+<img id="siteLogo" class="logo" src="https://d3tx3wg2jy0sui.cloudfront.net/bc4c172dace641d189815418b448e999.jpg" alt="Logo">
 <div><div class="brand">R2.0 <b>ESPORTS</b></div></div>
 </header>
 
@@ -184,7 +204,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
       <button type="button" onclick="togglePassword()" style="position:absolute;right:8px;top:8px;background:#20314a;color:white;border-radius:8px;padding:7px 10px">👁️</button>
     </div>
 
-    <!-- Referral Code Input for Registration -->
     <input id="refCodeInput" class="input" placeholder="🎁 Referral Code (Optional)" style="margin-top:8px">
 
     <button id="loginBtn" class="btn" onclick="loginUser()">🔐 Login</button>
@@ -208,7 +227,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <section id="matches" class="page"><h2>📋 My Matches</h2><div id="myMatchesList"></div></section>
 <section id="results" class="page"><h2>🏆 Results</h2><div id="resultsList"></div></section>
 
-<!-- Profile Section -->
 <section id="profile" class="page">
 <div class="card center">
   <div class="avatar" id="av">R</div>
@@ -222,7 +240,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   <button class="btn gold" style="margin-top:10px" onclick="go('wallet')">💰 Wallet</button>
 </div>
 
-<!-- Referral Section in Profile -->
 <div class="card">
   <h3>🔗 Referral & Earn (৳5 BDT)</h3>
   <p class="tiny muted">আপনার রেফার কোড বন্ধুদের শেয়ার করুন। সে একাউন্ট খুললে পাবেন ৳৫ ফ্রী ব্যালেন্স!</p>
@@ -239,7 +256,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 <button class="btn alt danger" style="margin-top:10px" onclick="logoutUser()">Logout</button>
 </section>
 
-<!-- Wallet Section -->
 <section id="wallet" class="page">
   <h2>💰 My Wallet</h2>
   <div class="card">
@@ -247,41 +263,30 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 
   <div class="wTabs" style="margin-bottom:10px">
-    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (Ads & Promo)</button>
+    <button class="btn alt mini" onclick="switchWTab('deposit')">📥 Deposit (bKash)</button>
     <button class="btn alt mini" onclick="switchWTab('withdraw')">📤 Withdraw</button>
   </div>
 
   <div id="wTabDeposit" class="card">
-    <h3>📥 Deposit Options & Bonus</h3>
-    
-    <!-- Tasks & Promos -->
-    <div class="pkg-card">
-      <div>
-        <div class="pkg-title">Subscribe Now</div>
-        <div class="pkg-reward">ইউটিউব সাবস্ক্রাইব লিংক</div>
-      </div>
-      <button class="btn gold mini" style="width:auto" onclick="startSubscribeTask()">শুরু</button>
+    <h3>📥 Deposit Money (bKash)</h3>
+    <div class="bkash-box">
+      <div style="font-weight:bold; font-size:14px;">bKash Personal Number:</div>
+      <div class="bkash-num" id="bkashNumText">01892036752</div>
+      <button class="btn mini gold" style="width:auto; display:inline-block; margin-left:8px;" onclick="copyBkashNum()">📋 Copy Number</button>
     </div>
 
-    <div class="pkg-card">
-      <div>
-        <div class="pkg-title">Get promo code video</div>
-        <div class="pkg-reward">ভিডিও দেখুন</div>
-      </div>
-      <button class="btn gold mini" style="width:auto" onclick="startPromoVideoTask()">শুরু</button>
+    <div style="background:#070e1b; padding:12px; border-radius:10px; border:1px solid var(--line); font-size:12px; margin-bottom:12px;">
+      <b style="color:var(--gold)">⚠️ ডিপোজিট করার নিয়মানুযায়ী:</b><br>
+      ১. ওপরের বিকাশ (Personal) নম্বরে Money Send (Send Money) করুন।<br>
+      ২. সর্বনিম্ন ডিপোজিট পরিমাণ <b>১০০ টাকা</b>।<br>
+      ৩. সেন্ড মানি করার পর নিচের ঘরগুলোতে তথ্য পূরণ করে সাবমিট দিন।
     </div>
 
-    <!-- Have Promo Code Box inside Deposit Section -->
-    <div class="card" style="background:#070e1b; margin:10px 0; border:1px solid var(--line)">
-      <h3 style="font-size:14px">🎁 Apply Promo Code</h3>
-      <div class="row" style="margin-top:6px">
-        <input id="promoCodeInput" class="input" placeholder="Enter Promo Code" style="margin:0">
-        <button class="btn gold mini" style="width:auto; white-space:nowrap; padding:12px 18px;" onclick="applyPromoCode()">Submit</button>
-      </div>
-    </div>
+    <input id="depSender" class="input" type="number" placeholder="আপনার bKash নম্বর (যে নম্বর থেকে পাঠিয়েছেন)">
+    <input id="depAmount" class="input" type="number" placeholder="টাকার পরিমাণ (Min 100 TK)">
+    <input id="depTrx" class="input" placeholder="TrxID (Transaction ID)">
 
-    <p class="tiny muted" style="margin-bottom:10px; margin-top:15px">অ্যাড দেখে ফ্রিতে ডিপোজিট রিওয়ার্ড সংগ্রহ করুন:</p>
-    <div id="adPackagesList">Loading Packages...</div>
+    <button class="btn gold" style="margin-top:10px" onclick="submitDepositRequest()">SUBMIT DEPOSIT REQUEST</button>
   </div>
 
   <div id="wTabWithdraw" class="card hidden">
@@ -293,22 +298,20 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
   </div>
 
   <div class="card">
-    <h3>📜 Withdraw History</h3>
+    <h3>📜 History (Deposit & Withdraw)</h3>
     <div id="requestList"></div>
   </div>
 </section>
 
-<!-- Admin Section -->
 <section id="admin" class="page">
 <h2>⚙ Admin Panel</h2><p id="adminStatus" class="tiny muted"></p>
 <div id="adminContent" class="hidden">
 <div class="adminTabs">
 <button class="btn alt mini" onclick="adminTab('tours')">🏆 Tournaments</button>
 <button class="btn alt mini" onclick="adminTab('modes')">🎮 Game Modes</button>
-<button class="btn alt mini" onclick="adminTab('ad_packages')">📺 Ad Packages</button>
-<button class="btn alt mini" onclick="adminTab('promos')">🎁 Promo Codes</button>
-<button class="btn alt mini" onclick="adminTab('players')">👥 Deposit & Withdraw (Players)</button>
+<button class="btn alt mini" onclick="adminTab('dep_requests')">📥 Deposit Req</button>
 <button class="btn alt mini" onclick="adminTab('wit_requests')">📤 Withdraw Req</button>
+<button class="btn alt mini" onclick="adminTab('players')">👥 Manage Players</button>
 <button class="btn alt mini" onclick="adminTab('settings')">⚙ Settings</button>
 </div>
 <div id="adminBox"></div>
@@ -326,23 +329,6 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 </div></nav>
 
 <!-- Modals -->
-<div id="adModal" class="modal"><div class="modalBox center">
-<h3>📺 Watching Ads</h3>
-<p class="muted tiny">সবগুলো অ্যাড সম্পূর্ণ দেখুন</p>
-<p style="font-size:18px;margin:15px 0">প্রোগ্রেস: <b id="adCurrent" style="color:var(--gold)">0</b> / <b id="adTotal">0</b></p>
-
-<button id="adWatchBtn" class="btn gold" onclick="triggerNextAd()">অ্যাডে দেখুন</button>
-
-<div id="adCodeSection" class="hidden">
-  <p class="tiny green" style="margin-top:10px">🎉 অ্যাড সম্পন্ন হয়েছে! সিক্রেট কোডটি নিশ্চিত করুন:</p>
-  <div id="generatedCode" class="code-display">000000</div>
-  <input id="inputAdCode" class="input" placeholder="Enter 6-digit Code" maxlength="6" style="text-align:center">
-  <button class="btn gold" onclick="verifyAndClaimDeposit()">VERIFY & CLAIM CREDIT</button>
-</div>
-
-<button class="btn alt mini" style="margin-top:15px" onclick="closeAdModal()">বন্ধ করুন</button>
-</div></div>
-
 <div id="joinModal" class="modal"><div class="modalBox">
 <h3>🎮 Join Tournament</h3>
 <p class="tiny muted" id="joinModalSubtitle">সঠিক তথ্য দিয়ে জয়েন নিশ্চিত করুন:</p>
@@ -425,7 +411,6 @@ let user = null, pendingJoinId = null, pendingRoomId = null;
 let bannerInterval = null, countdownInterval = null;
 let activeTournaments = [];
 let allPlayersData = [];
-let currentPkgTotal = 0, currentPkgReward = 0, currentAdCount = 0, activeGeneratedCode = "";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -711,7 +696,7 @@ window.openDetails = async id => {
 
     <div class="card">
       <h3>📜 Tournament Rules</h3>
-      <p style="white-space:pre-wrap;font-size:13px;line-height:1.5" class="muted">${esc(t.rules || '১. কোনো হ্যাক বা প্যানেল ব্যবহার নিষিদ্ধ।\n২. সঠিক ইন-গেম নেম দিয়ে জয়েন করুন।\n৩. কাস্টম রুম টাইমমতো শুরু হবে।')}</p>
+      <p style="white-space:pre-wrap;font-size:13px;line-height:1.5" class="muted">${esc(t.rules || '১. কোনো হ্যাক বা প্যানেল ব্যবহার নিষিদ্ধ。\n২. সঠিক ইন-গেম নেম দিয়ে জয়েন করুন。\n৩. কাস্টম রুম টাইমমতো শুরু হবে।')}</p>
     </div>
 
     <div class="card">
@@ -835,61 +820,10 @@ window.copyRefCode = () => {
   alert('📋 রেফারেল কোড কপি করা হয়েছে: ' + code);
 };
 
-window.applyPromoCode = async () => {
-  if(!user) return alert('দয়া করে লগইন করুন');
-  const codeInput = $('promoCodeInput');
-  const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
-  if(!code) return alert('প্রোমো কোড টাইপ করুন');
-
-  try {
-    const promoRef = doc(db, 'promoCodes', code);
-    const promoSnap = await getDoc(promoRef);
-
-    if(!promoSnap.exists()) return alert('❌ অবৈধ অথবা মেয়ার্দউত্তীর্ণ প্রোমো কোড!');
-    
-    const pData = promoSnap.data();
-    if(pData.usedBy && pData.usedBy.includes(user.uid)) {
-      return alert('⚠️ আপনি ইতিমধ্যে এই প্রোমো কোডটি ব্যবহার করেছেন!');
-    }
-
-    const reward = Number(pData.reward || 5.00);
-    const uRef = doc(db, 'users', user.uid);
-
-    await runTransaction(db, async tx => {
-      const uSnap = await tx.get(uRef);
-      const curBal = Number(uSnap.data().credits || 0);
-      
-      let usedByList = pData.usedBy || [];
-      usedByList.push(user.uid);
-
-      tx.update(uRef, { credits: Number((curBal + reward).toFixed(2)) });
-      tx.update(promoRef, { usedBy: usedByList });
-    });
-
-    alert(`🎉 সফল হয়েছে! ৳${reward.toFixed(2)} BDT বোনাস আপনার ওয়ালেটে যোগ করা হয়েছে।`);
-    if(codeInput) codeInput.value = '';
-    loadProfile();
-  } catch(e) {
-    alert('Error applying promo code: ' + e.message);
-  }
-};
-
-window.startSubscribeTask = async () => {
-  try {
-    const s = await getDoc(doc(db, 'settings', 'social'));
-    const ytUrl = (s.exists() && s.data().yt) ? s.data().yt : '';
-    if(!ytUrl) return alert('লিংক যুক্ত করা হয়নি, অ্যাডমিন প্যানেল থেকে সেট করুন।');
-    window.open(ytUrl, '_blank');
-  } catch(e){ alert('Error opening link'); }
-};
-
-window.startPromoVideoTask = async () => {
-  try {
-    const s = await getDoc(doc(db, 'settings', 'social'));
-    const promoUrl = (s.exists() && s.data().promoVideo) ? s.data().promoVideo : '';
-    if(!promoUrl) return alert('লিংক যুক্ত করা হয়নি, অ্যাডমিন প্যানেল থেকে সেট করুন।');
-    window.open(promoUrl, '_blank');
-  } catch(e){ alert('Error opening link'); }
+window.copyBkashNum = () => {
+  const num = $('bkashNumText').textContent.trim();
+  navigator.clipboard.writeText(num);
+  alert('📋 বিকাশ নম্বর কপি করা হয়েছে: ' + num);
 };
 
 async function loadMyMatches(){
@@ -929,102 +863,51 @@ async function loadWallet(){
     const s = await getDoc(doc(db, 'users', user.uid));
     $('walletPoints').textContent = Number(s.data().credits || 0).toFixed(2) + ' BDT';
 
-    await loadAdPackagesUser();
-
     const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
     $('requestList').innerHTML = q.docs.map(d => {
       const data = d.data();
       let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
+      let typeLabel = data.type === 'deposit' ? '📥 Deposit' : '📤 Withdraw';
       return `<div class="item" style="margin-top:8px">
         <div class="row space">
-          <b>📤 Withdraw (${Number(data.amount).toFixed(2)} BDT)</b>
+          <b>${typeLabel} (${Number(data.amount).toFixed(2)} BDT)</b>
           <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
+        </div>
+        <div class="tiny muted" style="margin-top:4px">
+          ${data.type === 'deposit' ? `TrxID: ${esc(data.trxId || '')} | Sender: ${esc(data.sender || '')}` : `Number: ${esc(data.receiver || '')}`}
         </div>
       </div>`;
     }).join('') || '<p class="tiny muted">No history</p>';
   } catch(e){ console.error(e); }
 }
 
-async function loadAdPackagesUser() {
-  const container = $('adPackagesList');
-  if(!container) return;
-  
-  try {
-    const snap = await getDocs(collection(db, 'adPackages'));
-    let packages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    
-    packages.sort((a, b) => Number(a.ads) - Number(b.ads));
+window.submitDepositRequest = async () => {
+  const sender = $('depSender').value.trim();
+  const amount = Number($('depAmount').value);
+  const trxId = $('depTrx').value.trim();
 
-    if(packages.length === 0) {
-      packages = [
-        { ads: 3, reward: 0.50, title: '৩ টি অ্যাড দেখুন', isHighlight: false },
-        { ads: 5, reward: 1.00, title: '৫ টি অ্যাড দেখুন ⭐', isHighlight: true },
-        { ads: 10, reward: 2.50, title: '১০ টি অ্যাড দেখুন (বোনাস)', isHighlight: false }
-      ];
-    }
-
-    container.innerHTML = packages.map(p => `
-      <div class="pkg-card ${p.isHighlight ? 'highlight' : ''}">
-        <div>
-          <div class="pkg-title">${esc(p.title || (p.ads + ' টি অ্যাড রাখুন'))}</div>
-          <div class="pkg-reward">+ ৳${Number(p.reward).toFixed(2)} BDT</div>
-        </div>
-        <button class="btn gold mini" style="width:auto" onclick="startAdPackage(${p.ads}, ${p.reward})">শুরু করুন</button>
-      </div>
-    `).join('');
-  } catch(e) {
-    container.innerHTML = '<p class="tiny muted">প্যাকেজ লোড হতে ব্যর্থ হয়েছে</p>';
-  }
-}
-
-window.startAdPackage = (ads, reward) => {
-  currentPkgTotal = Number(ads); 
-  currentPkgReward = Number(reward); 
-  currentAdCount = 0; 
-  activeGeneratedCode = "";
-  
-  $('adTotal').textContent = ads; 
-  $('adCurrent').textContent = 0;
-  $('adWatchBtn').classList.remove('hidden'); 
-  $('adCodeSection').classList.add('hidden');
-  $('adModal').classList.add('on');
-};
-
-window.triggerNextAd = () => {
-  window.open('https://omg10.com/4/11738539', '_blank');
-  
-  currentAdCount++; 
-  $('adCurrent').textContent = currentAdCount;
-  
-  if(currentAdCount >= currentPkgTotal) {
-    activeGeneratedCode = Math.floor(100000 + Math.random() * 900000).toString();
-    $('generatedCode').textContent = activeGeneratedCode;
-    $('adWatchBtn').classList.add('hidden'); 
-    $('adCodeSection').classList.remove('hidden');
-  }
-};
-
-window.verifyAndClaimDeposit = async () => {
-  const input = $('inputAdCode').value.trim();
-  if(!input || input !== activeGeneratedCode) return alert('❌ সিক্রেট কোড ভুল হয়েছে! সঠিক কোডটি বসান।');
+  if(!sender || !amount || !trxId) return alert('সমস্ত তথ্য প্রদান করুন');
+  if(amount < 100) return alert('⚠️ সর্বনিম্ন ডিপোজিট ১০০ টাকা');
 
   try {
-    const uRef = doc(db, 'users', user.uid);
-    await runTransaction(db, async tx => {
-      const uSnap = await tx.get(uRef);
-      const currentCredits = Number(uSnap.data().credits || 0);
-      const newBalance = Number((currentCredits + currentPkgReward).toFixed(2));
-      tx.update(uRef, { credits: newBalance });
+    const reqRef = doc(collection(db, 'walletRequests', user.uid, 'items'));
+    await setDoc(reqRef, {
+      type: 'deposit',
+      method: 'bKash',
+      sender,
+      amount,
+      trxId,
+      status: 'pending',
+      createdAt: serverTimestamp(),
+      email: user.email,
+      uid: user.uid
     });
 
-    alert(`🎉 সফল হয়েছে! ৳${currentPkgReward.toFixed(2)} BDT আপনার ওয়ালেটে জমা করা হয়েছে।`);
-    closeAdModal(); 
-    loadWallet(); 
-    loadProfile();
-  } catch(e) { alert('Error updating balance: ' + e.message); }
+    alert('✅ ডিপোজিট রিকোয়েস্ট জমা হয়েছে! অ্যাডমিন যাচাই করে রিভিউ করবেন।');
+    $('depSender').value = ''; $('depAmount').value = ''; $('depTrx').value = '';
+    loadWallet();
+  } catch(e) { alert('Error: ' + e.message); }
 };
-
-window.closeAdModal = () => { $('adModal').classList.remove('on'); $('inputAdCode').value = ''; };
 
 window.submitWithdraw = async () => {
   const receiver = $('witNum').value.trim(); 
@@ -1189,51 +1072,36 @@ window.adminTab = async tab => {
        `).join('')}
      </div>
    `;
- } else if(tab === 'ad_packages') {
-   const snap = await getDocs(collection(db, 'adPackages'));
-   const pkgs = snap.docs.map(d => ({id: d.id, ...d.data()}));
-   box.innerHTML = `
-     <div class="card">
-       <h3>📺 Add Ad Deposit Package</h3>
-       <input id="pkgTitle" class="input" placeholder="Package Title (e.g. ৩ টি অ্যাড দেখুন)">
-       <input id="pkgAds" class="input" type="number" placeholder="Number of Ads (e.g. 3)">
-       <input id="pkgReward" class="input" type="number" step="0.01" placeholder="Reward Amount in BDT (e.g. 0.50)">
-       <label class="tiny muted"><input type="checkbox" id="pkgHighlight"> Highlight Box (⭐ Popular Choice)</label>
-       <button class="btn gold" style="margin-top:8px" onclick="addAdPackage()">+ Add Package</button>
-     </div>
-     <div class="card list">
-       <h3>📋 Manage Ad Packages</h3>
-       ${pkgs.map(p => `
-         <div class="item" style="margin-top:8px">
-           <b>${esc(p.title || (p.ads + ' Ads'))}</b> - <span style="color:var(--cyan)">৳${Number(p.reward).toFixed(2)} BDT</span> (${p.ads} Ads)
-           <div class="row" style="margin-top:6px">
-             <button class="btn danger mini" style="flex:1" onclick="deleteAdPackage('${p.id}')">🗑️ Delete</button>
-           </div>
+ } else if(tab === 'dep_requests') {
+   try {
+     const snap = await getDocs(collectionGroup(db, 'items'));
+     const reqs = snap.docs
+       .map(d => ({id: d.id, ref: d.ref, ...d.data()}))
+       .filter(r => r.type === 'deposit');
+
+     box.innerHTML = `
+       <div class="card">
+         <h3>📥 Deposit Requests (bKash)</h3>
+         <div class="list">
+           ${reqs.map(r => `
+             <div class="item" style="margin-top:8px">
+               <b>Email:</b> ${esc(r.email)}<br>
+               <b>Amount:</b> <span style="color:var(--gold)">${Number(r.amount).toFixed(2)} BDT</span><br>
+               <b>Sender bKash:</b> ${esc(r.sender)}<br>
+               <b>TrxID:</b> <b style="color:var(--cyan)">${esc(r.trxId)}</b><br>
+               <b>Status:</b> <span class="badge">${esc(r.status)}</span>
+               ${r.status === 'pending' ? `
+                 <div class="row" style="margin-top:8px">
+                   <button class="btn mini green" onclick="handleDepositReq('${r.uid}', '${r.id}', 'approve', ${r.amount})">✅ Approve</button>
+                   <button class="btn mini danger" onclick="handleDepositReq('${r.uid}', '${r.id}', 'reject', ${r.amount})">❌ Reject</button>
+                 </div>
+               ` : ''}
+             </div>
+           `).join('') || '<p class="tiny muted">No deposit requests</p>'}
          </div>
-       `).join('') || '<p class="tiny muted">No packages found. Add one above.</p>'}
-     </div>
-   `;
- } else if(tab === 'promos') {
-   const snap = await getDocs(collection(db, 'promoCodes'));
-   const promos = snap.docs.map(d => ({id: d.id, ...d.data()}));
-   box.innerHTML = `
-     <div class="card">
-       <h3>🎁 Add Promo Code</h3>
-       <input id="newPromoCode" class="input" placeholder="Code (e.g. BONUS50)" style="text-transform:uppercase">
-       <input id="newPromoReward" class="input" type="number" placeholder="Reward Amount (BDT)" value="5">
-       <button class="btn gold" style="margin-top:8px" onclick="addPromoCode()">+ Create Code</button>
-     </div>
-     <div class="card list">
-       <h3>📋 Active Promo Codes</h3>
-       ${promos.map(p => `
-         <div class="item" style="margin-top:8px">
-           <b>Code:</b> <span style="color:var(--gold)">${esc(p.id)}</span> | <b>Reward:</b> ${Number(p.reward).toFixed(2)} BDT
-           <div style="margin-top:4px" class="tiny muted">Used by ${p.usedBy ? p.usedBy.length : 0} user(s)</div>
-           <button class="btn danger mini" style="margin-top:6px" onclick="deletePromoCode('${p.id}')">🗑️ Delete Code</button>
-         </div>
-       `).join('') || '<p class="tiny muted">No promo codes active</p>'}
-     </div>
-   `;
+       </div>
+     `;
+   } catch(e) { box.innerHTML = "Error loading deposit requests"; }
  } else if(tab === 'players') {
    const snap = await getDocs(collection(db, 'users'));
    allPlayersData = snap.docs.map(d => ({id: d.id, ...d.data()}));
@@ -1276,12 +1144,13 @@ window.adminTab = async tab => {
    } catch(e) { box.innerHTML = "Error loading requests"; }
 
  } else if(tab === 'settings') {
-   let set = {}, wa = {}, resData = {}, bData = {}, socData = {};
+   let set = {}, wa = {}, resData = {}, bData = {}, socData = {}, rulesData = {};
    try { set = (await getDoc(doc(db, 'settings', 'privacy'))).data() || {}; } catch(e){}
    try { wa = (await getDoc(doc(db, 'settings', 'whatsapp'))).data() || {}; } catch(e){}
    try { resData = (await getDoc(doc(db, 'settings', 'results'))).data() || {}; } catch(e){}
    try { bData = (await getDoc(doc(db, 'settings', 'banners'))).data() || {}; } catch(e){}
    try { socData = (await getDoc(doc(db, 'settings', 'social'))).data() || {}; } catch(e){}
+   try { rulesData = (await getDoc(doc(db, 'settings', 'rules'))).data() || {}; } catch(e){}
 
    box.innerHTML = `
      <div class="card">
@@ -1297,15 +1166,19 @@ window.adminTab = async tab => {
      </div>
 
      <div class="card" style="margin-top:10px">
-       <h3>📜 Privacy Policy & Game Rules Text</h3>
+       <h3>📖 Game Rules & Instructions</h3>
+       <textarea id="admRulesText" class="input" rows="4" placeholder="Game Rules...">${rulesData.rulesText || ''}</textarea>
+       <button class="btn gold" onclick="saveGameRulesText()">💾 Save Game Rules</button>
+     </div>
+
+     <div class="card" style="margin-top:10px">
+       <h3>📜 Privacy Policy Text</h3>
        <textarea id="admPrivacyText" class="input" rows="4" placeholder="Privacy Policy...">${set.privacyText || ''}</textarea>
        <button class="btn gold" onclick="savePrivacyPolicyText()">💾 Save Privacy Policy</button>
      </div>
 
      <div class="card" style="margin-top:10px">
-       <h3>🌐 Support Social & Deposit Task Links</h3>
-       <input id="admYT" class="input" placeholder="Subscribe Now Task URL (YouTube Link)" value="${socData.yt || ''}">
-       <input id="admPromoVid" class="input" placeholder="Get Promo Code Video Task URL" value="${socData.promoVideo || ''}">
+       <h3>🌐 Support Social Links</h3>
        <input id="admFB" class="input" placeholder="Facebook Page/Group Link" value="${socData.fb || ''}">
        <input id="admTG" class="input" placeholder="Telegram Channel Link" value="${socData.tg || ''}">
        <button class="btn gold" style="margin-top:8px" onclick="saveSocialLinks()">💾 Save Links</button>
@@ -1349,56 +1222,6 @@ window.filterPlayers = () => {
   `).join('');
 };
 
-window.addPromoCode = async () => {
-  const code = $('newPromoCode').value.trim().toUpperCase();
-  const reward = Number($('newPromoReward').value || 5);
-
-  if(!code || !reward || reward <= 0) return alert('সঠিক কোড ও রিওয়ার্ড পরিমাণ দিন');
-
-  await setDoc(doc(db, 'promoCodes', code), {
-    reward,
-    usedBy: [],
-    createdAt: serverTimestamp()
-  });
-
-  alert('✅ Promo Code Created Successfully!');
-  adminTab('promos');
-};
-
-window.deletePromoCode = async code => {
-  if(confirm(`সত্যিই কি '${code}' প্রোমো কোডটি ডিলিট করতে চান?`)) {
-    await deleteDoc(doc(db, 'promoCodes', code));
-    adminTab('promos');
-  }
-};
-
-window.addAdPackage = async () => {
-  const title = $('pkgTitle').value.trim();
-  const ads = Number($('pkgAds').value);
-  const reward = Number($('pkgReward').value);
-  const isHighlight = $('pkgHighlight').checked;
-
-  if(!ads || ads <= 0 || isNaN(reward) || reward <= 0) return alert('সঠিক অ্যাডের সংখ্যা ও রিওয়ার্ড দিন');
-
-  await addDoc(collection(db, 'adPackages'), {
-    title: title || `${ads} টি অ্যাড দেখুন`,
-    ads,
-    reward,
-    isHighlight,
-    createdAt: serverTimestamp()
-  });
-
-  alert('✅ Ad Package Added Successfully');
-  adminTab('ad_packages');
-};
-
-window.deleteAdPackage = async id => {
-  if(confirm('সত্যিই কি প্যাকেজটি মুছে ফেলতে চান?')) {
-    await deleteDoc(doc(db, 'adPackages', id));
-    adminTab('ad_packages');
-  }
-};
-
 window.addGameMode = async () => {
   const name = $('newModeName').value.trim();
   if(!name) return alert('গেম মোডের নাম দিন');
@@ -1420,18 +1243,46 @@ window.deleteGameMode = async id => {
   }
 };
 
+window.handleDepositReq = async (targetUid, reqId, action, amount) => {
+  if(!confirm(`আপনি কি এই ডিপোজিট রিকোয়েস্টটি ${action} করতে চান?`)) return;
+  try {
+    const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
+    const uRef = doc(db, 'users', targetUid);
+
+    if(action === 'approve') {
+      await runTransaction(db, async tx => {
+        const reqSnap = await tx.get(reqRef);
+        if(reqSnap.data().status !== 'pending') throw new Error('ইতিমধ্যেই প্রসেস করা হয়েছে!');
+        tx.update(uRef, { credits: increment(amount) });
+        tx.update(reqRef, { status: 'approved' });
+      });
+    } else {
+      await updateDoc(reqRef, { status: 'rejected' });
+    }
+    alert('✅ সফলভাবে প্রসেস করা হয়েছে!'); adminTab('dep_requests');
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
 window.handleWithdrawReq = async (targetUid, reqId, action, amount) => {
   if(!confirm(`আপনি কি এই রিকোয়েস্টটি ${action} করতে চান?`)) return;
   try {
     const reqRef = doc(db, 'walletRequests', targetUid, 'items', reqId);
     const uRef = doc(db, 'users', targetUid);
 
-    if(action === 'approve') {
-      await updateDoc(reqRef, { status: 'approved' });
-    } else {
-      await updateDoc(uRef, { credits: increment(amount) });
-      await updateDoc(reqRef, { status: 'rejected' });
-    }
+    await runTransaction(db, async tx => {
+      const reqSnap = await tx.get(reqRef);
+      if(!reqSnap.exists() || reqSnap.data().status !== 'pending') {
+        throw new Error('এই রিকোয়েস্টটি ইতোমধ্যে প্রসেস করা হয়ে গেছে!');
+      }
+
+      if(action === 'approve') {
+        tx.update(reqRef, { status: 'approved' });
+      } else {
+        tx.update(uRef, { credits: increment(amount) });
+        tx.update(reqRef, { status: 'rejected' });
+      }
+    });
+
     alert('✅ সফলভাবে প্রসেস করা হয়েছে!'); adminTab('wit_requests');
   } catch(e) { alert('Error: ' + e.message); }
 };
@@ -1483,6 +1334,12 @@ window.saveResultsText = async () => {
   alert('✅ Results Updated!');
 };
 
+window.saveGameRulesText = async () => {
+  const text = $('admRulesText').value.trim();
+  await setDoc(doc(db, 'settings', 'rules'), { rulesText: text }, { merge: true });
+  alert('✅ Game Rules Saved!');
+};
+
 window.savePrivacyPolicyText = async () => {
   const text = $('admPrivacyText').value.trim();
   await setDoc(doc(db, 'settings', 'privacy'), { privacyText: text }, { merge: true });
@@ -1491,13 +1348,11 @@ window.savePrivacyPolicyText = async () => {
 
 window.saveSocialLinks = async () => {
   const data = {
-    yt: $('admYT').value.trim(),
-    promoVideo: $('admPromoVid').value.trim(),
     fb: $('admFB').value.trim(),
     tg: $('admTG').value.trim()
   };
   await setDoc(doc(db, 'settings', 'social'), data, { merge: true });
-  alert('✅ Social & Promo Video Links Saved!');
+  alert('✅ Social Links Saved!');
 };
 
 window.saveWhatsAppSettings = async () => {
@@ -1514,7 +1369,6 @@ window.openSocialMediaModal = async () => {
     const s = await getDoc(doc(db, 'settings', 'social'));
     const d = s.exists() ? s.data() : {};
     let html = '';
-    if(d.yt) html += `<a href="${esc(d.yt)}" target="_blank" class="btn red" style="margin-bottom:8px;display:block;text-decoration:none;text-align:center">▶️ YouTube Channel</a>`;
     if(d.fb) html += `<a href="${esc(d.fb)}" target="_blank" class="btn alt" style="margin-bottom:8px;background:#1877f2;display:block;text-decoration:none;text-align:center">👍 Facebook Page/Group</a>`;
     if(d.tg) html += `<a href="${esc(d.tg)}" target="_blank" class="btn alt" style="margin-bottom:8px;background:#0088cc;display:block;text-decoration:none;text-align:center">✈️ Telegram Channel</a>`;
     
