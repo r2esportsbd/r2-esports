@@ -258,7 +258,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Subscribe Now</div>
-        <div class="pkg-reward">+ ৳2.00 BDT</div>
+        <div class="pkg-reward">ইউটিউব সাবস্ক্রাইব লিংক</div>
       </div>
       <button class="btn gold mini" style="width:auto" onclick="startSubscribeTask()">শুরু</button>
     </div>
@@ -266,7 +266,7 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Get promo code video</div>
-        <div class="pkg-reward">+ ৳5.00 BDT</div>
+        <div class="pkg-reward">ভিডিও দেখুন</div>
       </div>
       <button class="btn gold mini" style="width:auto" onclick="startPromoVideoTask()">শুরু</button>
     </div>
@@ -877,17 +877,19 @@ window.applyPromoCode = async () => {
 window.startSubscribeTask = async () => {
   try {
     const s = await getDoc(doc(db, 'settings', 'social'));
-    const ytUrl = (s.exists() && s.data().yt) ? s.data().yt : 'https://youtube.com';
+    const ytUrl = (s.exists() && s.data().yt) ? s.data().yt : '';
+    if(!ytUrl) return alert('লিংক যুক্ত করা হয়নি, অ্যাডমিন প্যানেল থেকে সেট করুন।');
     window.open(ytUrl, '_blank');
-  } catch(e){}
+  } catch(e){ alert('Error opening link'); }
 };
 
 window.startPromoVideoTask = async () => {
   try {
     const s = await getDoc(doc(db, 'settings', 'social'));
-    const promoUrl = (s.exists() && s.data().promoVideo) ? s.data().promoVideo : 'https://youtube.com';
+    const promoUrl = (s.exists() && s.data().promoVideo) ? s.data().promoVideo : '';
+    if(!promoUrl) return alert('লিংক যুক্ত করা হয়নি, অ্যাডমিন প্যানেল থেকে সেট করুন।');
     window.open(promoUrl, '_blank');
-  } catch(e){}
+  } catch(e){ alert('Error opening link'); }
 };
 
 async function loadMyMatches(){
@@ -1301,9 +1303,9 @@ window.adminTab = async tab => {
      </div>
 
      <div class="card" style="margin-top:10px">
-       <h3>🌐 Support Social & Promo Links</h3>
-       <input id="admYT" class="input" placeholder="YouTube Subscribe Link" value="${socData.yt || ''}">
-       <input id="admPromoVid" class="input" placeholder="Promo Code Video Link" value="${socData.promoVideo || ''}">
+       <h3>🌐 Support Social & Deposit Task Links</h3>
+       <input id="admYT" class="input" placeholder="Subscribe Now Task URL (YouTube Link)" value="${socData.yt || ''}">
+       <input id="admPromoVid" class="input" placeholder="Get Promo Code Video Task URL" value="${socData.promoVideo || ''}">
        <input id="admFB" class="input" placeholder="Facebook Page/Group Link" value="${socData.fb || ''}">
        <input id="admTG" class="input" placeholder="Telegram Channel Link" value="${socData.tg || ''}">
        <button class="btn gold" style="margin-top:8px" onclick="saveSocialLinks()">💾 Save Links</button>
