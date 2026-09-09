@@ -405,8 +405,8 @@ main{padding:14px}.page{display:none}.page.active{display:block}.card{background
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, runTransaction, increment, collectionGroup, query, where, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6uFXH6PtNK1G6MA7IdgVI1YrrWe81I44",
@@ -426,11 +426,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// 1. LOGIN PERSISTENCE FIX (রিলোড মারলে লগআউট বন্ধ রাখার সমাধান)
+setPersistence(auth, browserLocalPersistence).catch(err => console.error("Auth Persistence Error:", err));
+
 let user = null, pendingJoinId = null, pendingRoomId = null;
 let bannerInterval = null, countdownInterval = null;
 let activeTournaments = [];
 let userJoinedMap = {};
 let allPlayersData = [];
+let userUnsub = null, historyUnsub = null, currentModeUnsub = null;
+let currentActiveMode = null;
 
 // Global Dynamic Limits
 let minDepositLimit = 100;
@@ -698,16 +703,22 @@ window.openPrizeModal = id => {
 
 window.closePrizeModal = () => $('prizeModal').classList.remove('on');
 
+// 2. REAL-TIME TOURNAMENT LIST UPDATER (রিলোড ছাড়াই টুর্নামেন্ট লাইভ আপডেট)
 window.openMode = async mode => {
   try {
     await fetchUserJoinedState();
     go('tournaments');
     $('modeTitle').textContent = '🎮 ' + mode;
-    const snap = await getDocs(collection(db, 'tournaments'));
-    const tours = snap.docs
-      .map(d => ({id: d.id, ...d.data()}))
-      .filter(t => String(t.mode || '').trim().toLowerCase() === String(mode || '').trim().toLowerCase());
-    renderTours(tours);
+    currentActiveMode = mode;
+
+    if(currentModeUnsub) currentModeUnsub();
+
+    currentModeUnsub = onSnapshot(collection(db, 'tournaments'), (snap) => {
+      const tours = snap.docs
+        .map(d => ({id: d.id, ...d.data()}))
+        .filter(t => String(t.mode || '').trim().toLowerCase() === String(mode || '').trim().toLowerCase());
+      renderTours(tours);
+    });
   } catch(e) {
     $('tlist').innerHTML = '<div class="card">❌ Tournament Load Failed</div>';
   }
@@ -878,8 +889,6 @@ window.confirmJoin = async () => {
   alert(`🎉 Successfully Joined!${bonusMsg}`);
   closeJoinModal();
   userJoinedMap[pendingJoinId] = true;
-  loadProfile();
-  renderTours(activeTournaments);
  } catch(e){ 
    if(e.message === 'INSUFFICIENT_BALANCE') {
      closeJoinModal();
@@ -890,25 +899,33 @@ window.confirmJoin = async () => {
  }
 };
 
-async function loadProfile(){
- if(!user) return;
- try {
-  const s = await getDoc(doc(db, 'users', user.uid));
-  const d = s.data() || {};
-  if($('pname')) $('pname').textContent = d.name || user.email.split('@')[0];
-  if($('pemail')) $('pemail').textContent = user.email;
-  if($('av')) $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
-  if($('points')) $('points').textContent = Number(d.credits || 0).toFixed(2) + ' BDT';
-  if($('myRefCode')) $('myRefCode').value = d.refCode || user.uid.substring(0,6).toUpperCase();
-  
-  if($('roleBadge')){
-    if(ADMIN_EMAILS.includes(user.email)){
-      $('roleBadge').innerHTML = '<span class="tag" style="background:var(--gold);color:#000">👑 ADMIN</span>';
-    } else {
-      $('roleBadge').innerHTML = '<span class="tag" style="background:var(--line);color:#fff">Player</span>';
+// 3. REAL-TIME PROFILE & BALANCE UPDATER (রিলোড ছাড়াই প্রোফাইল ও পয়েন্ট অটো আপডেট)
+function setupRealtimeUser() {
+  if(!user) return;
+  if(userUnsub) userUnsub();
+
+  userUnsub = onSnapshot(doc(db, 'users', user.uid), (s) => {
+    if (!s.exists()) return;
+    const d = s.data() || {};
+    if($('pname')) $('pname').textContent = d.name || user.email.split('@')[0];
+    if($('pemail')) $('pemail').textContent = user.email;
+    if($('av')) $('av').textContent = (d.name || 'R').charAt(0).toUpperCase();
+    if($('points')) $('points').textContent = Number(d.credits || 0).toFixed(2) + ' BDT';
+    if($('walletPoints')) $('walletPoints').textContent = Number(d.credits || 0).toFixed(2) + ' BDT';
+    if($('myRefCode')) $('myRefCode').value = d.refCode || user.uid.substring(0,6).toUpperCase();
+    
+    if($('roleBadge')){
+      if(ADMIN_EMAILS.includes(user.email)){
+        $('roleBadge').innerHTML = '<span class="tag" style="background:var(--gold);color:#000">👑 ADMIN</span>';
+      } else {
+        $('roleBadge').innerHTML = '<span class="tag" style="background:var(--line);color:#fff">Player</span>';
+      }
     }
-  }
- } catch(e){}
+  });
+}
+
+function loadProfile(){
+  setupRealtimeUser();
 }
 
 window.applyPromoCode = async () => {
@@ -949,7 +966,6 @@ window.applyPromoCode = async () => {
 
     alert(`🎉 অভিনন্দন! প্রমো কোড সফলভাবে যুক্ত হয়েছে। ৳${code} আপনার ওয়ালেটে যোগ করা হয়েছে।`);
     inputEl.value = '';
-    loadProfile();
   } catch(e) {
     alert(e.message || 'Error applying promo code');
   }
@@ -1011,33 +1027,36 @@ window.switchWTab = tab => {
   if(tab==='withdraw') $('wTabWithdraw').classList.remove('hidden');
 };
 
+// 4. REAL-TIME WALLET HISTORY UPDATER (রিলোড ছাড়া ডিপোজিট ও উইথড্র স্টেটাস আপডেট)
 async function loadWallet(){
   try {
     await loadSystemLimits();
-    const s = await getDoc(doc(db, 'users', user.uid));
-    $('walletPoints').textContent = Number(s.data().credits || 0).toFixed(2) + ' BDT';
+    setupRealtimeUser();
 
-    const q = await getDocs(collection(db, 'walletRequests', user.uid, 'items'));
-    $('requestList').innerHTML = q.docs.map(d => {
-      const data = d.data();
-      let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
-      let typeLabel = '📥 Deposit';
-      if(data.type === 'withdraw') typeLabel = '📤 Withdraw';
-      else if(data.type === 'entry_fee') typeLabel = '🎮 Joined Fee';
-      else if(data.type === 'promo_reward') typeLabel = '🎟️ Promo Reward';
+    if(historyUnsub) historyUnsub();
 
-      return `<div class="item" style="margin-top:8px">
-        <div class="row space">
-          <b>${typeLabel} (${Number(data.amount).toFixed(2)} BDT)</b>
-          <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
-        </div>
-        <div class="tiny muted" style="margin-top:4px">
-          ${data.type === 'deposit' ? `TrxID: ${esc(data.trxId || '')} | Sender: ${esc(data.sender || '')}` : ''}
-          ${data.type === 'withdraw' ? `Number: ${esc(data.receiver || '')}` : ''}
-          ${data.title ? `${esc(data.title)}` : ''}
-        </div>
-      </div>`;
-    }).join('') || '<p class="tiny muted">No history</p>';
+    historyUnsub = onSnapshot(collection(db, 'walletRequests', user.uid, 'items'), (q) => {
+      $('requestList').innerHTML = q.docs.map(d => {
+        const data = d.data();
+        let statusColor = data.status==='approved'?'#22c55e':(data.status==='rejected'?'#ff3b55':'#ffc94d');
+        let typeLabel = '📥 Deposit';
+        if(data.type === 'withdraw') typeLabel = '📤 Withdraw';
+        else if(data.type === 'entry_fee') typeLabel = '🎮 Joined Fee';
+        else if(data.type === 'promo_reward') typeLabel = '🎟️ Promo Reward';
+
+        return `<div class="item" style="margin-top:8px">
+          <div class="row space">
+            <b>${typeLabel} (${Number(data.amount).toFixed(2)} BDT)</b>
+            <span class="badge" style="background:${statusColor}">${data.status.toUpperCase()}</span>
+          </div>
+          <div class="tiny muted" style="margin-top:4px">
+            ${data.type === 'deposit' ? `TrxID: ${esc(data.trxId || '')} | Sender: ${esc(data.sender || '')}` : ''}
+            ${data.type === 'withdraw' ? `Number: ${esc(data.receiver || '')}` : ''}
+            ${data.title ? `${esc(data.title)}` : ''}
+          </div>
+        </div>`;
+      }).join('') || '<p class="tiny muted">No history</p>';
+    });
   } catch(e){ console.error(e); }
 }
 
@@ -1065,11 +1084,9 @@ window.submitDepositRequest = async () => {
 
     alert('✅ ডিপোজিট রিকোয়েস্ট জমা হয়েছে! অ্যাডমিন যাচাই করে রিভিউ করবেন।');
     $('depSender').value = ''; $('depAmount').value = ''; $('depTrx').value = '';
-    loadWallet();
   } catch(e) { alert('Error: ' + e.message); }
 };
 
-// UPDATE 4: Instant Balance Deduction on Withdraw Request
 window.submitWithdraw = async () => {
   const receiver = $('witNum').value.trim(); 
   const amount = Number($('witAmount').value);
@@ -1098,7 +1115,7 @@ window.submitWithdraw = async () => {
     });
 
     alert('✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে এবং আপনার একাউন্ট থেকে টাকা কেটে নেওয়া হয়েছে!');
-    $('witNum').value = ''; $('witAmount').value = ''; loadWallet(); loadProfile();
+    $('witNum').value = ''; $('witAmount').value = '';
   } catch(e){ alert(e.message || 'Error occurred'); }
 };
 
@@ -1155,7 +1172,12 @@ window.googleLogin = async () => {
   } catch(e) { err(e); }
 };
 
-window.logoutUser = async () => { await signOut(auth); };
+window.logoutUser = async () => { 
+  if(userUnsub) userUnsub();
+  if(historyUnsub) historyUnsub();
+  if(currentModeUnsub) currentModeUnsub();
+  await signOut(auth); 
+};
 
 async function checkAdmin(){
   if(!user) return false; 
@@ -1697,8 +1719,13 @@ onAuthStateChanged(auth, async u => {
  if(u){
   await setDoc(doc(db, 'users', u.uid), { email: u.email, updatedAt: serverTimestamp() }, { merge: true }).catch(() => {});
   await loadSystemLimits();
-  loadProfile(); go('home'); loadHome();
+  setupRealtimeUser();
+  go('home'); 
+  loadHome();
  } else {
+  if(userUnsub) userUnsub();
+  if(historyUnsub) historyUnsub();
+  if(currentModeUnsub) currentModeUnsub();
   go('login');
  }
 });
